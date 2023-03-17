@@ -7,17 +7,20 @@ public class Movie {
     private double rating;
     private int length;
 
+    private boolean threeD;
+
 
     /**contructor**/
 
     public Movie() {
 
     }
-    public Movie(String title, String genre, double rating, int length) {
+    public Movie(String title, String genre, double rating, int length, boolean threeD) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
         this.length = length;
+        this.threeD = threeD;
     }
 
     /**get&set**/
@@ -52,5 +55,13 @@ public class Movie {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    public boolean isThreeD() {
+        return threeD;
+    }
+
+    public void setThreeD(boolean threeD) {
+        this.threeD = threeD;
     }
 }
