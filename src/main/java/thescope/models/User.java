@@ -5,6 +5,8 @@ public class User {
     private String name;
     private String firstName;
     private String address;
+    private int postalCode;
+    private String town;
 
 
     /**contructor**/
@@ -12,11 +14,13 @@ public class User {
     public User() {
 
     }
-    public User(int userId, String name, String firstName, String address) {
+    public User(int userId, String name, String firstName, String address, int postalCode, String town) {
         this.userId = userId;
         this.name = name;
         this.firstName = firstName;
         this.address = address;
+        this.postalCode = postalCode;
+        this.town = town;
     }
 
 
