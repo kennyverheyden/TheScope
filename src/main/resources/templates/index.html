@@ -1,40 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
-<head lang="en" th:replace="fragments/header :: header"> </head>
-<style type="text/css">
-.header {
-  padding: 20px;
-  text-align: center;
-  background:#514f74;
-  color: #ffffff;
-  font-family:verdana;
-  font-size: 15px;
-}
-</style>
-  <body>
 
- <div class="header">
-<h1>The Scope</h1>
-</div> 
-<br>
-  
-  <div class="container">
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<!--[endif]-->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>TheScope</title>
+<head lang="en">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="description" content="TheScope">
+<meta name="keywords" content="TheScope">
+<meta name="author" content="">
+<meta name="MobileOptimized" content="320">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/animate.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/bootstrap.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/font-awesome.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/fonts.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/dl-menu.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/slick.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/style3.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/responsive3.css}">
+</head>
+<body>
 
-<!--  ONLY LAYOUT -->
+	<!-- prs navigation Start -->
+	<div class="prs_navigation_main_wrapper menu_fixed animated fadeInDown">
+		<div class="container-fluid">
+			<div id="search_open" class="gc_search_box" style="">
+				<input type="text" placeholder="Search here">
+				<button>
+					<i class="fa fa-search" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div class="prs_navi_left_main_wrapper">
+				<div class="prs_logo_main_wrapper">
+					<img th:src="@{/assets/logo_yellow.png}" width="130" height="110"
+						alt="logo">
+				</div>
+				<div class="prs_menu_main_wrapper">
+					<nav class="navbar navbar-default">
+						<div id="dl-menu" class="xv-menuwrapper responsive-menu">
+							<div class="prs_mobail_searchbar_wrapper" id="search_button">
+								<i class="fa fa-search"></i>
+							</div>
+							<div class="clearfix"></div>
+							<ul class="dl-menu">
+								<li class="parent"><a href="/movies">Movies</a>
+									<ul class="lg-submenu">
+										<li class="dl-back"><a href="#">back</a></li>
+										<li><a href="/movies">Movies</a></li>
+										<li><a href="">Index-II</a></li>
+										<li><a href="">Index-III</a></li>
+										<li><a href="">Index-IV</a></li>
+									</ul></li>
 
-<!--  ADD CONTENT in the view folder -->
+								<li class="parent"><a href="/bookings">Bookings</a>
+									<ul class="lg-submenu">
+										<li class="dl-back"><a href="#">back</a></li>
+										<li><a href="/bookings">Bookings</a></li>
+										<li><a href="">Index-II</a></li>
+										<li><a href="">Index-III</a></li>
+										<li><a href="">Index-IV</a></li>
+									</ul></li>
 
-     <div th:replace="@{'views/' + ${content}} :: ${content}"></div>
-     
+								<li class="parent"><a href="/users">Management</a>
+									<ul class="lg-submenu">
+										<li class="dl-back"><a href="#">back</a></li>
+										<li><a href="/users">Users</a></li>
+										<li><a href="/cleanings">Cleaning Schedule</a></li>
+										<li><a href="/rooms">Rooms</a></li>
+										<li><a href="">Index-IV</a></li>
+									</ul></li>
 
-  </div>
-  <br>
-<div lang="en" th:replace="fragments/footer :: footer"> </div>
+								<li class="parent"><a href="/">HOME</a></li>
+							</ul>
+						</div>
+						<!-- /dl-menuwrapper -->
+					</nav>
+				</div>
+			</div>
+			<div class="prs_navi_right_main_wrapper">
+
+				<div class="prs_top_login_btn_wrapper">
+					<div class="prs_animate_btn1">
+						<ul>
+							<li><a href="#" class="button button--tamaya"
+								data-text="sign up" data-toggle="modal" data-target="#myModal"><span>sign
+										up</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="prs_top_login_btn_wrapper">
+					<div class="prs_animate_btn1">
+						<ul>
+							<li><a href="#" class="button button--tamaya"
+								data-text="login" data-toggle="modal" data-target="#myModal"><span>Login</span></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="product-heading">
+					<div class="con">
+						<input type="text" placeholder="Search Movie">
+						<button type="submit">
+							<ul>
+								<li>Go</li>
+							</ul>
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- prs navigation End -->
+
+	<div class="prs_ln_main_wrapper">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+					<!--  Content mapper -->
+					
+					<br> <br> <br> <br>
+					<div th:replace="@{'views/' + ${content}} :: ${content}"></div>
+
+					<br>
+					<br>
+					<br>
+					<br>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
 
 
 
-  
 
-  
+
+
