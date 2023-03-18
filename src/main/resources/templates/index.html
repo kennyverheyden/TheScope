@@ -4,13 +4,11 @@
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org" lang="en">
 <!--[endif]-->
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
 <title>TheScope</title>
-<head lang="en">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta name="description" content="TheScope">
 <meta name="keywords" content="TheScope">
@@ -30,7 +28,7 @@
 </head>
 <body>
 
-	<!-- prs navigation Start -->
+	<!-- navigation Start -->
 	<div class="prs_navigation_main_wrapper menu_fixed animated fadeInDown">
 		<div class="container-fluid">
 			<div id="search_open" class="gc_search_box" style="">
@@ -82,7 +80,6 @@
 								<li class="parent"><a href="/">HOME</a></li>
 							</ul>
 						</div>
-						<!-- /dl-menuwrapper -->
 					</nav>
 				</div>
 			</div>
@@ -92,7 +89,7 @@
 					<div class="prs_animate_btn1">
 						<ul>
 							<li><a href="#" class="button button--tamaya"
-								data-text="sign up" data-toggle="modal" data-target="#myModal"><span>sign
+								data-text="sign up" data-toggle="modal" data-target="#myModal"><span>Sign
 										up</span></a></li>
 						</ul>
 					</div>
@@ -110,18 +107,13 @@
 				<div class="product-heading">
 					<div class="con">
 						<input type="text" placeholder="Search Movie">
-						<button type="submit">
-							<ul>
-								<li>Go</li>
-							</ul>
-						</button>
+						<button type="submit">Go</button>
 					</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
-	<!-- prs navigation End -->
 
 	<div class="prs_ln_main_wrapper">
 		<div class="container">
@@ -129,15 +121,10 @@
 
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-					<!--  Content mapper -->
-					
+					<!--  Content  -->
 					<br> <br> <br> <br>
 					<div th:replace="@{'views/' + ${content}} :: ${content}"></div>
-
-					<br>
-					<br>
-					<br>
-					<br>
+					<br> <br> <br> <br>
 
 				</div>
 			</div>
