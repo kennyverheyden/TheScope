@@ -1,0 +1,22 @@
+<div th:fragment="users">
+      
+<table>
+<tr>
+<th>userID</th>
+<th>name</th>
+<th>firstname</th>
+<th>address</th>
+<th>postalCode</th>
+<th>town</th>
+</tr>
+<tr th:each="users: ${users}">
+<td th:text="${users.userID}"></td>
+<td th:text="${users.name}"></td>
+<td th:text="${users.firstName}"></td>
+<td th:text="${users.address}"></td>
+<td th:text="${users.postalCode}"></td>
+<td th:text="${users.town}"></td>
+</tr>
+</table>
+    
+</div>

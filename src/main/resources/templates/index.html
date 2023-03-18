@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head lang="en" th:replace="fragments/header :: header"> </head>
+<style type="text/css">
+.header {
+  padding: 20px;
+  text-align: center;
+  background:#514f74;
+  color: #ffffff;
+  font-family:verdana;
+  font-size: 15px;
+}
+</style>
+  <body>
+
+ <div class="header">
+<h1>The Scope</h1>
+</div> 
+<br>
+  
+  <div class="container">
+
+<!--  ONLY LAYOUT -->
+
+<!--  ADD CONTENT in the view folder -->
+
+     <div th:replace="@{'views/' + ${content}} :: ${content}"></div>
+     
+
+  </div>
+  <br>
+<div lang="en" th:replace="fragments/footer :: footer"> </div>
+</body>
+</html>
+
+
+
+  
+
+  

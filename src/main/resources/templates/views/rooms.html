@@ -1,0 +1,19 @@
+<div th:fragment="rooms">
+  
+    
+<table>
+<tr>
+<th>Seats</th>
+<th>Vip seats</th>
+<th>Location</th>
+</tr>
+<tr th:each="rooms: ${rooms}">
+<td th:text="${rooms.numSeats}"></td>
+<td th:text="${rooms.numVipSeats}"></td>
+<td th:text="${rooms.location}"></td>
+
+</tr>
+</table>
+    
+    
+</div>

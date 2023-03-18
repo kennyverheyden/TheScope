@@ -1,20 +1,33 @@
 package thescope.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import thescope.repositories.ScopeRepository;
+import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import thescope.models.User;
+import thescope.repositories.UserRepository;
+
+@Controller
 public class UserController {
 
-    private final ScopeRepository scopeRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(ScopeRepository scopeRepository) {
-        this.scopeRepository = scopeRepository;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
+    
+    @GetMapping("/users") // get request
+	public String selectGet(Model model) {
+
+		List<User> users = userRepository.selectUsers();
+		model.addAttribute("content", "users"); // redirect to movie view (users.html)
+		model.addAttribute("users",users);  // map content to html elements
+		return "index";
+	}
 
 }

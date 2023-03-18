@@ -2,11 +2,9 @@ package thescope.models;
 
 public class TheaterRoom {
 
-    private int numSeats;
-
-    private int numVipSeats;
-
-    private String location;
+    int numSeats;
+    int numVipSeats;
+    String location;
 
     /**construct**/
     public TheaterRoom(int numSeats, int numVipSeats, String location) {

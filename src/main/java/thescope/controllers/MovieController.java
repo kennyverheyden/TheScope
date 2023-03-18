@@ -1,28 +1,36 @@
 package thescope.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import thescope.models.Movie;
-import thescope.repositories.ScopeRepository;
-import thescope.services.MovieService;
-
 import java.util.List;
 
-@RestController
-@RequestMapping("/movies")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import thescope.models.Movie;
+import thescope.repositories.MovieRepository;
+
+@Controller
 public class MovieController {
 
-    private final MovieService movieService;
+    private final MovieRepository movieRepository;
 
     @Autowired
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
+    public MovieController(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
     }
+    
+    @GetMapping("/movies") // get request
+	public String selectGet(Model model) {
 
-    @GetMapping
-    public List<Movie> getAllMovies() {
-        return movieService.getAllMovies();
-    }
+		List<Movie> movies = movieRepository.selectMovies();
+		model.addAttribute("content", "movies"); // redirect to movie view (movies.html)
+		model.addAttribute("movies",movies);  // map content to html elements
+		return "index";
+	}
 }
