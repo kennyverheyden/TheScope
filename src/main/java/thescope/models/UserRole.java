@@ -1,9 +1,10 @@
 package thescope.models;
 
-public class UserRole {
+
+public class UserRole{
 
 	private String roleName;
-
+	
 	public UserRole(String roleName) {
 		this.roleName=roleName;
 	}

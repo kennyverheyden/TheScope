@@ -1,0 +1,24 @@
+<div th:fragment="cleanings">
+       
+<table>
+<tr>
+<th>Name</th>
+<th>Firstname</th>
+<th>Movie</th>
+<th>Length</th>
+<th>Room</th>
+<th>Time</th>
+<th>Date</th>
+</tr>
+<tr th:each="cleanings: ${cleanings}">
+<td th:text="${cleanings.name}"></td>
+<td th:text="${cleanings.firstname}"></td>
+<td th:text="${cleanings.movie}"></td>
+<td th:text="${cleanings.length}"></td>
+<td th:text="${cleanings.room}"></td>
+<td th:text="${cleanings.time}"></td>
+<td th:text="${cleanings.date}"></td>
+</tr>
+</table>
+    
+</div>

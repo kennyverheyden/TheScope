@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 public class ShopList {
     private long articleId;
     private String description;
-    private boolean inStock;
+    private int inStock; // How many left
     private int orderQuantity;
     private BigDecimal priceTaxEx;
     private BigDecimal priceTaxIn;
 
 
     /**construct**/
-    public ShopList(long articleId, String description, boolean inStock, int orderQuantity, BigDecimal priceTaxEx, BigDecimal priceTaxIn) {
+    public ShopList(long articleId, String description, int inStock, int orderQuantity, BigDecimal priceTaxEx, BigDecimal priceTaxIn) {
         this.articleId = articleId;
         this.description = description;
         this.inStock = inStock;
@@ -38,11 +38,11 @@ public class ShopList {
         this.description = description;
     }
 
-    public boolean isInStock() {
+    public int isInStock() {
         return inStock;
     }
 
-    public void setInStock(boolean inStock) {
+    public void setInStock(int inStock) {
         this.inStock = inStock;
     }
 

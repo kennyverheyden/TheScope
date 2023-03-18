@@ -1,6 +1,5 @@
 package thescope.repositories;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,21 +7,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import thescope.models.User;
+import thescope.models.UserRole;
 
 @Repository
-public class UserRepository {
+public class UserRoleRepository {
 
 	//Database connection
 	@Autowired
 	private JdbcTemplate jdbc;
 
-	public List<User> selectUsers() {
-		String sqlSelect = "SELECT userID, name, firstname, address, postalCode, town FROM tblUsers";
+	public List<UserRole> selectUserRoles() {
+		String sqlSelect = "SELECT roleName FROM tblUserRole";
 
-		RowMapper<User> rowMapper = (r, i) -> {
-			User rowObject =
-					new User(r.getInt("userID"),r.getString("name"),r.getString("firstname"),r.getString("address"),r.getInt("postalCode"),r.getString("town"));
+		RowMapper<UserRole> rowMapper = (r, i) -> {
+			UserRole rowObject =
+					new UserRole(r.getString("roleName"));
 			return rowObject;
 		};
 		return jdbc.query(sqlSelect, rowMapper);
