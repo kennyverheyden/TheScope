@@ -1,0 +1,22 @@
+<div th:fragment="login">
+    
+<h2>Login</h2>
+<br>
+
+<div style="background-color:#bdc6fc; width:600px; text-align:center; padding:16px; font-family:verdana;">
+<form action="/login" method="post">
+Username: <input type="text" name="username" /><br />
+Password: <input type="password" name="password" /><br />
+<br />
+<button type="submit">Log in</button>
+</form>
+
+<br>
+<strong>
+<p th:text="${message}"></p>
+</strong>
+
+</div>
+    
+    
+</div>

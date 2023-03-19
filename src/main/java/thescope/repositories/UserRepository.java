@@ -12,16 +12,24 @@ import thescope.models.User;
 @Repository
 public class UserRepository {
 
+	
+	//*************************************************
+	
+	// Repository also injected in class LoginProcessor
+	
+	//*************************************************
+	
+	
 	//Database connection
 	@Autowired
 	private JdbcTemplate jdbc;
 
 	public List<User> selectUsers() {
-		String sqlSelect = "SELECT userID, name, firstname, address, postalCode, town FROM tblUsers";
+		String sqlSelect = "SELECT userID, secret, name, firstname, address, postalCode, town FROM tblUsers";
 
 		RowMapper<User> rowMapper = (r, i) -> {
 			User rowObject =
-					new User(r.getInt("userID"),r.getString("name"),r.getString("firstname"),r.getString("address"),r.getInt("postalCode"),r.getString("town"));
+					new User(r.getString("userID"),r.getString("secret"),r.getString("name"),r.getString("firstname"),r.getString("address"),r.getInt("postalCode"),r.getString("town"));
 			return rowObject;
 		};
 		return jdbc.query(sqlSelect, rowMapper);

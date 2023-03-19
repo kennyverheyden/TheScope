@@ -1,7 +1,8 @@
 package thescope.models;
 
 public class User {
-	int userID;
+	String userID; //ex. verheydenk
+	String secret;
 	String name;
 	String firstName;
 	String address;
@@ -11,8 +12,9 @@ public class User {
 
 	/**contructor**/
 
-	public User(int userID, String name, String firstName, String address, int postalCode, String town) {
-		this.userID = userID;
+	public User(String userID, String secret, String name, String firstName, String address, int postalCode, String town) {
+		this.userID = userID; //ex. verheydenk
+		this.secret = secret;
 		this.name = name;
 		this.firstName = firstName;
 		this.address = address;
@@ -22,20 +24,26 @@ public class User {
 
 	/**get&set**/
 	
-	public int getUserID() {
+	public String getUserID() {
 		return userID;
 	}
 
-
-	public void setUserId(int userID) {
+	public void setUserId(String userID) {
 		this.userID = userID;
 	}
-
-
+	
+	public String getSecret() {
+		return secret;
+	}
+	
+	public void setSecret(String secret)
+	{
+		this.secret=secret;
+	}
+	
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
