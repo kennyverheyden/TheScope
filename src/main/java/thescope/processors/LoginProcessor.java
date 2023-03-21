@@ -2,7 +2,6 @@ package thescope.processors;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
-
 import thescope.repositories.UserRepository;
 import thescope.services.UserService;
 
@@ -12,7 +11,7 @@ public class LoginProcessor {
 
 	private String username;
 	private String secret;
-
+	
 	private final UserService userService;
 	private final UserRepository userRepository;
 	public LoginProcessor(UserService userService, UserRepository userRepository)
@@ -27,6 +26,7 @@ public class LoginProcessor {
 		// Session scope bean, username must be available
 		userService.setUsername(username);
 		userService.setSecret(secret);
+
 		// Check if username and password exist
 		for(int i=0;i<userRepository.selectUsers().size();i++)
 		{

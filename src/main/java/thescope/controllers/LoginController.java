@@ -1,8 +1,7 @@
 package thescope.controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,8 @@ import thescope.processors.LoginProcessor;
 
 @Controller
 public class LoginController {
-
+	
+	
 	// Injector login
 	private final LoginProcessor loginProcessor;
 	@Autowired
@@ -34,14 +34,8 @@ public class LoginController {
 	public String loginPost(@RequestParam String username, @RequestParam String password, Model model, RedirectAttributes rm) {
 		boolean loggedIn = false;
 
-		  BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-	     String hashedPass = bCryptPasswordEncoder.encode(password);
-
-		
 		loginProcessor.setUserName(username);
-		loginProcessor.setSecret(hashedPass);
-		System.out.println(hashedPass);
+		loginProcessor.setSecret(password);
 
 		loggedIn = loginProcessor.login();
 
@@ -52,7 +46,6 @@ public class LoginController {
 		}
 		else
 		{
-
 			model.addAttribute("content", "login");
 			rm.addFlashAttribute("message","Login failed");
 			return "redirect:login";
