@@ -1,52 +1,84 @@
 package thescope.services;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import thescope.models.User;
+import thescope.repositories.UserRepository;
 
 @Service
-@SessionScope
+@Transactional 
 public class UserService {
 	
-	String username;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+    
+    @Autowired
+	private EntityManager em;
+
+	// Current user login details
+	String userName;
 	String secret;
 	String name;
 	String firstname;
-	String address;
-	String postalcode;
-	String town;
-	int role;
 
-	private ArrayList<User> users = new ArrayList<>();
-
-	public void addUser(User user)
+	public List<User> list() {
+        return userRepository.findAll();
+    }
+	
+	public User findUserByUsername(String username)
 	{
-		users.add(user);
+		for (User i:userRepository.findAll())
+		{
+			if(i.getUserID().equals(username))
+			{
+				return i;
+			}
+		}
+		return null;
 	}
-
-	public List<User> findAll()
+	
+	public boolean userExist(String username)
 	{
-		return this.users;
+		for (User i:userRepository.findAll())
+		{
+			if(i.getUserID().equals(username))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void createUser(String username, String password, String name, String firstname, String address, String postalcode, String town, int role) {
+		User user = new User();
+		user.setUserID(username);
+		user.setSecret(password);
+		user.setName(name);
+		user.setFirstName(firstname);
+		user.setAddress(address);
+		user.setPostalCode(postalcode);
+		user.setTown(town);
+		user.setRole(role);
+		em.persist(user);
+		userRepository.findAll().add(user);
 	}
 
-	public ArrayList<User> getUsers() {
-		return users;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsers(ArrayList<User> users) {
-		this.users = users;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getSecret() {
@@ -71,38 +103,6 @@ public class UserService {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPostalcode() {
-		return postalcode;
-	}
-
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
-	}
-
-	public String getTown() {
-		return town;
-	}
-
-	public void setTown(String town) {
-		this.town = town;
-	}
-
-	public int getRole() {
-		return role;
-	}
-
-	public void setRole(int role) {
-		this.role = role;
 	}
 
 }

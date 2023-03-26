@@ -1,23 +1,41 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity(name="tblMovie")
 public class Movie {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long PKmovie;
+	
+	@Column(name="movie")
 	String title;
-	String genre;
+	
+	@Column(name="FKgenre")
+	int genre_fk;
+	
+	@Column(name="rating")
 	double rating;
+	
+	@Column(name="length")
 	int length;
 
+	@Column(name="3D")
 	private boolean threeD;
 
 
 	/**contructor**/
-
 	public Movie() {
 
 	}
-	public Movie(String title, String genre, double rating, int length, boolean threeD) {
+	public Movie(String title, int genre_fk, double rating, int length, boolean threeD) {
 		this.title = title;
-		this.genre = genre;
+		this.genre_fk = genre_fk;
 		this.rating = rating; 
 		this.length = length;
 		this.threeD = threeD;
@@ -33,13 +51,13 @@ public class Movie {
 		this.title = title;
 	}
 
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+//	public String getGenre() {
+//		return genre;
+//	}
+//
+//	public void setGenre(String genre) {
+//		this.genre = genre;
+//	}
 
 	public double getRating() {
 		return rating;
@@ -64,4 +82,14 @@ public class Movie {
 	public void setThreeD(boolean threeD) {
 		this.threeD = threeD;
 	}
+	
+	public int getGenre_fk() {
+		return genre_fk;
+	}
+	
+	public void setGenre_fk(int genre_fk) {
+		this.genre_fk = genre_fk;
+	}
+	
+	
 }

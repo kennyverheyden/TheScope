@@ -1,41 +1,66 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity(name="tblTheaterRoom")
 public class TheaterRoom {
 
-    int numSeats;
-    int numVipSeats;
-    String location;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long PKtheaterRoom;
 
-    /**construct**/
-    public TheaterRoom(int numSeats, int numVipSeats, String location) {
-        this.numSeats = numSeats;
-        this.numVipSeats = numVipSeats;
-        this.location = location;
-    }
+	@Column(name="maxNormalSeats")
+	int maxNormalSeats;
 
-    /**get&set**/
+	@Column(name="maxVipSeats")
+	int maxVipSeats;
 
-    public int getNumSeats() {
-        return numSeats;
-    }
+	@Column(name="location")
+	String location;
 
-    public void setNumSeats(int numSeats) {
-        this.numSeats = numSeats;
-    }
+	/**construct**/
+	public TheaterRoom(int maxNormalSeats, int maxVipSeats, String location) {
+		this.maxNormalSeats = maxNormalSeats;
+		this.maxVipSeats = maxVipSeats;
+		this.location = location;
+	}
 
-    public int getNumVipSeats() {
-        return numVipSeats;
-    }
+	/**get&set**/
 
-    public void setNumVipSeats(int numVipSeats) {
-        this.numVipSeats = numVipSeats;
-    }
+	public long getPKtheaterRoom() {
+		return PKtheaterRoom;
+	}
 
-    public String getLocation() {
-        return location;
-    }
+	public void setPKtheaterRoom(long pKtheaterRoom) {
+		PKtheaterRoom = pKtheaterRoom;
+	}
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+	public int getMaxNormalSeats() {
+		return maxNormalSeats;
+	}
+
+	public void setMaxNormalSeats(int maxNormalSeats) {
+		this.maxNormalSeats = maxNormalSeats;
+	}
+
+	public int getMaxVipSeats() {
+		return maxVipSeats;
+	}
+
+	public void setMaxVipSeats(int maxVipSeats) {
+		this.maxVipSeats = maxVipSeats;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 }

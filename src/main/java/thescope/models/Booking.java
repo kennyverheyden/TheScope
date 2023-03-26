@@ -1,13 +1,30 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity(name="tblBookings")
 public class Booking {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long PKbooking;
+	
+	@Column(name="FKuserRole")
 	String name;
 	String firstname;;
 	String movie;
 	String time;
 	String date;
 	String location;
+	
+	public Booking()
+	{
+		
+	}
 	
 	public Booking(String name, String firstname, String movie, String time, String date, String location)
 	{
@@ -19,52 +36,6 @@ public class Booking {
 		this.location=location;
 	}
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getMovie() {
-		return movie;
-	}
-
-	public void setMovie(String movie) {
-		this.movie = movie;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
 	
 }

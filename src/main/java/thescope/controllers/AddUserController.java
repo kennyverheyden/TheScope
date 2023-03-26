@@ -18,12 +18,11 @@ import thescope.services.UserService;
 public class AddUserController {
 
 	// Injector login
-	private final UserRepository userRepository;
 	private final UserService userService;
+
 	@Autowired
-	public AddUserController(UserRepository userRepository,UserService userService)
+	public AddUserController(UserService userService)
 	{
-		this.userRepository=userRepository;
 		this.userService=userService;
 	}
 
@@ -38,22 +37,33 @@ public class AddUserController {
 		//username = email
 		if(!username.equals("") && !password.equals("") && !confirmpassword.equals("") && !name.equals("") && !firstname.equals("") && !address.equals("") && !town.equals(""))
 		{
-			if(password.equals(confirmpassword))
+
+			if(!userService.userExist(username))
 			{
-				// Register user
-				List<User> users = userService.findAll();
-				User user = new User(username, password, name, firstname, address, postalcode, town, role);
-				userRepository.storeUsers(user);
-				users.add(user);
-				model.addAttribute("content", "adduser");
-				rm.addFlashAttribute("message","User succesfully added");
-				return "redirect:adduser";
+
+
+				if(password.equals(confirmpassword))
+				{
+					// Register user
+					userService.createUser(username, password, name, firstname, address, postalcode, town, role);
+
+					model.addAttribute("content", "adduser");
+					rm.addFlashAttribute("message","User succesfully added");
+					return "redirect:adduser";
+				}
+				else
+				{
+					// Check if password boxes are the same
+					model.addAttribute("content", "adduser");
+					rm.addFlashAttribute("message","Confirmation password not the same");
+					return "redirect:adduser";
+				}
 			}
 			else
 			{
-				// Check if password boxes are the same
+				// Check if all fields are filled in
 				model.addAttribute("content", "adduser");
-				rm.addFlashAttribute("message","Confirmation password not the same");
+				rm.addFlashAttribute("message","Username (email) already taken");
 				return "redirect:adduser";
 			}
 		}

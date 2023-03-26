@@ -28,7 +28,7 @@ public class MovieController {
     @GetMapping("/movies") // get request
 	public String selectGet(Model model) {
 
-		List<Movie> movies = movieRepository.selectMovies();
+		List<Movie> movies = movieRepository.findAll();
 		model.addAttribute("content", "movies"); // redirect to movie view (movies.html)
 		model.addAttribute("movies",movies);  // map content to html elements
 		return "index";

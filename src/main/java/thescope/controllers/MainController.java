@@ -20,11 +20,11 @@ public class MainController {
 	public String home(@RequestParam(required = false)String logout, Model model)
 	{
 		if(logout != null) {
-			userService.setUsername(null);
+			userService.setUserName(null);
 			userService.setSecret(null);
 		}
 
-		String username = userService.getUsername();
+		String username = userService.getUserName();
 		// When user is not logged on, the String is null
 
 		if(username==null)

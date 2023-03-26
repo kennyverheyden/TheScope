@@ -1,11 +1,26 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity(name="tblScheduleShow")
 public class ScheduleShow {
 
-	private String movie;
-	private String room;
-	private String time;
-	private String date;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long PKscheduleShow;
+	
+	String movie;
+	String room;
+	
+	@Column(name="time")
+	String time;
+	
+	@Column(name="date")
+	String date;
 	
 	public ScheduleShow(String movie, String room, String time, String date)
 	{

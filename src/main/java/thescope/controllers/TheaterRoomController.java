@@ -23,9 +23,9 @@ public class TheaterRoomController {
 	@GetMapping("/rooms") // get request
 	public String selectGet(Model model) {
 
-		List<TheaterRoom> rooms = theaterRoomRepository.selectTheaterRooms();
+		//	List<TheaterRoom> rooms = theaterRoomRepository.findAll();
 		model.addAttribute("content", "rooms"); // redirect to movie view (rooms.html)
-		model.addAttribute("rooms",rooms);  // map content to html elements
+		//model.addAttribute("rooms",rooms);  // map content to html elements
 		return "index";
 	}
 }

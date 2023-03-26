@@ -23,9 +23,9 @@ public class CleaningScheduleController {
 	@GetMapping("/cleanings") // get request
 	public String selectGet(Model model) {
 
-		List<CleaningSchedule> cleanings = cleaningScheduleRepository.selectCleaningSchedule();
+		//	List<CleaningSchedule> cleanings = cleaningScheduleRepository.findAll();
 		model.addAttribute("content", "cleanings"); // redirect to movie view (cleanings.html)
-		model.addAttribute("cleanings",cleanings);  // map content to html elements
+		//	model.addAttribute("cleanings",cleanings);  // map content to html elements
 		return "index";
 	}
 

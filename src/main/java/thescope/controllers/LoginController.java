@@ -13,8 +13,8 @@ import thescope.processors.LoginProcessor;
 
 @Controller
 public class LoginController {
-	
-	
+
+
 	// Injector login
 	private final LoginProcessor loginProcessor;
 	@Autowired

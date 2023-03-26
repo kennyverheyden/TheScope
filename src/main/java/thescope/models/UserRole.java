@@ -1,10 +1,25 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity(name="tblUserRole")
 public class UserRole{
 
-	private String roleName;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long PKrole;
+
+	@Column(name="roleName")
+	String roleName;
+
+	public UserRole()
+	{
+	}
+
 	public UserRole(String roleName) {
 		this.roleName=roleName;
 	}

@@ -2,13 +2,37 @@ package thescope.models;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity(name="tblShopList")
 public class ShopList {
-    private long articleId;
-    private String description;
-    private int inStock; // How many left
-    private int orderQuantity;
-    private BigDecimal priceTaxEx;
-    private BigDecimal priceTaxIn;
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long PKshop;
+	
+	@Column(name="artNO")
+    long articleId;
+	
+	@Column(name="description")
+    String description;
+	
+	@Column(name="inStock")
+    int inStock; // How many left
+	
+	@Column(name="orderQuantity")
+    int orderQuantity;
+	
+	@Column(name="priceTAXexcl")
+    BigDecimal priceTaxEx;
+	
+	@Column(name="priceTAXincl")
+    BigDecimal priceTaxIn;
 
 
     /**construct**/
