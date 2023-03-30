@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,31 +16,24 @@ import java.util.List;
 public class MovieService {
 
     private final EntityManager entityManager;
-    private final MovieRepository movieRepository;
     @Autowired
-    public MovieService(EntityManager entityManager, MovieRepository movieRepository) {
+    public MovieService(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.movieRepository = movieRepository;
+
     }
-
-
     public Movie findMovieById(Long id) {
         return entityManager.find(Movie.class, id);
     }
-
-    public Movie findMovieByGenre(Genre genre) {
+    public Movie findMovieByGenre(String genre) {
         return entityManager.find(Movie.class, genre);
     }
 
     public List<Movie> findAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies;
+        return new ArrayList<>();           //dummy statement
     }
-
     public void addMovie(Movie movie) {
         entityManager.persist(movie);
     }
-
     public void deleteMovieById(Long id) {
         entityManager.remove(entityManager.find(Movie.class, id));
     }
