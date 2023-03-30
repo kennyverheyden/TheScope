@@ -3,7 +3,6 @@ package thescope.models;
 import jakarta.persistence.*;
 
 @Entity(name="tblGenres")
-@Embeddable
 public class Genre {
 	
 	@Id
@@ -12,7 +11,6 @@ public class Genre {
 	
 	@Column(name="genre")
 	private String genre;
-
 
 	public Long getPKgenre() {
 		return PKgenre;
