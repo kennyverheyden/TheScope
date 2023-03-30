@@ -7,13 +7,13 @@ public class Movie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long PKmovie;
+	private Long PKmovie;
 	
 	@Column(name="movie")
 	private String title;
 	
-	@Column(name = "genre_fk")
-	private String genre_fk;
+	@Column(name = "FKgenre")
+	private String genre;
 	
 	@Column(name="rating")
 	private double rating;
@@ -25,13 +25,13 @@ public class Movie {
 	private boolean threeD;
 
 
-	/**contructor**/
+	/**constructor**/
 	public Movie() {
 
 	}
-	public Movie(String title, String genre_fk, double rating, int length, boolean threeD) {
+	public Movie(String title, String genre, double rating, int length, boolean threeD) {
 		this.title = title;
-		this.genre_fk = genre_fk;
+		this.genre = genre;
 		this.rating = rating; 
 		this.length = length;
 		this.threeD = threeD;
@@ -71,12 +71,12 @@ public class Movie {
 		this.threeD = threeD;
 	}
 	
-	public String getGenre_fk() {
-		return genre_fk;
+	public String getGenre() {
+		return genre;
 	}
 	
-	public void setGenre_fk(String genre_fk) {
-		this.genre_fk = genre_fk;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 	
 	
