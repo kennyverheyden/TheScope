@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.transaction.annotation.Transactional;
-import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.services.MovieService;
 
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +47,13 @@ public class MovieTest {
         Long id = 30L;
         movieService.deleteMovieById(id);
         assertNull(movieService.findMovieById(id));
+    }
 
+    @Test
+    @Transactional
+    void findAllMoviesTest() {
+        List<Movie> movies = movieService.findAllMovies();
+        assertNotNull(movies);
     }
 
 
