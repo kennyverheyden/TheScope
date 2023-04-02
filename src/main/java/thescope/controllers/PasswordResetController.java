@@ -27,7 +27,7 @@ public class PasswordResetController {
 	@GetMapping("/passwordreset") // get request
 	public String selectGet(Model model) {
 
-
+		// When user is not logged on, the String is null
 		if(userService.getUserName()==null)
 		{
 			model.addAttribute("content", "login");

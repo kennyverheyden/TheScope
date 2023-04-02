@@ -23,6 +23,15 @@ public class AddUserController {
 
 	@GetMapping("/adduser") // get request
 	public String loginGet(Model model) {
+		String username = userService.getUserName();
+		
+		// When user is not logged on, the String is null
+		if(username==null)
+		{
+			model.addAttribute("content", "login");
+			return "redirect:/";
+		}
+		
 		model.addAttribute("content", "adduser");
 		return "index";
 	}
