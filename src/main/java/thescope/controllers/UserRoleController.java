@@ -20,6 +20,5 @@ public class UserRoleController {
 		this.userRoleRepository = userRoleRepository;
 	}
 
-
 }
 

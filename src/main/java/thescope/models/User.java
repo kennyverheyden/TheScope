@@ -1,10 +1,16 @@
 package thescope.models;
 
+import java.util.Optional;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity(name="tblUsers")
 public class User {
@@ -12,8 +18,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int PKuser;
-	@Column(name="FKuserRole")
-	int role;
+	@OneToOne
+	@JoinColumn(name="FKuserRole")
+    UserRole userRole;
 	@Column(name="eMailuserID")
 	String userID; //ex. verheydenk
 	@Column(name="secret")
@@ -37,7 +44,7 @@ public class User {
 
 	}
 
-	public User(String userID, String secret, String name, String firstName, String address, String postalCode, String town, int role) {
+	public User(String userID, String secret, String name, String firstName, String address, String postalCode, String town, UserRole userRole) {
 		this.userID = userID; //ex. verheydenk
 		this.secret = secret;
 		this.name = name;
@@ -45,15 +52,7 @@ public class User {
 		this.address = address;
 		this.postalCode = postalCode;
 		this.town = town;
-		this.role =role;
-	}
-
-	public int getRole() {
-		return role;
-	}
-
-	public void setRole(int role) {
-		this.role = role;
+		this.userRole=userRole;
 	}
 
 	public String getUserID() {
@@ -112,4 +111,17 @@ public class User {
 		this.town = town;
 	}
 
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	public void setUserRole(Optional<UserRole> findById) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

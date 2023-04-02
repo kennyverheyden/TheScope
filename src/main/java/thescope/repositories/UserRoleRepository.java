@@ -8,5 +8,4 @@ import thescope.models.UserRole;
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole,Long>{
 	
-
 }

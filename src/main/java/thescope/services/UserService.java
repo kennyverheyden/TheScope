@@ -2,27 +2,33 @@ package thescope.services;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import thescope.models.User;
+import thescope.models.UserRole;
 import thescope.repositories.UserRepository;
+import thescope.repositories.UserRoleRepository;
 
 @Service
 @Transactional 
 public class UserService {
-	
-    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    
-    @Autowired
+	private final UserRepository userRepository;
+	private final UserRoleRepository userRoleRepository;
+
+	@Autowired
+	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+		this.userRepository = userRepository;
+		this.userRoleRepository = userRoleRepository;
+	}
+
+	@Autowired
 	private EntityManager em;
 
 	// Current user login details
@@ -32,9 +38,14 @@ public class UserService {
 	String firstname;
 
 	public List<User> list() {
-        return userRepository.findAll();
-    }
-	
+		return userRepository.findAll();
+	}
+
+	public List<UserRole> userRoles() {
+		return userRoleRepository.findAll();
+	}
+
+
 	public User findUserByUsername(String username)
 	{
 		for (User i:userRepository.findAll())
@@ -46,7 +57,7 @@ public class UserService {
 		}
 		return null;
 	}
-	
+
 	public boolean userExist(String username)
 	{
 		for (User i:userRepository.findAll())
@@ -58,8 +69,8 @@ public class UserService {
 		}
 		return false;
 	}
-	
-	public void createUser(String username, String password, String name, String firstname, String address, String postalcode, String town, int role) {
+
+	public void createUser(String username, String password, String name, String firstname, String address, String postalcode, String town, long role) {
 		User user = new User();
 		user.setUserID(username);
 		user.setSecret(password);
@@ -68,9 +79,9 @@ public class UserService {
 		user.setAddress(address);
 		user.setPostalCode(postalcode);
 		user.setTown(town);
-		user.setRole(role);
-		em.persist(user);
+		user.setUserRole(userRoleRepository.findById(role).get());
 		userRepository.findAll().add(user);
+		em.persist(user);
 	}
 
 	public String getUserName() {
@@ -104,6 +115,6 @@ public class UserService {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
+	
 }
 

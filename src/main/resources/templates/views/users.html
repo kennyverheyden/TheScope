@@ -12,6 +12,7 @@
 <th>address</th>
 <th>postalCode</th>
 <th>town</th>
+<th>role</th>
 </tr>
 <tr th:each="users: ${users}">
 <td th:text="${users.userID}"></td>
@@ -20,6 +21,7 @@
 <td th:text="${users.address}"></td>
 <td th:text="${users.postalCode}"></td>
 <td th:text="${users.town}"></td>
+<td th:text="${users.userRole}"></td>
 </tr>
 </table>
     
