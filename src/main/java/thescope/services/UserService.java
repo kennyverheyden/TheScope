@@ -2,12 +2,12 @@ package thescope.services;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import thescope.models.User;
@@ -21,21 +21,25 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final UserRoleRepository userRoleRepository;
+	private  PasswordEncoder passwordEncoder;
 
 	@Autowired
 	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
 		this.userRepository = userRepository;
 		this.userRoleRepository = userRoleRepository;
+		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
 
 	@Autowired
 	private EntityManager em;
 
-	// Current user login details
+	// Global credentials for processing
 	String userName;
 	String secret;
 	String name;
 	String firstname;
+	String userRole;
+	long roleID;
 
 	public List<User> list() {
 		return userRepository.findAll();
@@ -45,12 +49,11 @@ public class UserService {
 		return userRoleRepository.findAll();
 	}
 
-
 	public User findUserByUsername(String username)
 	{
 		for (User i:userRepository.findAll())
 		{
-			if(i.getUserID().equals(username))
+			if(i.getUserName().equals(username))
 			{
 				return i;
 			}
@@ -62,7 +65,7 @@ public class UserService {
 	{
 		for (User i:userRepository.findAll())
 		{
-			if(i.getUserID().equals(username))
+			if(i.getUserName().equals(username))
 			{
 				return true;
 			}
@@ -70,10 +73,11 @@ public class UserService {
 		return false;
 	}
 
-	public void createUser(String username, String password, String name, String firstname, String address, String postalcode, String town, long role) {
+	public void createUser(String userName, String password, String name, String firstname, String address, String postalcode, String town, long role) {
 		User user = new User();
-		user.setUserID(username);
-		user.setSecret(password);
+		user.setUserName(userName);
+		String encodedPassword = this.passwordEncoder.encode(password);
+		user.setSecret(encodedPassword);
 		user.setName(name);
 		user.setFirstName(firstname);
 		user.setAddress(address);
@@ -82,6 +86,97 @@ public class UserService {
 		user.setUserRole(userRoleRepository.findById(role).get());
 		userRepository.findAll().add(user);
 		em.persist(user);
+	}
+
+	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town) {
+		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
+		user.setName(name);
+		user.setFirstName(firstname);
+		user.setAddress(address);
+		user.setPostalCode(postalcode);
+		user.setTown(town);
+		this.name=name;
+		this.firstname=firstname;
+		em.persist(user);
+	}
+
+	public void updatePassword(String userName, String password) {
+		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
+		String encodedPassword = this.passwordEncoder.encode(password);
+		user.setSecret(encodedPassword);
+		em.persist(user);
+	}
+
+	// Check roles used by GlobalControllerAdvice
+	public boolean isStaff()
+	{
+		if(roleID==1 || roleID==2 || roleID==3 || roleID==4)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public boolean isCustomer()
+	{
+		if(roleID==5) // 5 = Customer
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean isAdmin()
+	{
+		if(roleID==4) // 4 = Admin
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean isCleaning()
+	{
+		if(roleID==3) // 3 = Cleaning staff
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean isDesk()
+	{
+		if(roleID==2) // 2 = Desk
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean isShop()
+	{
+		if(roleID==1) // 1 = Shop
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public String getUserName() {
@@ -115,6 +210,22 @@ public class UserService {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-	
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
+	public long getRoleID() {
+		return roleID;
+	}
+
+	public void setRoleID(long roleID) {
+		this.roleID = roleID;
+	}
+
 }
 

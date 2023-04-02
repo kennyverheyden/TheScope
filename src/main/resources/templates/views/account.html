@@ -1,0 +1,38 @@
+<div th:fragment="account">
+
+	<h2>Update your details</h2>
+
+
+<p><strong><span th:text="${userName}"></span></strong></p>
+<br><br>
+
+	<form action="/account" method="post">
+	<input type="hidden" name="userName" th:value="${userName}" readonly>
+
+		<label for="name">Name</label>
+		<input type="text" name="name" th:value="${name}"><br>
+		
+		<label for="firstname">Firstname</label>
+			<input type="text" name="firstName"
+			th:value="${firstName}"><br>
+			
+			<label for="address">Address</label>
+			<input type="text" name="address"
+			th:value="${address}"><br>
+			
+			<label for="postalCode">Postal code</label>
+			<input type="text" name="postalCode"
+			th:value="${postalCode}"><br>
+			
+			<label for="town">Town</label>
+			<input type="text" name="town"
+			th:value="${town}"><br>
+
+		<button type="submit">Update your profile</button>
+	</form>
+
+	<strong>
+		<p th:text="${message}"></p>
+	</strong>
+
+</div>

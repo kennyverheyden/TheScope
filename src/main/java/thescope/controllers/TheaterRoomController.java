@@ -24,7 +24,7 @@ public class TheaterRoomController {
 	public String selectGet(Model model) {
 
 		//	List<TheaterRoom> rooms = theaterRoomRepository.findAll();
-		model.addAttribute("content", "rooms"); // redirect to movie view (rooms.html)
+		model.addAttribute("content", "rooms"); 
 		//model.addAttribute("rooms",rooms);  // map content to html elements
 		return "index";
 	}

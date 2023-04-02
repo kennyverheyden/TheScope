@@ -39,8 +39,8 @@
 			</div>
 			<div class="prs_navi_left_main_wrapper">
 				<div class="prs_logo_main_wrapper">
-					<img th:src="@{/assets/logo_yellow.png}" width="130" height="110"
-						alt="logo">
+					<a href="/"><img th:src="@{/assets/logo_yellow.png}" width="130" height="110"
+						alt="logo"></a>
 				</div>
 				<div class="prs_menu_main_wrapper">
 					<nav class="navbar navbar-default">
@@ -59,7 +59,7 @@
 										<li><a href="">Index-IV</a></li>
 									</ul></li>
 
-								<li class="parent"><a href="/bookings">Bookings</a>
+								<li class="parent" th:if="${isCustomer}==true"><a href="/bookings">Bookings</a>
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/bookings">Bookings</a></li>
@@ -67,17 +67,36 @@
 										<li><a href="">Index-III</a></li>
 										<li><a href="">Index-IV</a></li>
 									</ul></li>
-
-								<li class="parent"><a href="/users">Management</a>
+									
+									<li class="parent"><a href="/shop">Shop</a>
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
-										<li><a href="/users">Users</a></li>
-										<li><a href="/cleanings">Cleaning Schedule</a></li>
-										<li><a href="/rooms">Rooms</a></li>
-										<li><a href="/adduser">Add user</a></li>
+										<li><a href="/shop">Shop</a></li>
+										<li><a href="">Index-II</a></li>
+										<li><a href="">Index-III</a></li>
+										<li><a href="">Index-IV</a></li>
 									</ul></li>
 
-								<li class="parent"><a href="/">HOME</a></li>
+								<li class="parent" th:if="${isStaff}==true"><a href="#">Management</a>
+									<ul class="lg-submenu">
+										<li class="dl-back"><a href="#">back</a></li>
+										<li th:if="${isAdmin}==true"><a href="/users">Users</a></li>
+										<li th:if="${isAdmin}==true"><a href="/adduser">Add user</a></li>
+										<li th:if="${isAdmin==true or isDesk==true}"><a href="/bookings">Bookings</a></li>
+										<li th:if="${isAdmin==true or isCleaning==true}"><a href="/cleanings">Cleaning Schedule</a></li>
+										<li th:if="${isAdmin==true or isCleaning==true or isDesk==true}"><a href="/rooms">Rooms</a></li>
+										<li th:if="${isAdmin==true or isDesk or isShop ==true}"><a href="/shop">Shop</a></li>
+									</ul></li>
+									
+									<li class="parent" th:if="${isLoggedIn}==true"><a href="/account">Account</a>
+									<ul class="lg-submenu">
+										<li class="dl-back"><a href="#">back</a></li>
+										<li><a href="/account">Account</a></li>
+										<li><a href="/passwordreset">Password reset</a></li>
+									</ul></li>
+
+								<li class="parent" th:if="${isLoggedIn}==false"><a href="/">HOME</a></li>
+								<li class="parent" th:if="${isLoggedIn}==true"><a href="/main"><span th:text="${firstNameINmenu}"></span></a></li>
 							</ul>
 						</div>
 					</nav>
@@ -87,7 +106,7 @@
 
 				<div class="prs_top_login_btn_wrapper">
 					<div class="prs_animate_btn1">
-						<ul>
+						<ul th:if="${isLoggedIn}==false">
 							<li><a href="signup" class="button button--tamaya"
 								data-text="sign up" data-toggle="modal" data-target="#myModal"><span>Sign
 										up</span></a></li>
@@ -98,8 +117,11 @@
 				<div class="prs_top_login_btn_wrapper">
 					<div class="prs_animate_btn1">
 						<ul>
-							<li><a href="/login" class="button button--tamaya"
+							<li th:if="${isLoggedIn}==false"><a href="/login" class="button button--tamaya"
 								data-text="login" data-toggle="modal" data-target="#myModal"><span>Login</span></a>
+							</li>
+							<li th:if="${isLoggedIn}==true"><a href="main?logout" class="button button--tamaya"
+								data-text="logout" data-toggle="modal" data-target="#myModal"><span>Logout</span></a>
 							</li>
 						</ul>
 					</div>

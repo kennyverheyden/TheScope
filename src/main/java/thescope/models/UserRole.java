@@ -21,6 +21,10 @@ public class UserRole{
 	public UserRole()
 	{
 	}
+	
+	public long getPKuserRole() {
+		return PKuserRole;
+	}
 
 	public UserRole(String roleName)
 	{

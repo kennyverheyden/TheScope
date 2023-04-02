@@ -22,6 +22,10 @@ public class MainController {
 		if(logout != null) {
 			userService.setUserName(null);
 			userService.setSecret(null);
+			userService.setFirstname(null);
+			userService.setName(null);
+			userService.setRoleID(0);
+			userService.setUserRole(null);
 		}
 
 		String username = userService.getUserName();
@@ -30,12 +34,13 @@ public class MainController {
 		if(username==null)
 		{
 			model.addAttribute("content", "login");
-			return "index";
+			return "redirect:/";
 		}
 
 		// When user is logged in, the user will be directed to another page
-		System.out.println(userService.getName());
-		model.addAttribute("name",userService.getFirstname()+" "+userService.getName());
+
+		model.addAttribute("role",userService.getUserRole());
+		model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
 		model.addAttribute("content", "main");
 		return "index";
 	}

@@ -1,7 +1,5 @@
 package thescope.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,7 @@ public class BookingController {
 	public String selectGet(Model model) {
 
 		//	List<Booking> bookings = bookingRepository.findAll();
-		model.addAttribute("content", "bookings"); // redirect to movie view (bookings.html)
+		model.addAttribute("content", "bookings");
 		//	model.addAttribute("bookings",bookings);  // map content to html elements
 		return "index";
 	}

@@ -1,6 +1,5 @@
 package thescope.controllers;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +15,26 @@ import thescope.services.UserService;
 public class UserController {
 
 	private final UserRepository userRepository;
+	private final UserService userService;
 
 	@Autowired
-	public UserController(UserRepository userRepository) {
+	public UserController(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
+		this.userService=userService;
 	}
 
 	@GetMapping("/users") // get request
 	public String selectGet(Model model) {
+		
+		
+		if(userService.getUserName()==null)
+		{
+			model.addAttribute("content", "login");
+			return "index";
+		}
 
 		List<User> users = userRepository.findAll();
-		model.addAttribute("content", "users"); // redirect to movie view (users.html)
+		model.addAttribute("content", "users"); 
 		model.addAttribute("users",users);  // map content to html elements
 		return "index";
 	}

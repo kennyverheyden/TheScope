@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,9 +18,9 @@ public class User {
 	int PKuser;
 	@OneToOne
 	@JoinColumn(name="FKuserRole")
-    UserRole userRole;
+	UserRole userRole;
 	@Column(name="eMailuserID")
-	String userID; //ex. verheydenk
+	String userName; //ex. verheydenk
 	@Column(name="secret")
 	String secret;
 	@Column(name="name")
@@ -44,8 +42,8 @@ public class User {
 
 	}
 
-	public User(String userID, String secret, String name, String firstName, String address, String postalCode, String town, UserRole userRole) {
-		this.userID = userID; //ex. verheydenk
+	public User(String userName, String secret, String name, String firstName, String address, String postalCode, String town, UserRole userRole) {
+		this.userName = userName; //ex. verheydenk
 		this.secret = secret;
 		this.name = name;
 		this.firstName = firstName;
@@ -55,20 +53,20 @@ public class User {
 		this.userRole=userRole;
 	}
 
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setSecret(String secret) {
+			this.secret = secret;
 	}
 
 	public String getSecret() {
 		return secret;
 	}
 
-	public void setSecret(String secret) {
-		this.secret = secret;
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getName() {
@@ -121,7 +119,12 @@ public class User {
 
 	public void setUserRole(Optional<UserRole> findById) {
 		// TODO Auto-generated method stub
-		
 	}
+
+	public int getPKuser() {
+		return PKuser;
+	}
+	
+	
 	
 }
