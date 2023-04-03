@@ -12,17 +12,35 @@
 <th style="width:120px">Address</th>
 <th style="width:40px">Postal code</th>
 <th style="width:110px">Town</th>
+<th style="width:110px">Password</th>
 <th style="width:100px">Role</th>
+<th></th>
 </tr>
-<tr th:each="users: ${users}">
-<td th:text="${users.userName}"></td>
-<td th:text="${users.name}"></td>
-<td th:text="${users.firstName}"></td>
-<td th:text="${users.address}"></td>
-<td th:text="${users.postalCode}"></td>
-<td th:text="${users.town}"></td>
-<td th:text="${users.userRole}"></td>
+<tr th:each="user: ${users}">
+<form action="/users" method="post">
+<td><span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"></td>
+<td><input th:value="${user.name}" type="text" name="name"></td>
+<td><input th:value="${user.firstName}" type="text" name="firstName"></td>
+<td><input th:value="${user.address}" type="text" name="address"></td>
+<td><input th:value="${user.postalCode}" type="text" name="postalCode"></td>
+<td><input th:value="${user.town}" type="text" name="town"></td>
+<td><input type="text" name="secret"></td>
+<td>
+<select name="userRole">
+    <option
+            th:each="role : ${T(thescope.models.UserRoleNames).values()}"
+            th:text="${role.string}"
+            th:value="${role.string}"  th:selected="${ #strings.equals(role.string, user.userRole)}">
+    </option>
+</select>
+</td>
+<td>		<button type="submit">Update details</button></td>
+</form>
 </tr>
 </table>
+
+<strong>
+		<p th:text="${message}"></p>
+	</strong>
     
 </div>

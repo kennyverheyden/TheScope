@@ -18,22 +18,21 @@ public class User {
 	int PKuser;
 	@OneToOne
 	@JoinColumn(name="FKuserRole")
-	UserRole userRole;
+	private UserRole userRole;
 	@Column(name="eMailuserID")
-	String userName; //ex. verheydenk
+	private String userName; //=email 
 	@Column(name="secret")
-	String secret;
+	private String secret;
 	@Column(name="name")
-	String name;
+	private String name;
 	@Column(name="firstname")
-	String firstName;
+	private String firstName;
 	@Column(name="address")
-	String address;
+	private String address;
 	@Column(name="postalCode")
-	String postalCode;
+	private String postalCode;
 	@Column(name="town")
-	String town;
-
+	private String town;
 
 	/**contructor**/
 
@@ -53,12 +52,20 @@ public class User {
 		this.userRole=userRole;
 	}
 
-	public void setSecret(String secret) {
-			this.secret = secret;
+	public int getPKuser() {
+		return PKuser;
 	}
 
-	public String getSecret() {
-		return secret;
+	public void setPKuser(int pKuser) {
+		PKuser = pKuser;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 	public String getUserName() {
@@ -67,6 +74,14 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getSecret() {
+		return secret;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 
 	public String getName() {
@@ -109,22 +124,4 @@ public class User {
 		this.town = town;
 	}
 
-	public UserRole getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
-	}
-
-	public void setUserRole(Optional<UserRole> findById) {
-		// TODO Auto-generated method stub
-	}
-
-	public int getPKuser() {
-		return PKuser;
-	}
-	
-	
-	
 }

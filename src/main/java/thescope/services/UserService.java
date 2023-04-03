@@ -61,6 +61,18 @@ public class UserService {
 		return null;
 	}
 
+	public long findRolID(String roleName)
+	{
+		for (UserRole i:userRoleRepository.findAll())
+		{
+			if(i.getRoleName().equals(roleName))
+			{
+				return i.getPKuserRole();
+			}
+		}
+		return 0;
+	}
+
 	public boolean userExist(String username)
 	{
 		for (User i:userRepository.findAll())
@@ -88,8 +100,8 @@ public class UserService {
 		em.persist(user);
 	}
 
-	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town) {
-		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
+	public void updateAccount(String userName, String name, String firstname, String address, String postalcode, String town) {
+		User user = this.findUserByUsername(userName);
 		user.setName(name);
 		user.setFirstName(firstname);
 		user.setAddress(address);
@@ -98,6 +110,27 @@ public class UserService {
 		this.name=name;
 		this.firstname=firstname;
 		em.persist(user);
+	}
+
+	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town, String password, String userRole) {
+		User user = this.findUserByUsername(userName);
+		user.setName(name);
+		user.setFirstName(firstname);
+		user.setAddress(address);
+		user.setPostalCode(postalcode);
+		user.setTown(town);
+		user.setUserName(userName);
+		if(!password.equals(""))
+		{
+			String encodedPassword = this.passwordEncoder.encode(password);
+			user.setSecret(encodedPassword);
+		}
+		this.name=name;
+		this.firstname=firstname;
+		this.roleID=findRolID(userRole); // for session and showing role name directly
+		user.setUserRole(userRoleRepository.findById(roleID).get());
+		em.persist(user);
+
 	}
 
 	public void updatePassword(String userName, String password) {

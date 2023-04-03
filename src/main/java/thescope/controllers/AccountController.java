@@ -50,7 +50,7 @@ public class AccountController {
 		if(!name.equals("") && !firstName.equals("") && !address.equals("") && !postalCode.equals("") && !town.equals(""))
 		{
 			// Update user
-			userService.updateUser(userName, name, firstName, address, postalCode, town);
+			userService.updateAccount(userName, name, firstName, address, postalCode, town);
 			model.addAttribute("content", "account");
 			rm.addFlashAttribute("message","Information succesfully updated");
 			return "redirect:account";
