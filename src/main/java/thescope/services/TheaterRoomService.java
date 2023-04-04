@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
+
 import java.util.List;
 
 @Service
