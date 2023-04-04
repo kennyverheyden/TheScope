@@ -21,3 +21,8 @@ https://www.baeldung.com/spring-boot-bean-validation    - Field/Bean Validation
 https://www.javatpoint.com/spring-mvc-validation      - Field Validation
 https://docs.spring.io/spring-framework/docs/3.0.x/reference/validation.html  - Spring validation klasse (validators, eigen @Annotations)
 https://github.com/C04t0/field-validation   - voorbeeld project field validation via jakarta.validation
+
+
+Unit testing / integratie testing
+https://dzone.com/articles/unit-testing-and-integration-testing-in-practice     - verschil unit vs integration tests
+https://github.com/C04t0/unit-integration-tests    - voorbeeld project bootcamp unit & integration test (MockMvc - Mockito)

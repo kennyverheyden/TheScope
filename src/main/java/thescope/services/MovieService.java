@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
 import java.util.List;
@@ -13,21 +12,20 @@ import java.util.List;
 @Transactional
 public class MovieService {
 
-    private final EntityManager entityManager;
+    /** enkel movierepo is geinjecteerd
+     * methoden van JPArepo toegepast ipv entityManager
+     * **/
+
+
     private final MovieRepository movieRepository;
+
     @Autowired
-    public MovieService(EntityManager entityManager, MovieRepository movieRepository) {
-        this.entityManager = entityManager;
+    public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
-
     public Movie findMovieById(Long id) {
-        return entityManager.find(Movie.class, id);
-    }
-
-    public Movie findMovieByGenre(Genre genre) {
-        return entityManager.find(Movie.class, genre);
+        return movieRepository.findById(id).get();
     }
 
     public List<Movie> findAllMovies() {
@@ -36,11 +34,11 @@ public class MovieService {
     }
 
     public void addMovie(Movie movie) {
-        entityManager.persist(movie);
+        movieRepository.save(movie);        //zelfde functie als persist normaal
     }
 
     public void deleteMovieById(Long id) {
-        entityManager.remove(entityManager.find(Movie.class, id));
+        movieRepository.delete(movieRepository.findById(id).get());
     }
 
 }
