@@ -1,10 +1,14 @@
 package thescope.models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity(name="tblScheduleShow")
 public class ScheduleShow {
@@ -13,16 +17,19 @@ public class ScheduleShow {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long PKscheduleShow;
 	
-	String movie;
-	String room;
+	@OneToOne
+	Movie movie;
+	
+	@OneToOne
+	TheaterRoom room;
 	
 	@Column(name="time")
-	String time;
+	LocalTime time;
 	
 	@Column(name="date")
-	String date;
+	LocalDate date;
 	
-	public ScheduleShow(String movie, String room, String time, String date)
+	public ScheduleShow(Movie movie, TheaterRoom room, LocalTime time, LocalDate date)
 	{
 		this.movie=movie;
 		this.room=room;
@@ -30,35 +37,35 @@ public class ScheduleShow {
 		this.date=date;
 	}
 
-	public String getMovie() {
+	public Movie getMovie() {
 		return movie;
 	}
 
-	public void setMovie(String movie) {
+	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
 
-	public String getRoom() {
+	public TheaterRoom getRoom() {
 		return room;
 	}
 
-	public void setRoom(String room) {
+	public void setRoom(TheaterRoom room) {
 		this.room = room;
 	}
 
-	public String getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}	
 }
