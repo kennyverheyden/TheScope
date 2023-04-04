@@ -3,6 +3,38 @@
 <h2>Users</h2>
 <br>
 
+
+<p>Search user</p>
+
+<table style="font-size:12px; width: 900px; text-align: left; padding: 0px; font-family: verdana;">
+<tr>
+<th style="width:210px">Email (userID)</th>
+<th style="width:200px">Name</th>
+<th style="width:200px">Firstname</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<form action="/users/find" method="post" name="findUser">
+<td><input type="text" name="findUserName"></td>
+<td><input type="text" name="findName"></td>
+<td><input type="text" name="findFirstName"></td>
+<td><button type="submit">Search</button></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</form>
+</tr>
+</table>
+<br><br>
       
 <table style="font-size:12px; width: 900px; text-align: left; padding: 0px; font-family: verdana;">
 <tr>
@@ -14,6 +46,7 @@
 <th style="width:110px">Town</th>
 <th style="width:110px">Password</th>
 <th style="width:100px">Role</th>
+<th>Delete?</th>
 <th></th>
 </tr>
 <tr th:each="user: ${users}">
@@ -24,7 +57,7 @@
 <td><input th:value="${user.address}" type="text" name="address"></td>
 <td><input th:value="${user.postalCode}" type="text" name="postalCode"></td>
 <td><input th:value="${user.town}" type="text" name="town"></td>
-<td><input type="text" name="secret"></td>
+<td><input type="password" name="secret"></td>
 <td>
 <select name="userRole">
     <option
@@ -33,6 +66,9 @@
             th:value="${role.string}"  th:selected="${ #strings.equals(role.string, user.userRole)}">
     </option>
 </select>
+</td>
+<td>
+ &nbsp; &nbsp;<input type="checkbox" id="delete" name="delete">
 </td>
 <td>		<button type="submit">Update details</button></td>
 </form>

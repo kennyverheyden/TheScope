@@ -1,6 +1,7 @@
 package thescope.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,11 @@ public class UserService {
 	private EntityManager em;
 
 	// Global credentials for processing
-	String userName;
-	String secret;
-	String name;
-	String firstname;
-	String userRole;
+	private String userName;
+	private String secret;
+	private String name;
+	private String firstname;
+	private String userRole;
 	long roleID;
 
 	public List<User> list() {
@@ -61,7 +62,22 @@ public class UserService {
 		return null;
 	}
 
-	public long findRolID(String roleName)
+	// Used for searching users by admin
+	public List<User> findUsers(String userName, String name, String firstName)
+	{
+		List<User> userList = new ArrayList();
+		for (User i:userRepository.findAll())
+		{
+			if(i.getUserName().toString().equalsIgnoreCase(userName) || i.getName().toString().equalsIgnoreCase(name) || i.getFirstName().toString().equalsIgnoreCase(firstName) )
+			{
+				userList.add(i);
+			}
+
+		}
+		return userList;
+	}
+
+	public long findbyRoleName(String roleName)
 	{
 		for (UserRole i:userRoleRepository.findAll())
 		{
@@ -125,12 +141,17 @@ public class UserService {
 			String encodedPassword = this.passwordEncoder.encode(password);
 			user.setSecret(encodedPassword);
 		}
-		this.name=name;
-		this.firstname=firstname;
-		this.roleID=findRolID(userRole); // for session and showing role name directly
-		user.setUserRole(userRoleRepository.findById(roleID).get());
+		user.setUserRole(userRoleRepository.findById(findbyRoleName(userRole)).get());
 		em.persist(user);
 
+	}
+
+	public void deleteUser(String userName)
+	{
+		User user = this.findUserByUsername(userName);
+		em.remove(user);
+		em.flush();
+		em.clear();
 	}
 
 	public void updatePassword(String userName, String password) {
