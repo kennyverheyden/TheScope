@@ -6,59 +6,32 @@
 
 <p>Search user</p>
 
-<table style="font-size:12px; width: 900px; text-align: left; padding: 0px; font-family: verdana;">
-<tr>
-<th style="width:210px">Email (userID)</th>
-<th style="width:200px">Name</th>
-<th style="width:200px">Firstname</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-<tr>
-<form action="/users/find" method="post" name="findUser">
-<td><input type="text" name="findUserName"></td>
-<td><input type="text" name="findName"></td>
-<td><input type="text" name="findFirstName"></td>
-<td><button type="submit">Search</button></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+
+<div class="table">
+<form action="/users/find" method="post" name="findUser" class="tr">
+<span class="td">Email (userID)<br><input type="text" name="findUserName" style="width:200px"></span>
+<span class="td">Name<br><input type="text" name="findName" style="width:190px"></span>
+<span class="td">Firstname<br><input type="text" name="findFirstName" style="width:190px"></span>
+<span class="td"><br><button type="submit">Search</button></span>
 </form>
-</tr>
-</table>
-<br><br>
-      
-<table style="font-size:12px; width: 900px; text-align: left; padding: 0px; font-family: verdana;">
-<tr>
-<th style="width:170px">Email (userID)</th>
-<th style="width:120px">Name</th>
-<th style="width:120px">Firstname</th>
-<th style="width:120px">Address</th>
-<th style="width:40px">Postal code</th>
-<th style="width:110px">Town</th>
-<th style="width:110px">Password</th>
-<th style="width:100px">Role</th>
-<th>Delete?</th>
-<th></th>
-</tr>
-<tr th:each="user, index: ${users}">
-<form action="/users" method="post">
-<td><span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"></td>
-<td><input th:value="${user.name}" type="text" name="name"></td>
-<td><input th:value="${user.firstName}" type="text" name="firstName"></td>
-<td><input th:value="${user.address}" type="text" name="address"></td>
-<td><input th:value="${user.postalCode}" type="text" name="postalCode"></td>
-<td><input th:value="${user.town}" type="text" name="town"></td>
-<td><input type="password" name="secret"></td>
-<td>
+</div>
+
+
+
+<strong>
+		<span th:text="${message}"></span>
+	</strong><br>
+	
+<br>
+     
+ <span style="font-size:15px;"><strong>Five users are preloaded, use the search button to find users </strong></span>
+<div class="table">
+
+<form action="/users" method="post" class="tr" th:each="user, index: ${users}" th:unless="${index.index > 4}">
+
+<span class="td">
+<strong>Username/role</strong><br>
+<span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
             th:each="role : ${T(thescope.models.UserRoleNames).values()}"
@@ -66,17 +39,38 @@
             th:value="${role.string}"  th:selected="${ #strings.equals(role.string, user.userRole)}">
     </option>
 </select>
-</td>
-<td>
- &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:show_alert(' + ${index.index} + ')'">
-</td>
-<td>		<button type="submit">Update details</button></td>
-</form>
-</tr>
-</table>
+</span>
 
-<strong>
-		<p th:text="${message}"></p>
-	</strong>
+<span class="td">
+<strong>Name/Firstname</strong><br>
+<input th:value="${user.name}" type="text" name="name"><br>
+<input th:value="${user.firstName}" type="text" name="firstName">
+</span>
+
+<span class="td">
+<strong>Address/Postal/Town</strong><br>
+<input th:value="${user.address}" type="text" name="address"><br>
+<input th:value="${user.postalCode}" type="text" name="postalCode"><br>
+<input th:value="${user.town}" type="text" name="town">
+</span>
+
+<span class="td">
+<strong>Password</strong><br>
+<input type="password" name="secret">
+</span>
+
+<span class="td">
+<strong>Delete?</strong><br>
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:show_alert(' + ${index.index} + ')'">
+</span>
+
+<span class="td">
+<br>
+<button type="submit">Update details</button>
+</span>
+
+</form>
+
+</div>
     
 </div>
