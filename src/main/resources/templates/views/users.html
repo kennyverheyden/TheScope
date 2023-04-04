@@ -1,5 +1,5 @@
 <div th:fragment="users">
- 
+
 <h2>Users</h2>
 <br>
 
@@ -49,7 +49,7 @@
 <th>Delete?</th>
 <th></th>
 </tr>
-<tr th:each="user: ${users}">
+<tr th:each="user, index: ${users}">
 <form action="/users" method="post">
 <td><span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"></td>
 <td><input th:value="${user.name}" type="text" name="name"></td>
@@ -68,7 +68,7 @@
 </select>
 </td>
 <td>
- &nbsp; &nbsp;<input type="checkbox" id="delete" name="delete">
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:show_alert(' + ${index.index} + ')'">
 </td>
 <td>		<button type="submit">Update details</button></td>
 </form>
