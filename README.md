@@ -26,3 +26,6 @@ https://github.com/C04t0/field-validation   - voorbeeld project field validation
 Unit testing / integratie testing
 https://dzone.com/articles/unit-testing-and-integration-testing-in-practice     - verschil unit vs integration tests
 https://github.com/C04t0/unit-integration-tests    - voorbeeld project bootcamp unit & integration test (MockMvc - Mockito)
+
+JSON to html
+https://www.w3schools.com/js/js_json_html.asp   - json to html door java script
