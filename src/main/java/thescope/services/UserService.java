@@ -1,6 +1,7 @@
 package thescope.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,11 @@ public class UserService {
 	private EntityManager em;
 
 	// Global credentials for processing
-	String userName;
-	String secret;
-	String name;
-	String firstname;
-	String userRole;
+	private String userName;
+	private String secret;
+	private String name;
+	private String firstname;
+	private String userRole;
 	long roleID;
 
 	public List<User> list() {
@@ -59,6 +60,33 @@ public class UserService {
 			}
 		}
 		return null;
+	}
+
+	// Used for searching users by admin
+	public List<User> findUsers(String userName, String name, String firstName)
+	{
+		List<User> userList = new ArrayList();
+		for (User i:userRepository.findAll())
+		{
+			if(i.getUserName().toString().equalsIgnoreCase(userName) || i.getName().toString().equalsIgnoreCase(name) || i.getFirstName().toString().equalsIgnoreCase(firstName) )
+			{
+				userList.add(i);
+			}
+
+		}
+		return userList;
+	}
+
+	public long findbyRoleName(String roleName)
+	{
+		for (UserRole i:userRoleRepository.findAll())
+		{
+			if(i.getRoleName().equals(roleName))
+			{
+				return i.getPKuserRole();
+			}
+		}
+		return 0;
 	}
 
 	public boolean userExist(String username)
@@ -88,8 +116,8 @@ public class UserService {
 		em.persist(user);
 	}
 
-	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town) {
-		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
+	public void updateAccount(String userName, String name, String firstname, String address, String postalcode, String town) {
+		User user = this.findUserByUsername(userName);
 		user.setName(name);
 		user.setFirstName(firstname);
 		user.setAddress(address);
@@ -98,6 +126,32 @@ public class UserService {
 		this.name=name;
 		this.firstname=firstname;
 		em.persist(user);
+	}
+
+	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town, String password, String userRole) {
+		User user = this.findUserByUsername(userName);
+		user.setName(name);
+		user.setFirstName(firstname);
+		user.setAddress(address);
+		user.setPostalCode(postalcode);
+		user.setTown(town);
+		user.setUserName(userName);
+		if(!password.equals(""))
+		{
+			String encodedPassword = this.passwordEncoder.encode(password);
+			user.setSecret(encodedPassword);
+		}
+		user.setUserRole(userRoleRepository.findById(findbyRoleName(userRole)).get());
+		em.persist(user);
+
+	}
+
+	public void deleteUser(String userName)
+	{
+		User user = this.findUserByUsername(userName);
+		em.remove(user);
+		em.flush();
+		em.clear();
 	}
 
 	public void updatePassword(String userName, String password) {

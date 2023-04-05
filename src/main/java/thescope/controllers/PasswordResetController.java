@@ -9,18 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.models.User;
-import thescope.repositories.UserRepository;
 import thescope.services.UserService;
 
 @Controller
 public class PasswordResetController {
-
-	private final UserRepository userRepository;
 	private final UserService userService;
 
 	@Autowired
-	public PasswordResetController(UserRepository userRepository, UserService userService) {
-		this.userRepository = userRepository;
+	public PasswordResetController(UserService userService) {
 		this.userService=userService;
 	}
 

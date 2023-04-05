@@ -10,22 +10,23 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MovieService {
+public class TheaterRoomService {
 
-    /** enkel movierepo is geinjecteerd
-     * methoden van JPArepo toegepast ipv entityManager
-     * **/
-
-
+    private final EntityManager entityManager;
     private final MovieRepository movieRepository;
-
     @Autowired
-    public MovieService(MovieRepository movieRepository) {
+    public TheaterRoomService(EntityManager entityManager, MovieRepository movieRepository) {
+        this.entityManager = entityManager;
         this.movieRepository = movieRepository;
     }
 
+
     public Movie findMovieById(Long id) {
-        return movieRepository.findById(id).get();
+        return entityManager.find(Movie.class, id);
+    }
+
+    public Movie findMovieByGenre(String genre) {
+        return entityManager.find(Movie.class, genre);
     }
 
     public List<Movie> findAllMovies() {
@@ -34,11 +35,11 @@ public class MovieService {
     }
 
     public void addMovie(Movie movie) {
-        movieRepository.save(movie);        //zelfde functie als persist normaal
+        entityManager.persist(movie);
     }
 
     public void deleteMovieById(Long id) {
-        movieRepository.delete(movieRepository.findById(id).get());
+        entityManager.remove(entityManager.find(Movie.class, id));
     }
 
 }
