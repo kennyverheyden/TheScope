@@ -1,29 +1,25 @@
 package thescope.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import thescope.models.Booking;
-import thescope.repositories.BookingRepository;
+import thescope.services.BookingService;
 
 @Controller
 public class BookingController {
-	private final BookingRepository bookingRepository;
+	
+	private final BookingService bookingService;
 
 	@Autowired
-	public BookingController(BookingRepository bookingRepository) {
-		this.bookingRepository = bookingRepository;
+	public BookingController(BookingService bookingService) {
+		this.bookingService = bookingService;
 	}
 
 	@GetMapping("/bookings") // get request
 	public String selectGet(Model model) {
 
-		//	List<Booking> bookings = bookingRepository.findAll();
-		model.addAttribute("content", "bookings"); // redirect to movie view (bookings.html)
+		model.addAttribute("content", "bookings");
 		//	model.addAttribute("bookings",bookings);  // map content to html elements
 		return "index";
 	}

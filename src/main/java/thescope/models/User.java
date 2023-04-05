@@ -1,10 +1,14 @@
 package thescope.models;
 
+import java.util.Optional;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity(name="tblUsers")
 public class User {
@@ -12,23 +16,23 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int PKuser;
-	@Column(name="FKuserRole")
-	int role;
+	@OneToOne
+	@JoinColumn(name="FKuserRole")
+	private UserRole userRole;
 	@Column(name="eMailuserID")
-	String userID; //ex. verheydenk
+	private String userName; //=email 
 	@Column(name="secret")
-	String secret;
+	private String secret;
 	@Column(name="name")
-	String name;
+	private String name;
 	@Column(name="firstname")
-	String firstName;
+	private String firstName;
 	@Column(name="address")
-	String address;
+	private String address;
 	@Column(name="postalCode")
-	String postalCode;
+	private String postalCode;
 	@Column(name="town")
-	String town;
-
+	private String town;
 
 	/**contructor**/
 
@@ -37,31 +41,39 @@ public class User {
 
 	}
 
-	public User(String userID, String secret, String name, String firstName, String address, String postalCode, String town, int role) {
-		this.userID = userID; //ex. verheydenk
+	public User(String userName, String secret, String name, String firstName, String address, String postalCode, String town, UserRole userRole) {
+		this.userName = userName; //ex. verheydenk
 		this.secret = secret;
 		this.name = name;
 		this.firstName = firstName;
 		this.address = address;
 		this.postalCode = postalCode;
 		this.town = town;
-		this.role =role;
+		this.userRole=userRole;
 	}
 
-	public int getRole() {
-		return role;
+	public int getPKuser() {
+		return PKuser;
 	}
 
-	public void setRole(int role) {
-		this.role = role;
+	public void setPKuser(int pKuser) {
+		PKuser = pKuser;
 	}
 
-	public String getUserID() {
-		return userID;
+	public UserRole getUserRole() {
+		return userRole;
 	}
 
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getSecret() {

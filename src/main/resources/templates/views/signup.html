@@ -1,10 +1,10 @@
-<div th:fragment="adduser">
+<div th:fragment="signup">
 
-	<h2>Add user</h2>
+	<h2>Welkom, create your account</h2>
 	<br>
 
 	<div style="background-color: #bdc6fc; width: 600px; text-align: left; padding: 5px; font-family: verdana;">
-		<form action="/adduser" method="post">
+		<form action="/signup" method="post">
 		<label for="username">Email (userID)</label>
 		<input type="text" name="username"><br>
 		
@@ -28,21 +28,6 @@
 		
 		<label for="confirmpassword">Confirm password</label>
 		<input type="password" name="confirmpassword"><br>
-		
-		<label for="shop">Shop staff</label>
-		<input type="radio" id="shop" name="role" value="1"><br>
-		
-		<label for="desk">Desk staff</label>
-	    <input type="radio" id="desk" name="role" value="2"><br>
-
-		<label for="cleaning">Cleaning staff</label>
-		<input type="radio" id="cleaning" name="role" value="3"><br>
-		
-		<label for="admin">Admin</label>
-		<input type="radio" id="admin" name="role" value="4"><br>
-
-		<label for="customer">Customer</label>
-		<input type="radio" id="customer" name="role" value="5" checked="checked"><br>
 
 		<button type="submit">Submit</button>
 		</form>
