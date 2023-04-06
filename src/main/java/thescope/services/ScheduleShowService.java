@@ -6,19 +6,24 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import thescope.models.ScheduleShow;
-import thescope.repositories.ScheduleRepository;
+import thescope.repositories.ScheduleShowRepository;
 
 @Service
 @Transactional
 public class ScheduleShowService {
 
 	private final EntityManager entityManager;
-	private final ScheduleRepository scheduleRepository;
+	private final ScheduleShowRepository scheduleShowRepository;
 	
 	@Autowired
-	public ScheduleShowService(EntityManager entityManager, ScheduleRepository scheduleRepository) {
+	public ScheduleShowService(EntityManager entityManager, ScheduleShowRepository scheduleShowRepository) {
 		this.entityManager = entityManager;
-		this.scheduleRepository = scheduleRepository;
+		this.scheduleShowRepository = scheduleShowRepository;
+	}
+	
+	public ScheduleShow findScheduleShowById(long id) {
+		ScheduleShow scheduleShow = entityManager.find(ScheduleShow.class, id);
+		return scheduleShow;
 	}
 	
 	
