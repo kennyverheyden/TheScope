@@ -1,16 +1,25 @@
 package thescope.models;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+=======
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import jakarta.persistence.OneToOne;
+=======
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 
 @Entity(name="tblScheduleShow")
 public class ScheduleShow {
@@ -19,6 +28,9 @@ public class ScheduleShow {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long PKscheduleShow;
 	
+
+	
+=======
 	@ManyToOne
 	@JoinColumn(name= "FKMovie")
 	private Movie movie;
@@ -36,6 +48,7 @@ public class ScheduleShow {
 	public ScheduleShow() {}
 	
 	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, Time time, Date date)
+
 	{
 		this.movie=movie;
 		this.theaterRoom=theaterRoom;
@@ -51,27 +64,7 @@ public class ScheduleShow {
 		this.movie = movie;
 	}
 
-	public TheaterRoom getTheaterRoom() {
-		return theaterRoom;
-	}
 
-	public void setTheaterRoom(TheaterRoom theaterRoom) {
-		this.theaterRoom = theaterRoom;
-	}
-
-	public Time getTime() {
-		return time;
-	}
-
-	public void setTime(Time time) {
-		this.time = time;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
 		this.date = date;
 	}
 
