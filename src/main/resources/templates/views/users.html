@@ -34,9 +34,9 @@
 <span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
-            th:each="role : ${users}"
-            th:text="${role.userRole}"
-            th:value="${role.userRole}"  th:selected="${ #strings.equals(role.userRole, user.userRole)}">
+            th:each="role : ${roles}"
+            th:text="${role.getRoleName}"
+            th:value="${role.getRoleName}"  th:selected="${ #strings.equals(role.getRoleName, user.userRole)}">
     </option>
 </select>
 </span>

@@ -1,5 +1,6 @@
 package thescope.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.User;
+import thescope.models.UserRole;
 import thescope.services.UserService;
 
 @Controller
@@ -29,6 +31,8 @@ public class UserController {
 		String username = userService.getUserName();
 		// When user is not logged on, the String is null
 
+
+
 		if(username==null)
 		{
 			model.addAttribute("content", "login");
@@ -36,8 +40,12 @@ public class UserController {
 		}
 
 		List<User> users = userService.list();
+		List<UserRole> roles = userService.userRoles();
+
+
 		model.addAttribute("content", "users"); 
 		model.addAttribute("users",users);  // map content to html elements
+		model.addAttribute("roles",roles);  // map content to html elements
 		return "index";
 	}
 
