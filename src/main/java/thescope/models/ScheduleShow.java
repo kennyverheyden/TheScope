@@ -1,10 +1,16 @@
 package thescope.models;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name="tblScheduleShow")
 public class ScheduleShow {
@@ -13,52 +19,65 @@ public class ScheduleShow {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long PKscheduleShow;
 	
-	String movie;
-	String room;
+	@ManyToOne
+	@JoinColumn(name= "FKMovie")
+	private Movie movie;
+	
+	@ManyToOne
+	@JoinColumn(name="FKtheaterRoom")
+	private TheaterRoom theaterRoom;
 	
 	@Column(name="time")
-	String time;
+	Time time;
 	
 	@Column(name="date")
-	String date;
+	Date date;
 	
-	public ScheduleShow(String movie, String room, String time, String date)
+	public ScheduleShow() {}
+	
+	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, Time time, Date date)
 	{
 		this.movie=movie;
-		this.room=room;
+		this.theaterRoom=theaterRoom;
 		this.time=time;
 		this.date=date;
 	}
 
-	public String getMovie() {
+	public Movie getMovie() {
 		return movie;
 	}
 
-	public void setMovie(String movie) {
+	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
 
-	public String getRoom() {
-		return room;
+	public TheaterRoom getTheaterRoom() {
+		return theaterRoom;
 	}
 
-	public void setRoom(String room) {
-		this.room = room;
+	public void setTheaterRoom(TheaterRoom theaterRoom) {
+		this.theaterRoom = theaterRoom;
 	}
 
-	public String getTime() {
+	public Time getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(Time time) {
 		this.time = time;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
-	}	
+	}
+
+	public long getPKscheduleShow() {
+		return PKscheduleShow;
+	}
+	
+	
 }

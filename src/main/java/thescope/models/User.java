@@ -16,21 +16,29 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int PKuser;
+	
 	@OneToOne
 	@JoinColumn(name="FKuserRole")
 	private UserRole userRole;
+	
 	@Column(name="eMailuserID")
 	private String userName; //=email 
+	
 	@Column(name="secret")
 	private String secret;
+	
 	@Column(name="name")
 	private String name;
+	
 	@Column(name="firstname")
 	private String firstName;
+	
 	@Column(name="address")
 	private String address;
+	
 	@Column(name="postalCode")
 	private String postalCode;
+	
 	@Column(name="town")
 	private String town;
 

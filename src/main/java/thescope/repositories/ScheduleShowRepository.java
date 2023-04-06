@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import thescope.models.ScheduleShow;
 
 @Repository
-public interface ScheduleRepository extends JpaRepository<ScheduleShow,Long>{
+public interface ScheduleShowRepository extends JpaRepository<ScheduleShow,Long>{
 	
 
 }

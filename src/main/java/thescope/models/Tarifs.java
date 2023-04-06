@@ -1,5 +1,6 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,11 +10,17 @@ import jakarta.persistence.Id;
 public class Tarifs {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name= "PKtarif_id")
 	private long id;
-	private String name;
+	@Column(name="FKtarifName")
+	private long name;
+	@Column(name="priceTaxexcl")
 	private double priceTaxExcl;
+	@Column(name="priceTaxincl")
 	private double priceTaxIncl;
+	@Column(name="3Dsurcharge")
 	private double ThreeDSurcharge;
+	@Column(name="Active")
 	private boolean active;
 	
 	public Tarifs() {}

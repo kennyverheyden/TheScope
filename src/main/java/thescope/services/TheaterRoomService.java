@@ -14,6 +14,7 @@ public class TheaterRoomService {
 
     private final EntityManager entityManager;
     private final MovieRepository movieRepository;
+    
     @Autowired
     public TheaterRoomService(EntityManager entityManager, MovieRepository movieRepository) {
         this.entityManager = entityManager;
