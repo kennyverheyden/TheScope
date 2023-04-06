@@ -21,27 +21,27 @@ public class UserRole{
 	public UserRole()
 	{
 	}
-	
-	public long getPKuserRole() {
-		return PKuserRole;
-	}
 
-	public UserRole(String roleName)
-	{
-		this.roleName=roleName;
-	}
 	
 	public String getRoleName() {
 		return roleName;
 	}
 
+
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
-	@Override
-	public String toString() {
-		return roleName.toString();
-	}
 
+	public long getPKuserRole() {
+		return PKuserRole;
+	}
+	
+	
+
+	
+
+	
+
+	
 }
