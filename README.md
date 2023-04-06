@@ -29,6 +29,7 @@ https://github.com/C04t0/unit-integration-tests    - voorbeeld project bootcamp 
 
 JSON to html
 https://www.w3schools.com/js/js_json_html.asp   - json to html door java script
+https://www.peterelst.com/how-to-use-json-to-generate-dynamic-html-content/   - json parser in html
 
 Lombok
 https://www.baeldung.com/intro-to-project-lombok  -lombok dependency, autogenerate get/set/construct door @Annotations
