@@ -113,7 +113,7 @@ public class UserService {
 		user.setTown(town);
 		user.setUserRole(userRoleRepository.findById(role).get());
 		userRepository.findAll().add(user);
-		em.persist(user);
+		userRepository.save(user);
 	}
 
 	public void updateAccount(String userName, String name, String firstname, String address, String postalcode, String town) {
@@ -125,7 +125,7 @@ public class UserService {
 		user.setTown(town);
 		this.name=name;
 		this.firstname=firstname;
-		em.persist(user);
+		userRepository.save(user);
 	}
 
 	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town, String password, String userRole) {
@@ -142,23 +142,21 @@ public class UserService {
 			user.setSecret(encodedPassword);
 		}
 		user.setUserRole(userRoleRepository.findById(findbyRoleName(userRole)).get());
-		em.persist(user);
+		userRepository.save(user);
 
 	}
 
 	public void deleteUser(String userName)
 	{
 		User user = this.findUserByUsername(userName);
-		em.remove(user);
-		em.flush();
-		em.clear();
+		userRepository.delete(user);
 	}
 
 	public void updatePassword(String userName, String password) {
 		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
 		String encodedPassword = this.passwordEncoder.encode(password);
 		user.setSecret(encodedPassword);
-		em.persist(user);
+		userRepository.save(user);
 	}
 
 	// Check roles used by GlobalControllerAdvice

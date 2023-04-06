@@ -1,6 +1,5 @@
 package thescope.controllers;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,7 +172,9 @@ public class UserController {
 	public String findUser(@RequestParam (required = false) String findUserName, @RequestParam (required = false) String findFirstName, @RequestParam (required = false) String findName, Model model, RedirectAttributes rm){
 
 		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName);
+		List<UserRole> roles = userService.userRoles();
 		model.addAttribute("content", "users"); 
+		model.addAttribute("roles",roles);  // map content to html elements
 		model.addAttribute("users",foundUsers);  // map content to html elements
 		return "index";
 	}
