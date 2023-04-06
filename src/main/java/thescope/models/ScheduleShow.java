@@ -1,14 +1,25 @@
 package thescope.models;
 
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+=======
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 import jakarta.persistence.OneToOne;
+=======
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 
 @Entity(name="tblScheduleShow")
 public class ScheduleShow {
@@ -17,22 +28,30 @@ public class ScheduleShow {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long PKscheduleShow;
 	
-	@OneToOne
-	Movie movie;
+
 	
-	@OneToOne
-	TheaterRoom room;
+=======
+	@ManyToOne
+	@JoinColumn(name= "FKMovie")
+	private Movie movie;
+	
+	@ManyToOne
+	@JoinColumn(name="FKtheaterRoom")
+	private TheaterRoom theaterRoom;
 	
 	@Column(name="time")
-	LocalTime time;
+	Time time;
 	
 	@Column(name="date")
-	LocalDate date;
+	Date date;
 	
-	public ScheduleShow(Movie movie, TheaterRoom room, LocalTime time, LocalDate date)
+	public ScheduleShow() {}
+	
+	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, Time time, Date date)
+
 	{
 		this.movie=movie;
-		this.room=room;
+		this.theaterRoom=theaterRoom;
 		this.time=time;
 		this.date=date;
 	}
@@ -45,27 +64,13 @@ public class ScheduleShow {
 		this.movie = movie;
 	}
 
-	public TheaterRoom getRoom() {
-		return room;
-	}
 
-	public void setRoom(TheaterRoom room) {
-		this.room = room;
-	}
-
-	public LocalTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalTime time) {
-		this.time = time;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
 		this.date = date;
-	}	
+	}
+
+	public long getPKscheduleShow() {
+		return PKscheduleShow;
+	}
+	
+	
 }

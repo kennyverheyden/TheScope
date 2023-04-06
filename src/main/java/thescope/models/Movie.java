@@ -12,8 +12,8 @@ public class Movie {
 	@Column(name="movie")
 	private String title;
 	
-	@Column(name = "genre_fk")
-	private String genre_fk;
+	@Column(name = "genre")
+	private String genre;
 	
 	@Column(name="rating")
 	private double rating;
@@ -29,9 +29,9 @@ public class Movie {
 	public Movie() {
 
 	}
-	public Movie(String title, String genre_fk, double rating, int length, boolean threeD) {
+	public Movie(String title, String genre, double rating, int length, boolean threeD) {
 		this.title = title;
-		this.genre_fk = genre_fk;
+		this.genre = genre;
 		this.rating = rating; 
 		this.length = length;
 		this.threeD = threeD;
@@ -72,11 +72,11 @@ public class Movie {
 	}
 	
 	public String getGenre_fk() {
-		return genre_fk;
+		return genre;
 	}
 	
-	public void setGenre_fk(String genre_fk) {
-		this.genre_fk = genre_fk;
+	public void setGenre_fk(String genre) {
+		this.genre = genre;
 	}
 	
 	

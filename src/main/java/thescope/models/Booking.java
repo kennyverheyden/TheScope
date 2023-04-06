@@ -5,36 +5,32 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name="tblBookings")
 public class Booking {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long PKbooking;
+	private Long PKbooking;
 	
-	@Column(name="FKuserRole")
-	String name;
-	String firstname;;
-	String movie;
-	String time;
-	String date;
-	String location;
+	@ManyToOne
+	@JoinColumn(name= "FKUser")
+	private User user;
 	
-	public Booking()
-	{
-		
+	@ManyToOne
+	@JoinColumn(name="FKScheduleShow")
+	private ScheduleShow scheduleShow;
+	
+	public Booking(){}
+	
+	public Booking(User user, ScheduleShow scheduleShow) {
+		this.user= user;
+		this.scheduleShow= scheduleShow;
 	}
 	
-	public Booking(String name, String firstname, String movie, String time, String date, String location)
-	{
-		this.name=name;
-		this.firstname=firstname;
-		this.movie=movie;
-		this.time=time;
-		this.date=date;
-		this.location=location;
-	}
+	
 
 
 	

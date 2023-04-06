@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
 import java.util.List;
@@ -15,6 +14,7 @@ public class TheaterRoomService {
 
     private final EntityManager entityManager;
     private final MovieRepository movieRepository;
+    
     @Autowired
     public TheaterRoomService(EntityManager entityManager, MovieRepository movieRepository) {
         this.entityManager = entityManager;
@@ -26,7 +26,7 @@ public class TheaterRoomService {
         return entityManager.find(Movie.class, id);
     }
 
-    public Movie findMovieByGenre(Genre genre) {
+    public Movie findMovieByGenre(String genre) {
         return entityManager.find(Movie.class, genre);
     }
 

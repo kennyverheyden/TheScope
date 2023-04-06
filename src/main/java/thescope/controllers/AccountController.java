@@ -45,7 +45,7 @@ public class AccountController {
 	}
 
 	@PostMapping("/account") 
-	public String commentPost(@RequestParam (required = false) String userName, @RequestParam (required = false) String name, @RequestParam (required = false) String firstName, @RequestParam (required = false) String address, @RequestParam (required = false) String postalCode, @RequestParam (required = false) String town, Model model, RedirectAttributes rm){
+	public String updateAccount(@RequestParam (required = false) String userName, @RequestParam (required = false) String name, @RequestParam (required = false) String firstName, @RequestParam (required = false) String address, @RequestParam (required = false) String postalCode, @RequestParam (required = false) String town, Model model, RedirectAttributes rm){
 
 		if(!name.equals("") && !firstName.equals("") && !address.equals("") && !postalCode.equals("") && !town.equals(""))
 		{
