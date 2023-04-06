@@ -24,19 +24,19 @@
 	
 <br>
      
- <span style="font-size:15px;"><strong>Five users are preloaded, use the search button to find users </strong></span>
+ <span style="font-size:10px;"><strong>* Only 50 users are preloaded, use the search button to find users </strong></span>
 <div class="table">
 
-<form action="/users" method="post" class="tr" th:each="user, index: ${users}" th:unless="${index.index > 4}">
+<form action="/users" method="post" class="tr" th:each="user, index: ${users}" th:unless="${index.index > 49}">
 
 <span class="td">
 <strong>Username/role</strong><br>
 <span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
-            th:each="role : ${T(thescope.models.UserRoleNames).values()}"
-            th:text="${role.string}"
-            th:value="${role.string}"  th:selected="${ #strings.equals(role.string, user.userRole)}">
+            th:each="role : ${users}"
+            th:text="${role.userRole}"
+            th:value="${role.userRole}"  th:selected="${ #strings.equals(role.userRole, user.userRole)}">
     </option>
 </select>
 </span>

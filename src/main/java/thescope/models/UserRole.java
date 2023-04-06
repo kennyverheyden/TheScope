@@ -37,11 +37,10 @@ public class UserRole{
 		return PKuserRole;
 	}
 	
-	
-
-	
-
-	
-
+	@Override
+	public String toString()
+	{
+		return roleName;
+	}
 	
 }
