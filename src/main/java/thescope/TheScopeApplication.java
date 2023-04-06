@@ -22,14 +22,15 @@ public class TheScopeApplication{
 		ConfigurableApplicationContext ctx=
 		 SpringApplication.run(TheScopeApplication.class, args);
 
-		 BookingService b= ctx.getBean(BookingService.class);
-		 TarifsService s= ctx.getBean(TarifsService.class);
-		
-		System.out.println("hallo allemaal!!");
-		System.out.println(s.findTarifsById(2).getPriceTaxIncl());
-		
-		TarifsListService t=ctx.getBean(TarifsListService.class);
-		t.addTarifsList(new TarifsList(s.findTarifsById(2),b.findBookingById(2),4));
+//		 BookingService b= ctx.getBean(BookingService.class);
+//		 TarifsService s= ctx.getBean(TarifsService.class);
+//		
+//		System.out.println("hallo allemaal!!");
+//		System.out.println(s.findTarifsById(2).getPriceTaxIncl());
+//		
+//		TarifsListService t=ctx.getBean(TarifsListService.class);
+//		t.addTarifsList(new TarifsList(s.findTarifsById(1),b.findBookingById(3),5));
+//		t.addTarifsList(new TarifsList(s.findTarifsById(3),b.findBookingById(3),1));
 		
 	}
 
