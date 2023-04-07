@@ -25,6 +25,8 @@ public class ScheduleShowService {
 		ScheduleShow scheduleShow = entityManager.find(ScheduleShow.class, id);
 		return scheduleShow;
 	}
-	
+	public void addScheduleShow(ScheduleShow scheduleShow) {
+		entityManager.persist(scheduleShow);
+	}
 	
 }

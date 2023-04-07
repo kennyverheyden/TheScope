@@ -2,14 +2,38 @@
   
 <h2>Shop</h2>
 <br>
-<div style="background-color:#bdc6fc; width:500px;  padding:16px;  font-family: sans-serif; letter-spacing: 4px;">    
+<div style= width:500px;  padding:16px;  font-family: sans-serif; letter-spacing: 4px;">    
 
-    <select name="Category:" size="6">
+    <table style="width: 100%; border-collapse: collapse;" border="1">
+<tbody>
+<tr>
+<td style="width: 30%;"> <div>
+  <label for="category">Categories:
+  </label>
+  <select name="Category:" size="4" multiple style="width: 100%;">
 <option value="Drinks">Drinks</option>
 <option value="Candy">Candy</option>
 <option value="Popcorn">Popcorn</option>
 <option value="Chips">Chips</option>
-
+</select></div></td>
+  
+  
+<td style="width: 70%;">  <div>
+  <label for="producten">Kies producten:</label><br>
+  <select id="producten" name="producten" multiple>
+    <option th:each="product : ${products}" th:value="${product.getId()}" th:text="${product.getName() + ' - €' + product.getPrice()}">
+    </option>
 </select>
+
+  </div>
+</td>
+</tr>
+  <tr><td> <div> <label for="user">Userdata:</label>
+    <span th:text="${welcomeName}"></span> (<span th:text="${role}"></span>)
+    </div></td>
+    <td> <div> <label for="producten">Shoppinglist:</label></div></td>
+  </tr>
+</tbody>
+</table>
     
 </div>

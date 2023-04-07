@@ -5,13 +5,15 @@
     
 <table>
 <tr>
+<th>ID</th>
 <th>Seats</th>
 <th>Vip seats</th>
 <th>Location</th>
 </tr>
 <tr th:each="rooms: ${rooms}">
-<td th:text="${rooms.numSeats}"></td>
-<td th:text="${rooms.numVipSeats}"></td>
+<td th:text="${rooms.PKtheaterRoom}"></td>
+<td th:text="${rooms.maxNormalSeats}"></td>
+<td th:text="${rooms.maxVipSeats}"></td>
 <td th:text="${rooms.location}"></td>
 
 </tr>

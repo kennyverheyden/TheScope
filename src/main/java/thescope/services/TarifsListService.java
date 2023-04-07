@@ -18,10 +18,12 @@ public class TarifsListService {
 	public TarifsListService(TarifsListRepository tarifsListRepository) {
 		this.tarifsListRepository=tarifsListRepository;
 	}
-	public TarifsList findTarifslistById(long id) {
+	
+	
+	public TarifsList findTarifslistById(long id) {	//zoek op id
 		return tarifsListRepository.findById(id).get();
 	}
-	public void addTarifsList(TarifsList tarifsList) {
+	public void addTarifsList(TarifsList tarifsList) {	//maak een nieuwe tarifslist
 		tarifsListRepository.save(tarifsList);
 	}
 }

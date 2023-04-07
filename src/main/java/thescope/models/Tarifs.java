@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name= "tblTarifs")
-public class Tarifs {
+public class Tarifs {	//Dit zijn de verschillende tarieven mogelijk te kiezen
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, name= "PKtarif_id")

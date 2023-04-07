@@ -1,7 +1,8 @@
 package thescope;
 
-import static org.junit.Assert.assertEquals;
 
+
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ public class ScheduleShowTest {
 		ScheduleShow schedule = sss.findScheduleShowById(1);
 		System.out.println(schedule);
 		assertEquals(1, schedule.getPKscheduleShow());
+		
 
 	}
 	
