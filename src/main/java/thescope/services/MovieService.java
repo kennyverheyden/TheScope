@@ -1,11 +1,11 @@
 package thescope.services;
 
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
+
 import java.util.List;
 
 @Service
@@ -17,7 +17,7 @@ public class MovieService {
      * **/
 
 
-    private final MovieRepository movieRepository;
+    private MovieRepository movieRepository;
 
     @Autowired
     public MovieService(MovieRepository movieRepository) {

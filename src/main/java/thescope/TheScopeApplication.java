@@ -15,7 +15,7 @@ import thescope.services.BookingService;
 import thescope.services.TarifsListService;
 import thescope.services.TarifsService;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class TheScopeApplication{
 
 	public static void main(String[] args) {
