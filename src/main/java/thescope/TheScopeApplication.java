@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
+import ch.qos.logback.classic.pattern.ClassOfCallerConverter;
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -33,11 +34,15 @@ import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.metamodel.Metamodel;
 import thescope.models.Booking;
 import thescope.models.ScheduleShow;
+import thescope.models.ShopCategory;
+import thescope.models.ShopList;
 import thescope.models.Tarifs;
 import thescope.models.TarifsList;
+import thescope.repositories.ShopListRepository;
 import thescope.repositories.TarifsRepository;
 import thescope.services.BookingService;
 import thescope.services.ScheduleShowService;
+import thescope.services.ShopListService;
 import thescope.services.TarifsListService;
 import thescope.services.TarifsService;
 
@@ -48,7 +53,16 @@ public class TheScopeApplication{
 		ConfigurableApplicationContext ctx=
 		 SpringApplication.run(TheScopeApplication.class, args);
 
+		 ShopListService s= ctx.getBean(ShopListService.class);
 		 
+//		 ShopList item= new ShopList();
+//		 item.setDescription("M&Ms pinda 200g");
+//		 item.setCategory(ShopCategory.CANDY);
+//		 item.setInStock(7);
+//		 item.setOrderQuantity(20);
+//		 item.setPriceTaxEx(2.14d);
+//		 item.setPriceTaxIn(2.50d);
+//		 s.AddShopList(item);
 	}
 
 }
