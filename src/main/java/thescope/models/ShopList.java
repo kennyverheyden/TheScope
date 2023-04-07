@@ -20,7 +20,10 @@ public class ShopList {
     long articleId;
 	
 	@Column(name="description")
-    String description;
+	String description;
+	
+	@Column(name="category")
+	ShopCategory category;
 	
 	@Column(name="inStock")
     int inStock; // How many left
@@ -36,13 +39,14 @@ public class ShopList {
 
 
     /**construct**/
-    public ShopList(long articleId, String description, int inStock, int orderQuantity, BigDecimal priceTaxEx, BigDecimal priceTaxIn) {
+    public ShopList(long articleId, String description, ShopCategory category, int inStock, int orderQuantity, BigDecimal priceTaxEx, BigDecimal priceTaxIn) {
         this.articleId = articleId;
         this.description = description;
         this.inStock = inStock;
         this.orderQuantity = orderQuantity;
         this.priceTaxEx = priceTaxEx;
         this.priceTaxIn = priceTaxIn;
+        this.category=category;
     }
 
     /**get&set**/

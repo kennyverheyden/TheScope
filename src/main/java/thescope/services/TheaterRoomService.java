@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import thescope.models.Movie;
+import thescope.models.TheaterRoom;
 import thescope.repositories.MovieRepository;
+import thescope.repositories.TheaterRoomRepository;
 
 import java.util.List;
 
@@ -14,34 +16,32 @@ import java.util.List;
 public class TheaterRoomService {
 
     private final EntityManager entityManager;
-    private final MovieRepository movieRepository;
+    private final TheaterRoomRepository theaterRoomRepository;
     
     @Autowired
-    public TheaterRoomService(EntityManager entityManager, MovieRepository movieRepository) {
+    public TheaterRoomService(EntityManager entityManager, TheaterRoomRepository theaterRoomRepository) {
         this.entityManager = entityManager;
-        this.movieRepository = movieRepository;
+        this.theaterRoomRepository = theaterRoomRepository;
     }
 
 
-    public Movie findMovieById(Long id) {
-        return entityManager.find(Movie.class, id);
+    public TheaterRoom findTheatherRoomById(Long id) {
+        return entityManager.find(TheaterRoom.class, id);
     }
 
-    public Movie findMovieByGenre(String genre) {
-        return entityManager.find(Movie.class, genre);
+   
+
+    public List<TheaterRoom> findAllTheaterRooms() {
+        List<TheaterRoom> rooms = theaterRoomRepository.findAll();
+        return rooms;
     }
 
-    public List<Movie> findAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies;
+    public void addTheaterRoom(TheaterRoom theaterRoom) {
+        entityManager.persist(theaterRoom);
     }
 
-    public void addMovie(Movie movie) {
-        entityManager.persist(movie);
-    }
-
-    public void deleteMovieById(Long id) {
-        entityManager.remove(entityManager.find(Movie.class, id));
+    public void deleteTheaterRoomById(Long id) {
+        entityManager.remove(entityManager.find(TheaterRoom.class, id));
     }
 
 }

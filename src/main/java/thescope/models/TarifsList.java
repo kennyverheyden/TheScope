@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity(name= "tblTarifsList")
-public class TarifsList {
+public class TarifsList {	//Dit selecteert het Tarif en aantal en koppelt dit aan een booking
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")

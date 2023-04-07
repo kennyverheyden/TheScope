@@ -15,22 +15,23 @@ public class TarifsService {
 
 	private final TarifsRepository tarifsRepository;
 	
+		
 	@Autowired
 	public TarifsService(TarifsRepository tarifsRepository) {
 		this.tarifsRepository = tarifsRepository;
 	}
 	
-	public Tarifs findTarifsById(long id) {
+	public Tarifs findTarifsById(long id) {		//zoek op id
 		return tarifsRepository.findById(id).get();
 	}
-	public List<Tarifs> findAllTarifs() {
+	public List<Tarifs> findAllTarifs() {		//maak een lijst met alle tarifs
 		List<Tarifs> tarifsList= tarifsRepository.findAll();
 		return tarifsList;
 	}
-	public void addTarifs(Tarifs tarifs) {
+	public void addTarifs(Tarifs tarifs) {		//maak een nieuwe tarifs
 		tarifsRepository.save(tarifs);
 	}
-	public void ChangeTarifsInactive(long id) {
+	public void ChangeTarifsInactive(long id) {		//enkel actieve tarifs mogen gebruikt worden (vb bij prijsverhoging)
 		tarifsRepository.findById(id).get().setActive(false);
 	}
 }
