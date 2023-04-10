@@ -47,7 +47,7 @@ public class LoginController {
 		else
 		{
 			model.addAttribute("content", "login");
-			rm.addFlashAttribute("message","Login failed");
+			rm.addFlashAttribute("message","Your credentials are incorrect");
 			return "redirect:login";
 		}
 
