@@ -1,6 +1,8 @@
 package thescope.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity(name="tblMovie")
 public class Movie {
@@ -8,19 +10,20 @@ public class Movie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long PKmovie;
-	
+	@NotBlank		//jakarta validation annotatie, checked vanzelf of er geldige entities worden ingegeven, geen nood voor if/else blokken dus
+	@NotNull
 	@Column(name="movie")
 	private String title;
-	
+	@NotNull
 	@Column(name = "genre")
 	private String genre;
-	
+	@NotNull
 	@Column(name="rating")
 	private double rating;
-	
+	@NotNull
 	@Column(name="length")
 	private int length;
-
+	@NotNull
 	@Column(name="3D")
 	private boolean threeD;
 
@@ -71,11 +74,11 @@ public class Movie {
 		this.threeD = threeD;
 	}
 	
-	public String getGenre_fk() {
+	public String getGenre() {
 		return genre;
 	}
 	
-	public void setGenre_fk(String genre) {
+	public void setGenre(String genre) {
 		this.genre = genre;
 	}
 	

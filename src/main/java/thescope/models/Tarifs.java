@@ -24,13 +24,11 @@ public class Tarifs {	//Dit zijn de verschillende tarieven mogelijk te kiezen
 	private boolean active;
 	
 	public Tarifs() {}
-	
-	
-	
-	public String getName() {
+
+	public Long getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(Long name) {
 		this.name = name;
 	}
 	public double getPriceTaxExcl() {
