@@ -48,7 +48,7 @@ import thescope.services.TarifsService;
 
 //@SpringBootApplication()
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class }) // Ignore login screen from Spring Security
-public class TheScopeApplication{
+public class TheScopeApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx=
@@ -65,5 +65,10 @@ public class TheScopeApplication{
 //		 item.setPriceTaxIn(2.50d);
 //		 s.AddShopList(item);
 	}
+
+	/**
+	 * Deze klasse clean laten, het enige wat hier moet instaan is app.run(). Indien je wilt testen, doe dit via JUnit
+	 * of integratietesten.
+ 	 */
 
 }
