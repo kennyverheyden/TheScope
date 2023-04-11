@@ -50,16 +50,9 @@ public class UserService {
 		return userRoleRepository.findAll();
 	}
 
-	public User findUserByUsername(String username)
+	public User findUserByUsername(String userName)
 	{
-		for (User i:userRepository.findAll())
-		{
-			if(i.getUserName().equals(username))
-			{
-				return i;
-			}
-		}
-		return null;
+		   return userRepository.findUserByUserName(userName);
 	}
 
 	// Used for searching users by admin
@@ -153,7 +146,7 @@ public class UserService {
 	}
 
 	public void updatePassword(String userName, String password) {
-		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
+		User user = this.findUserByUsername(userName);
 		String encodedPassword = this.passwordEncoder.encode(password);
 		user.setSecret(encodedPassword);
 		userRepository.save(user);
