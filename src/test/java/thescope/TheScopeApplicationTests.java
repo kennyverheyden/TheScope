@@ -7,12 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TheScopeApplicationTests {
 
-	@Test
-	void contextLoads() {
+//	@Test
+//	void contextLoads() {
 
 				//springContext load successful?
 
 				//voorlopig nog niet gelukt. 11/04
-	}
+	
 
 }

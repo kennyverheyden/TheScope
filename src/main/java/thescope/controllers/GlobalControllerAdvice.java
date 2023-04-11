@@ -17,9 +17,13 @@ public class GlobalControllerAdvice {
 	 ******************************************************************************/
 
 
-	private final UserService userService;
+	private UserService userService;
 
-	@Autowired
+	
+	
+	public GlobalControllerAdvice() {}
+	
+	
 	public GlobalControllerAdvice(UserService userService)
 	{
 		this.userService=userService;

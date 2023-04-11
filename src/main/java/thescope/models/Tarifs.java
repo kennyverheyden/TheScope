@@ -12,8 +12,8 @@ public class Tarifs {	//Dit zijn de verschillende tarieven mogelijk te kiezen
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, name= "PKtarif_id")
 	private long id;
-	@Column(name="FKtarifName")
-	private long name;
+	@Column(name="tarifName")
+	private String name;
 	@Column(name="priceTaxexcl")
 	private double priceTaxExcl;
 	@Column(name="priceTaxincl")
@@ -25,10 +25,10 @@ public class Tarifs {	//Dit zijn de verschillende tarieven mogelijk te kiezen
 	
 	public Tarifs() {}
 
-	public Long getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(Long name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public double getPriceTaxExcl() {

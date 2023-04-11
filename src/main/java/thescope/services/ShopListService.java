@@ -11,9 +11,10 @@ import thescope.repositories.ShopListRepository;
 @Transactional
 public class ShopListService {
 	
+	@Autowired
 	private ShopListRepository shopListRepository;
 	
-	@Autowired
+	public ShopListService() {}
 	public ShopListService(ShopListRepository shopListRepository) {
 		this.shopListRepository=shopListRepository;
 	}

@@ -14,9 +14,12 @@ import thescope.services.TheaterRoomService;
 @Controller
 public class TheaterRoomController {
 
-	private final TheaterRoomService theaterRoomService;
+	private TheaterRoomService theaterRoomService;
 
-	@Autowired
+	
+	public TheaterRoomController() {}
+	
+	
 	public TheaterRoomController(TheaterRoomService theaterRoomService) {
 		this.theaterRoomService= theaterRoomService;
 	}

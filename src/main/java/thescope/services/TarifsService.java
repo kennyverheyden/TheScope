@@ -13,10 +13,12 @@ import thescope.repositories.TarifsRepository;
 @Transactional
 public class TarifsService {
 
-	private final TarifsRepository tarifsRepository;
-	
-		
 	@Autowired
+	private TarifsRepository tarifsRepository;
+	
+	public TarifsService() {}
+	
+	
 	public TarifsService(TarifsRepository tarifsRepository) {
 		this.tarifsRepository = tarifsRepository;
 	}

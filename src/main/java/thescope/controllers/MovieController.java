@@ -13,9 +13,12 @@ import thescope.services.MovieService;
 @Controller
 public class MovieController {
 
-    private final MovieService movieService;
+    private MovieService movieService;
 
-    @Autowired
+    
+    public MovieController() {}
+    
+    
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }

@@ -20,7 +20,7 @@ public class MovieService {
 
     private MovieRepository movieRepository;
 
-    @Autowired
+    public MovieService() {}
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
