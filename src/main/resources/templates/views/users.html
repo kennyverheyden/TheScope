@@ -61,12 +61,12 @@
 
 <span class="td">
 <strong>Delete?</strong><br>
- &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:show_alert(' + ${index.index} + ')'">
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButton(' + ${index.index} + ')'">
 </span>
 
 <span class="td">
 <br>
-<button type="submit">Update details</button>
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:100px;">Update details</button>
 </span>
 
 </form>

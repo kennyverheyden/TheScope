@@ -46,7 +46,8 @@ import thescope.services.ShopListService;
 import thescope.services.TarifsListService;
 import thescope.services.TarifsService;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+//@SpringBootApplication()
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class }) // Ignore login screen from Spring Security
 public class TheScopeApplication{
 
 	public static void main(String[] args) {
