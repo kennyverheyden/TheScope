@@ -72,7 +72,7 @@ public class UserService {
 				userList.add(i);
 			}
 			// Search with rolename and username and firstname
-			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getUserName().toString().equalsIgnoreCase(userName) && i.getFirstName().toString().equalsIgnoreCase(firstname)  && name=="")
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getUserName().toString().equalsIgnoreCase(userName) && i.getFirstName().toString().equalsIgnoreCase(firstName)  && name=="")
 			{
 				userList.add(i);
 			}
@@ -95,7 +95,6 @@ public class UserService {
 			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getFirstName().toString().equalsIgnoreCase(firstName) && i.getName().toString().equalsIgnoreCase(name) && i.getUserName().toString().equalsIgnoreCase(userName))
 			{
 				userList.add(i);
-				System.out.println("test");
 			}
 			// Search with rolename without username and without name and without firstname
 			else if(roleName!="" &&  i.getUserRole().toString().equalsIgnoreCase(roleName) && userName=="" && name=="" && firstName=="")
@@ -136,7 +135,6 @@ public class UserService {
 					else if(i.getName().toString().equalsIgnoreCase(name) && i.getFirstName().toString().equalsIgnoreCase(firstName) && userName=="")
 					{
 						userList.add(i);
-						System.out.println("test");
 					}
 					// Search with username without name and without firstname and without role
 					else if(i.getUserName().toString().equalsIgnoreCase(userName) && name=="" && firstName=="")
