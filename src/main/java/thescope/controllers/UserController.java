@@ -169,10 +169,10 @@ public class UserController {
 
 	// Admin can search for users
 	@PostMapping("/users/find") 
-	public String findUser(@RequestParam (required = false) String findUserName, @RequestParam (required = false) String findFirstName, @RequestParam (required = false) String findName, Model model, RedirectAttributes rm){
+	public String findUser(@RequestParam (required = false) String findUserName, @RequestParam (required = false) String findFirstName, @RequestParam (required = false) String findName, @RequestParam (required = false) String roleName, Model model, RedirectAttributes rm){
 
-		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName);
-		List<UserRole> roles = userService.userRoles();
+		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName, roleName);
+		List<UserRole> roles = userService.userRoles(); // List is used for dropdown select box
 		model.addAttribute("content", "users"); 
 		model.addAttribute("roles",roles);  // map content to html elements
 		model.addAttribute("users",foundUsers);  // map content to html elements
