@@ -11,19 +11,21 @@ public class Movie {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long PKmovie;
 	@NotBlank		//jakarta validation annotatie, checked vanzelf of er geldige entities worden ingegeven, geen nood voor if/else blokken dus
-	@NotNull
+	@NotNull (message = "Title cannot be null")
 	@Column(name="movie")
 	private String title;
-	@NotNull
+
+	@NotBlank(message = "Genre cannot be blank")
+	@NotNull (message = "Genre cannot be null")
 	@Column(name = "genre")
 	private String genre;
-	@NotNull
+	@NotNull (message = "Rating cannot be null")
 	@Column(name="rating")
 	private double rating;
-	@NotNull
+	@NotNull (message = "Length cannot be null")
 	@Column(name="length")
 	private int length;
-	@NotNull
+	@NotNull (message = "3D attribute cannot be null")
 	@Column(name="3D")
 	private boolean threeD;
 
@@ -38,6 +40,14 @@ public class Movie {
 		this.rating = rating; 
 		this.length = length;
 		this.threeD = threeD;
+	}
+
+	public Movie(Movie source) {
+		this.title = source.title;
+		this.genre = source.genre;
+		this.rating = source.rating;
+		this.length = source.length;
+		this.threeD = source.threeD;
 	}
 
 	/**get&set**/

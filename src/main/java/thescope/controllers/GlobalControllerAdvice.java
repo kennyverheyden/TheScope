@@ -16,15 +16,12 @@ public class GlobalControllerAdvice {
 	 * 
 	 ******************************************************************************/
 
-
-	private final UserService userService;
-
 	@Autowired
-	public GlobalControllerAdvice(UserService userService)
-	{
-		this.userService=userService;
-	}
+	private UserService userService;
 
+	public GlobalControllerAdvice() {
+
+	}
 	@ModelAttribute("firstNameINmenu")
 	public String firstNameINmenu()
 	{

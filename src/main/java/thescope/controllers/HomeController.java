@@ -16,13 +16,13 @@ import thescope.services.MovieService;
 
 @Controller
 public class HomeController {
-
-	private final MovieService movieService;
-
 	@Autowired
-	public HomeController(MovieService movieService) {
-		this.movieService=movieService;
+	private MovieService movieService;
+
+	public HomeController() {
+
 	}
+
 
 	@GetMapping("/") // get request
 	public String selectGet(Model model) {

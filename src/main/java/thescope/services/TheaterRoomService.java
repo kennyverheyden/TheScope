@@ -10,26 +10,20 @@ import thescope.repositories.MovieRepository;
 import thescope.repositories.TheaterRoomRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class TheaterRoomService {
 
-    private final EntityManager entityManager;
-    private final TheaterRoomRepository theaterRoomRepository;
-    
     @Autowired
-    public TheaterRoomService(EntityManager entityManager, TheaterRoomRepository theaterRoomRepository) {
-        this.entityManager = entityManager;
-        this.theaterRoomRepository = theaterRoomRepository;
-    }
-
+    private TheaterRoomRepository theaterRoomRepository;
 
     public TheaterRoom findTheatherRoomById(Long id) {
-        return entityManager.find(TheaterRoom.class, id);
+        Optional<TheaterRoom> entity = theaterRoomRepository.findById(id);
+        TheaterRoom unwrappedTheatherRoom = unwrapTheaterRoom(entity, id);
+        return unwrappedTheatherRoom;
     }
-
-   
 
     public List<TheaterRoom> findAllTheaterRooms() {
         List<TheaterRoom> rooms = theaterRoomRepository.findAll();
@@ -37,11 +31,19 @@ public class TheaterRoomService {
     }
 
     public void addTheaterRoom(TheaterRoom theaterRoom) {
-        entityManager.persist(theaterRoom);
+        theaterRoomRepository.save(theaterRoom);
     }
 
     public void deleteTheaterRoomById(Long id) {
-        entityManager.remove(entityManager.find(TheaterRoom.class, id));
+        theaterRoomRepository.deleteById(id);
+    }
+
+    public static TheaterRoom unwrapTheaterRoom(Optional<TheaterRoom> entity, Long id) {
+        if (entity.isPresent()) {
+            return entity.get();
+        } else {
+            throw new RuntimeException();
+        }
     }
 
 }

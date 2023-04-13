@@ -20,19 +20,13 @@ import thescope.repositories.UserRoleRepository;
 @Transactional 
 public class UserService {
 
-	private final UserRepository userRepository;
-	private final UserRoleRepository userRoleRepository;
+	@Autowired
+	private  UserRepository userRepository;
+	@Autowired
+	private  UserRoleRepository userRoleRepository;
+	@Autowired
 	private  PasswordEncoder passwordEncoder;
 
-	@Autowired
-	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
-		this.userRepository = userRepository;
-		this.userRoleRepository = userRoleRepository;
-		this.passwordEncoder =  new BCryptPasswordEncoder();
-	}
-
-	@Autowired
-	private EntityManager em;
 
 	// Global credentials for processing
 	private String userName;

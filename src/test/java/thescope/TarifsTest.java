@@ -11,11 +11,11 @@ import thescope.services.TarifsService;
 @SpringBootTest
 public class TarifsTest {
 	
-	TarifsService ts;
+	TarifsService tarifsService;
 
 	@Test
 	public void findTarifsTest() {
-		Tarifs testTarifs=ts.findTarifsById(2);
+		Tarifs testTarifs = tarifsService.findTarifsById(2);
 		assertEquals(14, testTarifs.getPriceTaxIncl());
 	}
 }

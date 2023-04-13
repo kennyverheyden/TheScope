@@ -12,15 +12,15 @@ import thescope.services.ScheduleShowService;
 public class ScheduleShowTest {
 
 	@Autowired
-	private ScheduleShowService sss;
+	private ScheduleShowService scheduleShowService;
 	
 	@Test
 	public void contextLoads() {
 		System.out.println("Test successfully loaded");
 	}	
 	@Test
-	public void scheduleshowLoadedTest() {
-	ScheduleShow showtest= sss.findScheduleShowById(1);
+	public void findScheduleShowTest() {
+	ScheduleShow showtest= scheduleShowService.findScheduleShowById(1);
 	assertEquals(95, showtest.getMovie().getLength());
 	}
 }

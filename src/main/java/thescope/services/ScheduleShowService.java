@@ -8,25 +8,29 @@ import jakarta.transaction.Transactional;
 import thescope.models.ScheduleShow;
 import thescope.repositories.ScheduleShowRepository;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class ScheduleShowService {
-
-	private final EntityManager entityManager;
-	private final ScheduleShowRepository scheduleShowRepository;
-	
 	@Autowired
-	public ScheduleShowService(EntityManager entityManager, ScheduleShowRepository scheduleShowRepository) {
-		this.entityManager = entityManager;
-		this.scheduleShowRepository = scheduleShowRepository;
-	}
-	
+	private ScheduleShowRepository scheduleShowRepository;
+
 	public ScheduleShow findScheduleShowById(long id) {
-		ScheduleShow scheduleShow = entityManager.find(ScheduleShow.class, id);
-		return scheduleShow;
+		Optional<ScheduleShow> entity = scheduleShowRepository.findById(id);
+		ScheduleShow unwrappedScheduleShow = unwrapScheduleShow(entity, id);
+		return unwrappedScheduleShow;
 	}
 	public void addScheduleShow(ScheduleShow scheduleShow) {
-		entityManager.persist(scheduleShow);
+		scheduleShowRepository.save(scheduleShow);
+	}
+
+	public static ScheduleShow unwrapScheduleShow(Optional<ScheduleShow> entity, Long id) {
+		if (entity.isPresent()) {
+			return entity.get();
+		} else {
+			throw new RuntimeException();
+		}
 	}
 	
 }
