@@ -12,16 +12,10 @@ import java.util.List;
 @Transactional
 public class CleaningScheduleService {
 
-    
     @Autowired
     private BookingRepository bookingRepository;
-    
     
     public CleaningScheduleService() {}
 
     
-    public CleaningScheduleService(BookingRepository bookingRepository) {
-        
-        this.bookingRepository = bookingRepository;
-    }
 }

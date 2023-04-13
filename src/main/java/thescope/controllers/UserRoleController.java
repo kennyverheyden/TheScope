@@ -8,15 +8,10 @@ import thescope.repositories.UserRoleRepository;
 @RestController
 public class UserRoleController {
 
+	@Autowired
 	private UserRoleRepository userRoleRepository;
 
-	
 	public UserRoleController() {}
 			
-	
-	public UserRoleController(UserRoleRepository userRoleRepository) {
-		this.userRoleRepository = userRoleRepository;
-	}
-
 }
 

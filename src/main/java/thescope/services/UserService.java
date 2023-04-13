@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import thescope.models.User;
 import thescope.models.UserRole;
@@ -27,17 +25,9 @@ public class UserService{
 	private  PasswordEncoder passwordEncoder;
 
 	
-	public UserService() {}
-	
-	
-	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
-		this.userRepository = userRepository;
-		this.userRoleRepository = userRoleRepository;
+	public UserService() {
 		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
-
-//	@Autowired
-//	private EntityManager em;
 
 	// Global credentials for processing
 	private String userName;

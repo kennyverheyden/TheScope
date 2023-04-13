@@ -14,15 +14,11 @@ import thescope.services.TheaterRoomService;
 @Controller
 public class TheaterRoomController {
 
+	@Autowired
 	private TheaterRoomService theaterRoomService;
-
 	
 	public TheaterRoomController() {}
 	
-	
-	public TheaterRoomController(TheaterRoomService theaterRoomService) {
-		this.theaterRoomService= theaterRoomService;
-	}
 
 	@GetMapping("/rooms") // get request
 	public String selectGet(Model model) {

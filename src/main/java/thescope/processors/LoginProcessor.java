@@ -1,5 +1,6 @@
 package thescope.processors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,16 +15,17 @@ public class LoginProcessor {
 	private String userName;
 	private String secret;
 
-	private final UserService userService;
-	private final UserRepository userRepository;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserRepository userRepository;
 	private  PasswordEncoder passwordEncoder;
 	
-	public LoginProcessor(UserService userService, UserRepository userRepository)
+	public LoginProcessor()
 	{
-		this.userService=userService;
-		this.userRepository=userRepository;
 		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
+	
 
 	public boolean login()
 	{

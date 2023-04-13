@@ -17,13 +17,12 @@ public class MovieService {
     /** enkel movierepo is geinjecteerd
      * methoden van JPArepo toegepast ipv entityManager
      * **/
-
+	
+	@Autowired
     private MovieRepository movieRepository;
 
     public MovieService() {}
-    public MovieService(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
-    }
+  
 
     public Movie findMovieById(Long id) {
         Optional<Movie> entity = movieRepository.findById(id);      //exceptions worden opgevangen zonder overal throws exception te moeten bijvoegen
