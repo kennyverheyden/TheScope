@@ -145,18 +145,19 @@ SPAN.td
 							<li th:if="${isLoggedIn}==false"><a href="/login" class="button button--tamaya"
 								data-text="login" data-toggle="modal" data-target="#myModal"><span>Login</span></a>
 							</li>
-							<li th:if="${isLoggedIn}==true"><a href="main?logout" class="button button--tamaya"
+							<li th:if="${isLoggedIn}==true"><a href="/main?logout" class="button button--tamaya"
 								data-text="logout" data-toggle="modal" data-target="#myModal"><span>Logout</span></a>
 							</li>
 						</ul>
 					</div>
 				</div>
+					<form action="/home/findMovie" method="post" style="padding:0px;margin:0px;">
 				<div class="product-heading">
 					<div class="con">
-						<input type="text" placeholder="Search Movie">
-						<button type="submit">Go</button>
+						<input type="text" name="searchString" placeholder="Type genre or movie"><button type="submit">Go</button>
 					</div>
 				</div>
+				</form>
 			</div>
 
 		</div>
@@ -177,6 +178,10 @@ SPAN.td
 			</div>
 		</div>
 	</div>
+
+		<div class="container" style="text-align:center;">
+	 <br><script>document.write(new Date().getFullYear())</script> TheScope<br>
+	 </div>
 
 </body>
 </html>

@@ -34,6 +34,10 @@ public class MovieService {
     public List<Movie> findMoviesByGenre (String genre) {
         return movieRepository.findMoviesByGenre(genre);
     }
+    
+    public List<Movie> findMoviesByTitle (String title) {
+        return movieRepository.findMoviesByTitle(title);
+    }
 
     public List<Movie> findAllMovies() {
         List<Movie> movies = movieRepository.findAll();

@@ -55,29 +55,99 @@ public class UserService{
 		return userRoleRepository.findAll();
 	}
 
-	public User findUserByUsername(String username)
+	public User findUserByUsername(String userName)
 	{
-		for (User i:userRepository.findAll())
-		{
-			if(i.getUserName().equals(username))
-			{
-				return i;
-			}
-		}
-		return null;
+		return userRepository.findUserByUserName(userName);
 	}
 
 	// Used for searching users by admin
-	public List<User> findUsers(String userName, String name, String firstName)
+	public List<User> findUsers(String userName, String name, String firstName, String roleName)
 	{
 		List<User> userList = new ArrayList<>();
 		for (User i:userRepository.findAll())
 		{
-			if(i.getUserName().toString().equalsIgnoreCase(userName) || i.getName().toString().equalsIgnoreCase(name) || i.getFirstName().toString().equalsIgnoreCase(firstName) )
+			// Search with rolename and username
+			if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getUserName().toString().equalsIgnoreCase(userName) && name=="" && firstName=="")
 			{
 				userList.add(i);
 			}
-
+			// Search with rolename and username and name
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getUserName().toString().equalsIgnoreCase(userName) && i.getName().toString().equalsIgnoreCase(name)  && firstName=="")
+			{
+				userList.add(i);
+			}
+			// Search with rolename and username and firstname
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getUserName().toString().equalsIgnoreCase(userName) && i.getFirstName().toString().equalsIgnoreCase(firstName)  && name=="")
+			{
+				userList.add(i);
+			}
+			// Search with rolename and name
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getName().toString().equalsIgnoreCase(name) && userName=="" && firstName=="")
+			{
+				userList.add(i);
+			}
+			// Search with rolename and firstname
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getFirstName().toString().equalsIgnoreCase(firstName) && userName=="" && name=="")
+			{
+				userList.add(i);
+			}
+			// Search with rolename and firstname and name
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getFirstName().toString().equalsIgnoreCase(firstName) && i.getName().toString().equalsIgnoreCase(name) && userName=="")
+			{
+				userList.add(i);
+			}
+			// Search with rolename and firstname and name and username
+			else if(roleName!="" && i.getUserRole().toString().equalsIgnoreCase(roleName) && i.getFirstName().toString().equalsIgnoreCase(firstName) && i.getName().toString().equalsIgnoreCase(name) && i.getUserName().toString().equalsIgnoreCase(userName))
+			{
+				userList.add(i);
+			}
+			// Search with rolename without username and without name and without firstname
+			else if(roleName!="" &&  i.getUserRole().toString().equalsIgnoreCase(roleName) && userName=="" && name=="" && firstName=="")
+			{
+				userList.add(i);
+			}
+			else
+			{
+				// Search without rolename
+				if(roleName=="")
+				{
+					// Search with username and name and firstname without rolename
+					if(i.getUserName().toString().equalsIgnoreCase(userName) && i.getName().toString().equalsIgnoreCase(name) && i.getFirstName().toString().equalsIgnoreCase(firstName)) 
+					{
+						userList.add(i);
+					}
+					// Search with username and name without firstname and without rolename
+					if(i.getUserName().toString().equalsIgnoreCase(userName) && i.getName().toString().equalsIgnoreCase(name) && firstName=="") 
+					{
+						userList.add(i);
+					}
+					// Search with username and firstname without name and without rolename
+					else if(i.getUserName().toString().equalsIgnoreCase(userName) && i.getFirstName().toString().equalsIgnoreCase(firstName) && name=="")
+					{
+						userList.add(i);
+					}
+					// Search with firstname without username and without name and without role
+					else if(i.getFirstName().toString().equalsIgnoreCase(firstName) && userName=="" && name=="")
+					{
+						userList.add(i);
+					}
+					// Search with name without username and without firstname and without role
+					else if(i.getName().toString().equalsIgnoreCase(name) && userName=="" && firstName=="")
+					{
+						userList.add(i);
+					}
+					// Search with name and firstname without username and without role
+					else if(i.getName().toString().equalsIgnoreCase(name) && i.getFirstName().toString().equalsIgnoreCase(firstName) && userName=="")
+					{
+						userList.add(i);
+					}
+					// Search with username without name and without firstname and without role
+					else if(i.getUserName().toString().equalsIgnoreCase(userName) && name=="" && firstName=="")
+					{
+						userList.add(i);
+					}
+				}
+			}
 		}
 		return userList;
 	}
@@ -158,7 +228,7 @@ public class UserService{
 	}
 
 	public void updatePassword(String userName, String password) {
-		User user = em.find(User.class,this.findUserByUsername(userName).getPKuser());
+		User user = this.findUserByUsername(userName);
 		String encodedPassword = this.passwordEncoder.encode(password);
 		user.setSecret(encodedPassword);
 		userRepository.save(user);

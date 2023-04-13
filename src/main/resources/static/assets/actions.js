@@ -12,12 +12,11 @@ function show_alert(index) {
 }
 }
 	
-
 function changeSubmitButton(index)
 {
 	if(document.getElementById(index).checked)
 	{
-	document.getElementById("submit"+index).innerHTML="DELETE user";
+	document.getElementById("submit"+index).innerHTML="Delete user";
 	}
 	else
 	document.getElementById("submit"+index).innerHTML="Update details";
