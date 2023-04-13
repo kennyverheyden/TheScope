@@ -1,6 +1,6 @@
 package thescope.controllers;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,13 @@ import thescope.services.MovieService;
 
 @Controller
 public class HomeController {
+
 	@Autowired
 	private MovieService movieService;
-
-	public HomeController() {
-
-	}
-
-
+	
+	public HomeController() {}
+	
+	
 	@GetMapping("/") // get request
 	public String selectGet(Model model) {
 		model.addAttribute("content", "home"); // redirect to movie view (home.html)

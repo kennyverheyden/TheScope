@@ -10,11 +10,13 @@ import thescope.services.UserService;
 
 @Controller
 public class MainController {
+
 	@Autowired
-	private  UserService userService;
+	private UserService userService;
+	
 	public MainController() {}
 
-
+	
 	@GetMapping("/main")
 	public String home(@RequestParam(required = false)String logout, Model model)
 	{

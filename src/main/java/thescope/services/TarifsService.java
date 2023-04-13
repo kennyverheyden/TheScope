@@ -14,8 +14,11 @@ import thescope.repositories.TarifsRepository;
 public class TarifsService {
 
 	@Autowired
-	private  TarifsRepository tarifsRepository;
-
+	private TarifsRepository tarifsRepository;
+	
+	public TarifsService() {}
+	
+	
 	public Tarifs findTarifsById(long id) {		//zoek op id
 		return tarifsRepository.findById(id).get();
 	}

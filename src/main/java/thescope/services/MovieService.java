@@ -17,8 +17,12 @@ public class MovieService {
     /** enkel movierepo is geinjecteerd
      * methoden van JPArepo toegepast ipv entityManager
      * **/
-    @Autowired
+	
+	@Autowired
     private MovieRepository movieRepository;
+
+    public MovieService() {}
+  
 
     public Movie findMovieById(Long id) {
         Optional<Movie> entity = movieRepository.findById(id);      //exceptions worden opgevangen zonder overal throws exception te moeten bijvoegen
@@ -53,13 +57,7 @@ public class MovieService {
     }
 
     public void addMovie(Movie movie) {
-        Movie savedMovie = new Movie();
-        savedMovie.setTitle(movie.getTitle());
-        savedMovie.setGenre(movie.getGenre());
-        savedMovie.setRating(movie.getRating());
-        savedMovie.setLength(movie.getLength());
-        savedMovie.setThreeD(movie.isThreeD());
-        movieRepository.save(savedMovie);        //zelfde functie als persist normaal
+        movieRepository.save(movie);        //zelfde functie als persist normaal
     }
 
     public void deleteMovieById(Long id) {

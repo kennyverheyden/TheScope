@@ -13,12 +13,13 @@ import thescope.services.UserService;
 
 @Controller
 public class AccountController {
+
 	@Autowired
-	private  UserService userService;
+	private UserService userService;
 
-	public AccountController(){
+	public AccountController() {}
+	
 
-	}
 	@GetMapping("/account") // get request
 	public String selectGet(Model model) {
 

@@ -19,9 +19,10 @@ public class GlobalControllerAdvice {
 	@Autowired
 	private UserService userService;
 
-	public GlobalControllerAdvice() {
+	
+	public GlobalControllerAdvice() {}
+	
 
-	}
 	@ModelAttribute("firstNameINmenu")
 	public String firstNameINmenu()
 	{

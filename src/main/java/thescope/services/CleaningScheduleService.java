@@ -14,5 +14,8 @@ public class CleaningScheduleService {
 
     @Autowired
     private BookingRepository bookingRepository;
+    
+    public CleaningScheduleService() {}
 
+    
 }
