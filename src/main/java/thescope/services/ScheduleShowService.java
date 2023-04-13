@@ -12,21 +12,23 @@ import thescope.repositories.ScheduleShowRepository;
 @Transactional
 public class ScheduleShowService {
 
-	private final EntityManager entityManager;
-	private final ScheduleShowRepository scheduleShowRepository;
 	
 	@Autowired
-	public ScheduleShowService(EntityManager entityManager, ScheduleShowRepository scheduleShowRepository) {
-		this.entityManager = entityManager;
+	private  ScheduleShowRepository scheduleShowRepository;
+	
+	public ScheduleShowService() {}
+	public ScheduleShowService(ScheduleShowRepository scheduleShowRepository) {
+		
 		this.scheduleShowRepository = scheduleShowRepository;
 	}
 	
 	public ScheduleShow findScheduleShowById(long id) {
-		ScheduleShow scheduleShow = entityManager.find(ScheduleShow.class, id);
+	
+		ScheduleShow scheduleShow = scheduleShowRepository.findById(id).get();
 		return scheduleShow;
 	}
 	public void addScheduleShow(ScheduleShow scheduleShow) {
-		entityManager.persist(scheduleShow);
+		scheduleShowRepository.save(scheduleShow);
 	}
 	
 }

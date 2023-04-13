@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.models.User;
 import thescope.services.UserService;
@@ -14,9 +15,12 @@ import thescope.services.UserService;
 @Controller
 public class AccountController {
 
-	private final UserService userService;
+	private UserService userService;
 
-	@Autowired
+	
+	public AccountController() {}
+	
+	
 	public AccountController(UserService userService) {
 		this.userService=userService;
 	}

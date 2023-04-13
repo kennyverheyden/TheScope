@@ -14,10 +14,13 @@ import thescope.services.UserService;
 public class SignUpController {
 
 	// Injector login
-	private final UserService userService;
-	private final LoginProcessor loginProcessor;
+	private UserService userService;
+	private LoginProcessor loginProcessor;
 
-	@Autowired
+	
+	public SignUpController() {}
+	
+	
 	public SignUpController(UserService userService, LoginProcessor loginProcessor)
 	{
 		this.userService=userService;

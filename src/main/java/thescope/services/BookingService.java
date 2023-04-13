@@ -14,13 +14,13 @@ import java.util.List;
 @Transactional
 public class BookingService {
 
-    private final EntityManager entityManager;
-    private final BookingRepository bookingRepository;
+	@Autowired
+   private BookingRepository bookingRepository;
 
-    @Autowired
-    public BookingService(EntityManager entityManager, BookingRepository bookingRepository) {
-        this.entityManager = entityManager;
-        this.bookingRepository = bookingRepository;
+   public BookingService() {}
+	
+    public BookingService(BookingRepository bookingRepository) {
+       this.bookingRepository = bookingRepository;
     }
     
     public Booking findBookingById(long id) {

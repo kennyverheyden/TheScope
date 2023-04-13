@@ -18,21 +18,26 @@ import thescope.repositories.UserRoleRepository;
 
 @Service
 @Transactional 
-public class UserService {
-
-	private final UserRepository userRepository;
-	private final UserRoleRepository userRoleRepository;
-	private  PasswordEncoder passwordEncoder;
+public class UserService{
 
 	@Autowired
+	private  UserRepository userRepository;
+	@Autowired
+	private  UserRoleRepository userRoleRepository;
+	private  PasswordEncoder passwordEncoder;
+
+	
+	public UserService() {}
+	
+	
 	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
 		this.userRepository = userRepository;
 		this.userRoleRepository = userRoleRepository;
 		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
 
-	@Autowired
-	private EntityManager em;
+//	@Autowired
+//	private EntityManager em;
 
 	// Global credentials for processing
 	private String userName;
@@ -58,7 +63,7 @@ public class UserService {
 	// Used for searching users by admin
 	public List<User> findUsers(String userName, String name, String firstName, String roleName)
 	{
-		List<User> userList = new ArrayList();
+		List<User> userList = new ArrayList<>();
 		for (User i:userRepository.findAll())
 		{
 			// Search with rolename and username

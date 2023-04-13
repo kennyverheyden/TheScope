@@ -9,9 +9,12 @@ import thescope.services.CleaningScheduleService;
 @Controller
 public class CleaningScheduleController {
 
-	private final CleaningScheduleService cleaningScheduleService;
+	private CleaningScheduleService cleaningScheduleService;
 
-	@Autowired
+	
+	public CleaningScheduleController() {}
+	
+	
 	public CleaningScheduleController(CleaningScheduleService cleaningScheduleService) {
 		this.cleaningScheduleService = cleaningScheduleService;
 	}

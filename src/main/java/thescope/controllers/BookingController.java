@@ -9,9 +9,13 @@ import thescope.services.BookingService;
 @Controller
 public class BookingController {
 	
-	private final BookingService bookingService;
+	
+	private BookingService bookingService;
 
-	@Autowired
+	
+	public BookingController() {}
+	
+	
 	public BookingController(BookingService bookingService) {
 		this.bookingService = bookingService;
 	}

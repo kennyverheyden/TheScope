@@ -16,8 +16,12 @@ public class LoginController {
 
 
 	// Injector login
-	private final LoginProcessor loginProcessor;
-	@Autowired
+	private LoginProcessor loginProcessor;
+	
+	
+	public LoginController() {}
+	
+	
 	public LoginController(LoginProcessor loginProcessor)
 	{
 		this.loginProcessor=loginProcessor;

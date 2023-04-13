@@ -15,18 +15,19 @@ import java.util.List;
 @Transactional
 public class TheaterRoomService {
 
-    private final EntityManager entityManager;
-    private final TheaterRoomRepository theaterRoomRepository;
     
     @Autowired
-    public TheaterRoomService(EntityManager entityManager, TheaterRoomRepository theaterRoomRepository) {
-        this.entityManager = entityManager;
+    private  TheaterRoomRepository theaterRoomRepository;
+    
+    public TheaterRoomService() {}
+    public TheaterRoomService(TheaterRoomRepository theaterRoomRepository) {
+        
         this.theaterRoomRepository = theaterRoomRepository;
     }
 
 
     public TheaterRoom findTheatherRoomById(Long id) {
-        return entityManager.find(TheaterRoom.class, id);
+        return theaterRoomRepository.findById(id).get();
     }
 
    
@@ -37,11 +38,11 @@ public class TheaterRoomService {
     }
 
     public void addTheaterRoom(TheaterRoom theaterRoom) {
-        entityManager.persist(theaterRoom);
+        theaterRoomRepository.save(theaterRoom);
     }
 
     public void deleteTheaterRoomById(Long id) {
-        entityManager.remove(entityManager.find(TheaterRoom.class, id));
+        theaterRoomRepository.deleteById(id);
     }
 
 }

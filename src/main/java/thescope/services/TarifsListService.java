@@ -12,9 +12,10 @@ import thescope.repositories.TarifsListRepository;
 @Transactional
 public class TarifsListService {
 
-	private final TarifsListRepository tarifsListRepository;
-	
 	@Autowired
+	private TarifsListRepository tarifsListRepository;
+	
+	public TarifsListService() {}
 	public TarifsListService(TarifsListRepository tarifsListRepository) {
 		this.tarifsListRepository=tarifsListRepository;
 	}

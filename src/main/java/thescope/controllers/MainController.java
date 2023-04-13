@@ -1,5 +1,6 @@
 package thescope.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +11,12 @@ import thescope.services.UserService;
 @Controller
 public class MainController {
 
-	private final UserService userService;
-	MainController(UserService userService)
+	private UserService userService;
+	
+	
+	public MainController() {}
+	
+	public MainController(UserService userService)
 	{
 		this.userService=userService;
 	}

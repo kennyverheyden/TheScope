@@ -14,10 +14,7 @@ public class ScheduleShowTest {
 	@Autowired
 	private ScheduleShowService sss;
 	
-	@Test
-	public void contextLoads() {
-		System.out.println("Test successfully loaded");
-	}	
+		
 	@Test
 	public void scheduleshowLoadedTest() {
 	ScheduleShow showtest= sss.findScheduleShowById(1);
