@@ -7,24 +7,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.models.User;
 import thescope.services.UserService;
 
 @Controller
 public class AccountController {
+	@Autowired
+	private  UserService userService;
 
-	private UserService userService;
+	public AccountController(){
 
-	
-	public AccountController() {}
-	
-	
-	public AccountController(UserService userService) {
-		this.userService=userService;
 	}
-
 	@GetMapping("/account") // get request
 	public String selectGet(Model model) {
 

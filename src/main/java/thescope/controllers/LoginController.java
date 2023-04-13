@@ -16,17 +16,12 @@ public class LoginController {
 
 
 	// Injector login
-	private LoginProcessor loginProcessor;
-	
-	
-	public LoginController() {}
-	
-	
-	public LoginController(LoginProcessor loginProcessor)
-	{
-		this.loginProcessor=loginProcessor;
-	}
+	@Autowired
+	private  LoginProcessor loginProcessor;
 
+	public LoginController(){
+
+	}
 
 	@GetMapping("/login") // get request
 	public String loginGet(Model model) {

@@ -10,27 +10,20 @@ import thescope.repositories.MovieRepository;
 import thescope.repositories.TheaterRoomRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class TheaterRoomService {
 
-    
     @Autowired
-    private  TheaterRoomRepository theaterRoomRepository;
-    
-    public TheaterRoomService() {}
-    public TheaterRoomService(TheaterRoomRepository theaterRoomRepository) {
-        
-        this.theaterRoomRepository = theaterRoomRepository;
-    }
-
+    private TheaterRoomRepository theaterRoomRepository;
 
     public TheaterRoom findTheatherRoomById(Long id) {
-        return theaterRoomRepository.findById(id).get();
+        Optional<TheaterRoom> entity = theaterRoomRepository.findById(id);
+        TheaterRoom unwrappedTheatherRoom = unwrapTheaterRoom(entity, id);
+        return unwrappedTheatherRoom;
     }
-
-   
 
     public List<TheaterRoom> findAllTheaterRooms() {
         List<TheaterRoom> rooms = theaterRoomRepository.findAll();
@@ -43,6 +36,14 @@ public class TheaterRoomService {
 
     public void deleteTheaterRoomById(Long id) {
         theaterRoomRepository.deleteById(id);
+    }
+
+    public static TheaterRoom unwrapTheaterRoom(Optional<TheaterRoom> entity, Long id) {
+        if (entity.isPresent()) {
+            return entity.get();
+        } else {
+            throw new RuntimeException();
+        }
     }
 
 }

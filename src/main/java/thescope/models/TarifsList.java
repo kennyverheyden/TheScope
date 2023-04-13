@@ -29,9 +29,6 @@ public class TarifsList {	//Dit selecteert het Tarif en aantal en koppelt dit aa
 	
 	@Column(name="Quantity")
 	private long quantity=0;
-	
-	
-	
 
 	public TarifsList() {}
 	

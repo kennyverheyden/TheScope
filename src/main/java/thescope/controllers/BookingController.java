@@ -8,16 +8,11 @@ import thescope.services.BookingService;
 
 @Controller
 public class BookingController {
-	
-	
+	@Autowired
 	private BookingService bookingService;
 
-	
-	public BookingController() {}
-	
-	
-	public BookingController(BookingService bookingService) {
-		this.bookingService = bookingService;
+	public BookingController(){
+
 	}
 
 	@GetMapping("/bookings") // get request

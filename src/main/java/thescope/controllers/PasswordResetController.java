@@ -13,14 +13,12 @@ import thescope.services.UserService;
 
 @Controller
 public class PasswordResetController {
-	private UserService userService;
 
-	
-	
-	public PasswordResetController() {}
-	
-	public PasswordResetController(UserService userService) {
-		this.userService=userService;
+	@Autowired
+	private  UserService userService;
+
+
+	public PasswordResetController() {
 	}
 
 	@GetMapping("/passwordreset") // get request
