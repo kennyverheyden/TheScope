@@ -21,7 +21,7 @@ public class ShopController {
 	@Autowired
 	private ShopListService shopListService;
 	@Autowired
-	private UserService userService; // If your want to print user name on shop page
+	private UserService userService; // If you want to print user name on shop page
 	
 	List<ShopList> filteredProducts = new ArrayList(); // Products FILTERED by category
 	List<ShopList> selectedProducts= new ArrayList(); // Collect SELECTED product from user
@@ -58,7 +58,10 @@ public class ShopController {
 	public String selectProduct(@RequestParam (required = false) Long select, Model model){
 
 		// Collect selected product from user
+		if(select!=null)
+		{
 		selectedProducts.add(shopListService.findShopListById(select));
+		}
 		
 		model.addAttribute("content", "shop"); // Map to shop page
 		model.addAttribute("welcomeName",userService.getName()); // Print user name on shop page
