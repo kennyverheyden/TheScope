@@ -15,21 +15,28 @@ public class TarifsService {
 
 	@Autowired
 	private TarifsRepository tarifsRepository;
-	
-	public TarifsService() {}
-	
-	
-	public Tarifs findTarifsById(long id) {		//zoek op id
+
+	public TarifsService() {
+	}
+
+	public Tarifs findTarifsById(long id) { // zoek op id
 		return tarifsRepository.findById(id).get();
 	}
-	public List<Tarifs> findAllTarifs() {		//maak een lijst met alle tarifs
-		List<Tarifs> tarifsList= tarifsRepository.findAll();
+
+	public List<Tarifs> findAllTarifs() { // maak een lijst met alle tarifs
+		List<Tarifs> tarifsList = tarifsRepository.findAll();
 		return tarifsList;
 	}
-	public void addTarifs(Tarifs tarifs) {		//maak een nieuwe tarifs
+
+	public void addTarifs(Tarifs tarifs) { // maak een nieuwe tarifs
 		tarifsRepository.save(tarifs);
 	}
-	public void ChangeTarifsInactive(long id) {		//enkel actieve tarifs mogen gebruikt worden (vb bij prijsverhoging)
+
+	public void removeTarifs(Tarifs tarifs) { // verwijder een tarifs
+		tarifsRepository.delete(tarifs);
+	}
+
+	public void ChangeTarifsInactive(long id) { // enkel actieve tarifs mogen gebruikt worden (vb bij prijsverhoging)
 		tarifsRepository.findById(id).get().setActive(false);
 	}
 }
