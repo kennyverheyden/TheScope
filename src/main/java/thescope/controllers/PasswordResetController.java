@@ -72,7 +72,6 @@ public class PasswordResetController {
 			rm.addFlashAttribute("message","Your old password is not correct");
 			return "redirect:passwordreset";
 		}
-
 	}
 
 }

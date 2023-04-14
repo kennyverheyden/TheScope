@@ -28,9 +28,6 @@ public class UserController {
 
 		String username = userService.getUserName();
 		// When user is not logged on, the String is null
-
-
-
 		if(username==null)
 		{
 			model.addAttribute("content", "login");
@@ -49,7 +46,6 @@ public class UserController {
 
 	@PostMapping("/users") 
 	public String updateUser(@RequestParam (required = false) String userName, @RequestParam (required = false) String name, @RequestParam (required = false) String firstName, @RequestParam (required = false) String address, @RequestParam (required = false) String postalCode, @RequestParam (required = false) String town, @RequestParam (required = false) String secret, @RequestParam (required = false) String userRole, @RequestParam (required = false) Boolean delete, Model model, RedirectAttributes rm){
-
 
 		if(delete==null) // avoid error Cannot invoke "java.lang.Boolean.booleanValue()" because "delete" is null
 		{

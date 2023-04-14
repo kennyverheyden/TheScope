@@ -33,11 +33,8 @@ public class SignUpController {
 		Long role=5L; // 5 = customer
 		if(!username.equals("") && !password.equals("") && !confirmpassword.equals("") && !name.equals("") && !firstname.equals("") && !address.equals("") && !town.equals(""))
 		{
-
 			if(!userService.userExist(username))
 			{
-
-
 				if(password.equals(confirmpassword))
 				{
 					boolean loggedIn = false;
@@ -56,7 +53,7 @@ public class SignUpController {
 				else
 				{
 					// Check if password boxes are the same
-					model.addAttribute("content", "adduser");
+					model.addAttribute("content", "signup");
 					rm.addFlashAttribute("message","Confirmation password not the same");
 					return "redirect:signup";
 				}

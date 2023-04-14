@@ -19,8 +19,7 @@ public class LoginProcessor {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserRepository userRepository;
+
 	private  PasswordEncoder passwordEncoder;
 	
 	public LoginProcessor()
