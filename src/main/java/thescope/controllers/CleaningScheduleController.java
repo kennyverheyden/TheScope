@@ -9,15 +9,11 @@ import thescope.services.CleaningScheduleService;
 @Controller
 public class CleaningScheduleController {
 
+	@Autowired
 	private CleaningScheduleService cleaningScheduleService;
 
-	
 	public CleaningScheduleController() {}
 	
-	
-	public CleaningScheduleController(CleaningScheduleService cleaningScheduleService) {
-		this.cleaningScheduleService = cleaningScheduleService;
-	}
 
 	@GetMapping("/cleanings") // get request
 	public String selectGet(Model model) {

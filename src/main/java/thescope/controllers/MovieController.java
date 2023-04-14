@@ -13,16 +13,12 @@ import thescope.services.MovieService;
 @Controller
 public class MovieController {
 
+	@Autowired
     private MovieService movieService;
 
-    
     public MovieController() {}
     
-    
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
-    
+
     @GetMapping("/movies") // get request
 	public String selectGet(Model model) {
 		List<Movie> movies = movieService.findAllMovies();

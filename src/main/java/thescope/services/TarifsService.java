@@ -19,10 +19,6 @@ public class TarifsService {
 	public TarifsService() {}
 	
 	
-	public TarifsService(TarifsRepository tarifsRepository) {
-		this.tarifsRepository = tarifsRepository;
-	}
-	
 	public Tarifs findTarifsById(long id) {		//zoek op id
 		return tarifsRepository.findById(id).get();
 	}

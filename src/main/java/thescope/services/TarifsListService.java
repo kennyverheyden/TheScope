@@ -16,9 +16,6 @@ public class TarifsListService {
 	private TarifsListRepository tarifsListRepository;
 	
 	public TarifsListService() {}
-	public TarifsListService(TarifsListRepository tarifsListRepository) {
-		this.tarifsListRepository=tarifsListRepository;
-	}
 	
 	
 	public TarifsList findTarifslistById(long id) {	//zoek op id

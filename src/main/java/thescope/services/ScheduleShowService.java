@@ -17,10 +17,7 @@ public class ScheduleShowService {
 	private  ScheduleShowRepository scheduleShowRepository;
 	
 	public ScheduleShowService() {}
-	public ScheduleShowService(ScheduleShowRepository scheduleShowRepository) {
-		
-		this.scheduleShowRepository = scheduleShowRepository;
-	}
+	
 	
 	public ScheduleShow findScheduleShowById(long id) {
 	

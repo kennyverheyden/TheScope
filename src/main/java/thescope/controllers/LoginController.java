@@ -14,18 +14,10 @@ import thescope.processors.LoginProcessor;
 @Controller
 public class LoginController {
 
-
-	// Injector login
+	@Autowired
 	private LoginProcessor loginProcessor;
-	
-	
+
 	public LoginController() {}
-	
-	
-	public LoginController(LoginProcessor loginProcessor)
-	{
-		this.loginProcessor=loginProcessor;
-	}
 
 
 	@GetMapping("/login") // get request
