@@ -23,6 +23,8 @@ public class TheaterRoom {
 	String location;
 
 	/**construct**/
+	public TheaterRoom() {}
+	
 	public TheaterRoom(int maxNormalSeats, int maxVipSeats, String location) {
 		this.maxNormalSeats = maxNormalSeats;
 		this.maxVipSeats = maxVipSeats;

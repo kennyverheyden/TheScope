@@ -14,14 +14,10 @@ import thescope.processors.LoginProcessor;
 @Controller
 public class LoginController {
 
-
-	// Injector login
-	private final LoginProcessor loginProcessor;
 	@Autowired
-	public LoginController(LoginProcessor loginProcessor)
-	{
-		this.loginProcessor=loginProcessor;
-	}
+	private LoginProcessor loginProcessor;
+
+	public LoginController() {}
 
 
 	@GetMapping("/login") // get request
@@ -47,7 +43,7 @@ public class LoginController {
 		else
 		{
 			model.addAttribute("content", "login");
-			rm.addFlashAttribute("message","Login failed");
+			rm.addFlashAttribute("message","Your credentials are incorrect");
 			return "redirect:login";
 		}
 

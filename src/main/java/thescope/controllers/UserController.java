@@ -11,23 +11,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.User;
+import thescope.models.UserRole;
 import thescope.services.UserService;
 
 @Controller
 public class UserController {
 
-	private final UserService userService;
-
 	@Autowired
-	public UserController(UserService userService) {
-		this.userService=userService;
-	}
+	private UserService userService;
+
+	public UserController() {}
+	
 
 	@GetMapping("/users") // get request
 	public String selectGet(Model model) {
 
 		String username = userService.getUserName();
 		// When user is not logged on, the String is null
+
+
 
 		if(username==null)
 		{
@@ -36,8 +38,12 @@ public class UserController {
 		}
 
 		List<User> users = userService.list();
+		List<UserRole> roles = userService.userRoles();
+
+
 		model.addAttribute("content", "users"); 
 		model.addAttribute("users",users);  // map content to html elements
+		model.addAttribute("roles",roles);  // map content to html elements
 		return "index";
 	}
 
@@ -162,10 +168,12 @@ public class UserController {
 
 	// Admin can search for users
 	@PostMapping("/users/find") 
-	public String findUser(@RequestParam (required = false) String findUserName, @RequestParam (required = false) String findFirstName, @RequestParam (required = false) String findName, Model model, RedirectAttributes rm){
+	public String findUser(@RequestParam (required = false) String findUserName, @RequestParam (required = false) String findFirstName, @RequestParam (required = false) String findName, @RequestParam (required = false) String roleName, Model model, RedirectAttributes rm){
 
-		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName);
+		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName, roleName);
+		List<UserRole> roles = userService.userRoles(); // List is used for dropdown select box
 		model.addAttribute("content", "users"); 
+		model.addAttribute("roles",roles);  // map content to html elements
 		model.addAttribute("users",foundUsers);  // map content to html elements
 		return "index";
 	}

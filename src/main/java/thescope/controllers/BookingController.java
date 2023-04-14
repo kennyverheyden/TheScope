@@ -9,13 +9,12 @@ import thescope.services.BookingService;
 @Controller
 public class BookingController {
 	
-	private final BookingService bookingService;
-
 	@Autowired
-	public BookingController(BookingService bookingService) {
-		this.bookingService = bookingService;
-	}
-
+	private BookingService bookingService;
+	
+	public BookingController() {}
+	
+	
 	@GetMapping("/bookings") // get request
 	public String selectGet(Model model) {
 

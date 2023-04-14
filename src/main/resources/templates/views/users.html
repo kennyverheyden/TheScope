@@ -4,14 +4,25 @@
 <br>
 
 
-<p>Search user</p>
+<p>Search users</p>
 
 
 <div class="table">
 <form action="/users/find" method="post" name="findUser" class="tr">
-<span class="td">Email (userID)<br><input type="text" name="findUserName" style="width:200px"></span>
-<span class="td">Name<br><input type="text" name="findName" style="width:190px"></span>
-<span class="td">Firstname<br><input type="text" name="findFirstName" style="width:190px"></span>
+<span class="td">Email (Username)<br><input type="text" name="findUserName" style="width:200px"></span>
+<span class="td">Name<br><input type="text" name="findName" style="width:170px"></span>
+<span class="td">Firstname<br><input type="text" name="findFirstName" style="width:170px"></span>
+<span class="td">
+Rolename<br>
+<select name="roleName">
+<option value="" selected></option>
+    <option
+            th:each="roleName : ${roles}"
+            th:text="${roleName.getRoleName}"
+            th:value="${roleName.getRoleName}">
+    </option>
+</select>
+</span>
 <span class="td"><br><button type="submit">Search</button></span>
 </form>
 </div>
@@ -24,19 +35,19 @@
 	
 <br>
      
- <span style="font-size:15px;"><strong>Five users are preloaded, use the search button to find users </strong></span>
+ <span style="font-size:12px;"><strong>* Only 50 users are preloaded, use the search button to find users </strong></span>
 <div class="table">
 
-<form action="/users" method="post" class="tr" th:each="user, index: ${users}" th:unless="${index.index > 4}">
+<form action="/users" method="post" class="tr" th:each="user, index: ${users}" th:unless="${index.index > 49}">
 
 <span class="td">
 <strong>Username/role</strong><br>
 <span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
-            th:each="role : ${T(thescope.models.UserRoleNames).values()}"
-            th:text="${role.string}"
-            th:value="${role.string}"  th:selected="${ #strings.equals(role.string, user.userRole)}">
+            th:each="role : ${roles}"
+            th:text="${role.getRoleName}"
+            th:value="${role.getRoleName}"  th:selected="${ #strings.equals(role.getRoleName, user.userRole)}">
     </option>
 </select>
 </span>
@@ -61,12 +72,12 @@
 
 <span class="td">
 <strong>Delete?</strong><br>
- &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:show_alert(' + ${index.index} + ')'">
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButton(' + ${index.index} + ')'">
 </span>
 
 <span class="td">
 <br>
-<button type="submit">Update details</button>
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:100px;">Update details</button>
 </span>
 
 </form>

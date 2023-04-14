@@ -13,16 +13,13 @@ import thescope.services.UserService;
 @Controller
 public class SignUpController {
 
-	// Injector login
-	private final UserService userService;
-	private final LoginProcessor loginProcessor;
-
 	@Autowired
-	public SignUpController(UserService userService, LoginProcessor loginProcessor)
-	{
-		this.userService=userService;
-		this.loginProcessor=loginProcessor;
-	}
+	private UserService userService;
+	@Autowired
+	private LoginProcessor loginProcessor;
+
+	public SignUpController() {}
+	
 
 	@GetMapping("/signup") // get request
 	public String loginGet(Model model) {

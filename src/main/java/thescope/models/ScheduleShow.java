@@ -1,64 +1,59 @@
 package thescope.models;
 
+import java.sql.Date;
+import java.sql.Time;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-@Entity(name="tblScheduleShow")
+@Entity(name = "tblScheduleShow")
 public class ScheduleShow {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long PKscheduleShow;
-	
-	String movie;
-	String room;
-	
-	@Column(name="time")
-	String time;
-	
-	@Column(name="date")
-	String date;
-	
-	public ScheduleShow(String movie, String room, String time, String date)
-	{
-		this.movie=movie;
-		this.room=room;
-		this.time=time;
-		this.date=date;
+
+	@ManyToOne
+	@JoinColumn(name = "FKMovie")
+	private Movie movie;
+
+	@ManyToOne
+	@JoinColumn(name = "FKtheaterRoom")
+	private TheaterRoom theaterRoom;
+
+	@Column(name = "time")
+	Time time;
+
+	@Column(name = "date")
+	Date date;
+
+	public ScheduleShow() {
 	}
 
-	public String getMovie() {
+	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, Time time, Date date)
+
+	{
+		this.movie = movie;
+		this.theaterRoom = theaterRoom;
+		this.time = time;
+		this.date = date;
+	}
+
+	public Movie getMovie() {
 		return movie;
 	}
 
-	public void setMovie(String movie) {
+	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
 
-	public String getRoom() {
-		return room;
+	public long getPKscheduleShow() {
+		return PKscheduleShow;
 	}
 
-	public void setRoom(String room) {
-		this.room = room;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}	
 }
+

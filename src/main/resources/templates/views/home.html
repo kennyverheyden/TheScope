@@ -4,6 +4,15 @@
 <br>
 
     <br>
+    
+    <span th:text="${title}"></span>
+    <div class="table">
+<div class="tr"  th:each="movie: ${movies}" style="font-weigh:bold;font-size:14px;color:darkblue;">
+<span class="td" th:text="${movie.title}"></span>
+<span class="td" th:text="${movie.genre}"></span>
+<span class="td" th:text="${movie.rating}+' rating'"></span>
+</div>
+</div>
   
     <table>
     <tr><td style="text-align:left;font-weight:bold" colspan="3">Testdata<br><span style="font-size:12px">* Menu options depends on user role</span><br><br></td></tr>

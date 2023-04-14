@@ -1,25 +1,30 @@
 package thescope.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name= "tblTarifs")
-public class Tarifs {
+public class Tarifs {	//Dit zijn de verschillende tarieven mogelijk te kiezen
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name= "PKtarif_id")
 	private long id;
+	@Column(name="tarifName")
 	private String name;
+	@Column(name="priceTaxexcl")
 	private double priceTaxExcl;
+	@Column(name="priceTaxincl")
 	private double priceTaxIncl;
+	@Column(name="3Dsurcharge")
 	private double ThreeDSurcharge;
+	@Column(name="Active")
 	private boolean active;
 	
 	public Tarifs() {}
-	
-	
-	
+
 	public String getName() {
 		return name;
 	}

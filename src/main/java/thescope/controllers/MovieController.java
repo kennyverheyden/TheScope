@@ -1,6 +1,7 @@
 package thescope.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +13,12 @@ import thescope.services.MovieService;
 @Controller
 public class MovieController {
 
-    private final MovieService movieService;
+	@Autowired
+    private MovieService movieService;
 
-    @Autowired
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
+    public MovieController() {}
     
+
     @GetMapping("/movies") // get request
 	public String selectGet(Model model) {
 		List<Movie> movies = movieService.findAllMovies();

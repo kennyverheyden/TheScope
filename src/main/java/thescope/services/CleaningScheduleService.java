@@ -12,12 +12,10 @@ import java.util.List;
 @Transactional
 public class CleaningScheduleService {
 
-    private final EntityManager entityManager;
-    private final BookingRepository bookingRepository;
-
     @Autowired
-    public CleaningScheduleService(EntityManager entityManager, BookingRepository bookingRepository) {
-        this.entityManager = entityManager;
-        this.bookingRepository = bookingRepository;
-    }
+    private BookingRepository bookingRepository;
+    
+    public CleaningScheduleService() {}
+
+    
 }

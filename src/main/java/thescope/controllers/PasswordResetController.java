@@ -13,12 +13,12 @@ import thescope.services.UserService;
 
 @Controller
 public class PasswordResetController {
-	private final UserService userService;
-
+	
 	@Autowired
-	public PasswordResetController(UserService userService) {
-		this.userService=userService;
-	}
+	private UserService userService;
+
+	public PasswordResetController() {}
+	
 
 	@GetMapping("/passwordreset") // get request
 	public String selectGet(Model model) {
@@ -38,21 +38,30 @@ public class PasswordResetController {
 	}
 
 	@PostMapping("/passwordreset") 
-	public String commentPost(@RequestParam (required = false) String userName, @RequestParam (required = false) String password, @RequestParam (required = false) String confirmPassword, Model model, RedirectAttributes rm){
-
-		if(!password.equals("") && !confirmPassword.equals(""))
-		{
-			if(password.equals(confirmPassword))
+	public String commentPost(@RequestParam (required = false) String userName, @RequestParam (required = false) String oldPassword, @RequestParam (required = false) String password, @RequestParam (required = false) String confirmPassword, Model model, RedirectAttributes rm){
+		if(userService.getSecret().equals(oldPassword))
+		{		
+			if(!password.equals("") && !confirmPassword.equals(""))
 			{
-				userService.updatePassword(userName, password);
-				model.addAttribute("content", "passwordreset");
-				rm.addFlashAttribute("message","Password succesfully changed");
-				return "redirect:passwordreset";
+				if(password.equals(confirmPassword))
+				{
+					userService.updatePassword(userName, password);
+					model.addAttribute("content", "passwordreset");
+					rm.addFlashAttribute("message","Password succesfully changed");
+					return "redirect:passwordreset";
+				}
+				else
+				{
+					model.addAttribute("content", "passwordreset");
+					rm.addFlashAttribute("message","Password not the same as confirmation password");
+					return "redirect:passwordreset";
+				}
 			}
 			else
 			{
+				// Check if all fields are filled in
 				model.addAttribute("content", "passwordreset");
-				rm.addFlashAttribute("message","Password not the same as confirmation password");
+				rm.addFlashAttribute("message","Fill in all fields");
 				return "redirect:passwordreset";
 			}
 		}
@@ -60,7 +69,7 @@ public class PasswordResetController {
 		{
 			// Check if all fields are filled in
 			model.addAttribute("content", "passwordreset");
-			rm.addFlashAttribute("message","Fill in all fields");
+			rm.addFlashAttribute("message","Your old password is not correct");
 			return "redirect:passwordreset";
 		}
 

@@ -4,93 +4,111 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name="tblShopList")
 public class ShopList {
-	
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long PKshop;
-	
-	@Column(name="artNO")
-    long articleId;
-	
+
+	//	@Column(name="artNO")
+	//    long articleId;
+
 	@Column(name="description")
-    String description;
-	
-	@Column(name="inStock")
-    int inStock; // How many left
-	
-	@Column(name="orderQuantity")
-    int orderQuantity;
-	
+	String description;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="category")
+	ShopCategory category;
+
+	@Column(name="stock")
+	int inStock; // How many left
+
+	@Column(name="orderQTY")
+	int orderQuantity;
+
 	@Column(name="priceTAXexcl")
-    BigDecimal priceTaxEx;
-	
+	Double priceTaxEx;
+
 	@Column(name="priceTAXincl")
-    BigDecimal priceTaxIn;
+	Double priceTaxIn;
 
 
-    /**construct**/
-    public ShopList(long articleId, String description, int inStock, int orderQuantity, BigDecimal priceTaxEx, BigDecimal priceTaxIn) {
-        this.articleId = articleId;
-        this.description = description;
-        this.inStock = inStock;
-        this.orderQuantity = orderQuantity;
-        this.priceTaxEx = priceTaxEx;
-        this.priceTaxIn = priceTaxIn;
-    }
+	/**construct**/
+	public ShopList() {}
 
-    /**get&set**/
-    public long getArticleId() {
-        return articleId;
-    }
+	public ShopList(String description, ShopCategory category, int inStock, int orderQuantity, Double priceTaxEx, Double priceTaxIn) {
 
-    public void setArticleId(long articleId) {
-        this.articleId = articleId;
-    }
+		this.description = description;
+		this.inStock = inStock;
+		this.orderQuantity = orderQuantity;
+		this.priceTaxEx = priceTaxEx;
+		this.priceTaxIn = priceTaxIn;
+		this.category=category;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	/**get&set**/
+	public long getArticleId() {
+		return PKshop;
+	}
+	
+	//
+	//    public void setArticleId(long articleId) {
+	//        this.articleId = articleId;
+	//    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public int isInStock() {
-        return inStock;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setInStock(int inStock) {
-        this.inStock = inStock;
-    }
+	public ShopCategory getCategory() {
+		return category;
+	}
 
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
+	public void setCategory(ShopCategory category) {
+		this.category = category;
+	}
 
-    public void setOrderQuantity(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
-    }
+	public int isInStock() {
+		return inStock;
+	}
 
-    public BigDecimal getPriceTaxIn() {
-        return priceTaxIn;
-    }
+	public void setInStock(int inStock) {
+		this.inStock = inStock;
+	}
 
-    public void setPriceTaxIn(BigDecimal priceTaxIn) {
-        this.priceTaxIn = priceTaxIn;
-    }
+	public int getOrderQuantity() {
+		return orderQuantity;
+	}
 
-    public BigDecimal getPriceTaxEx() {
-        return priceTaxEx;
-    }
+	public void setOrderQuantity(int orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
 
-    public void setPriceTaxEx(BigDecimal priceTaxEx) {
-        this.priceTaxEx = priceTaxEx;
-    }
+	public Double getPriceTaxIn() {
+		return priceTaxIn;
+	}
+
+	public void setPriceTaxIn(Double priceTaxIn) {
+		this.priceTaxIn = priceTaxIn;
+	}
+
+	public Double getPriceTaxEx() {
+		return priceTaxEx;
+	}
+
+	public void setPriceTaxEx(Double priceTaxEx) {
+		this.priceTaxEx = priceTaxEx;
+	}
 }

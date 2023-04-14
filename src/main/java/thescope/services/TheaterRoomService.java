@@ -1,45 +1,40 @@
 package thescope.services;
 
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import thescope.models.Movie;
-import thescope.repositories.MovieRepository;
+import thescope.models.TheaterRoom;
+import thescope.repositories.TheaterRoomRepository;
+
 import java.util.List;
 
 @Service
 @Transactional
 public class TheaterRoomService {
 
-    private final EntityManager entityManager;
-    private final MovieRepository movieRepository;
     @Autowired
-    public TheaterRoomService(EntityManager entityManager, MovieRepository movieRepository) {
-        this.entityManager = entityManager;
-        this.movieRepository = movieRepository;
+    private  TheaterRoomRepository theaterRoomRepository;
+    
+    public TheaterRoomService() {}
+  
+    
+    public TheaterRoom findTheatherRoomById(Long id) {
+        return theaterRoomRepository.findById(id).get();
     }
 
+   
 
-    public Movie findMovieById(Long id) {
-        return entityManager.find(Movie.class, id);
+    public List<TheaterRoom> findAllTheaterRooms() {
+        List<TheaterRoom> rooms = theaterRoomRepository.findAll();
+        return rooms;
     }
 
-    public Movie findMovieByGenre(String genre) {
-        return entityManager.find(Movie.class, genre);
+    public void addTheaterRoom(TheaterRoom theaterRoom) {
+        theaterRoomRepository.save(theaterRoom);
     }
 
-    public List<Movie> findAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies;
-    }
-
-    public void addMovie(Movie movie) {
-        entityManager.persist(movie);
-    }
-
-    public void deleteMovieById(Long id) {
-        entityManager.remove(entityManager.find(Movie.class, id));
+    public void deleteTheaterRoomById(Long id) {
+        theaterRoomRepository.deleteById(id);
     }
 
 }
