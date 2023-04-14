@@ -30,7 +30,7 @@ public class TarifsTest {
 		testTarifs.setPriceTaxExcl(97);
 		ts.addTarifs(testTarifs);
 		assertEquals(4, ts.findAllTarifs().size());
-		// ts.removeTarif();
+		ts.removeTarifs(testTarifs);
 	}
 
 	@Test
