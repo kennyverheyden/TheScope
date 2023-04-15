@@ -1,40 +1,29 @@
 <div th:fragment="signup">
 
-	<h2>Welkom, create your account</h2>
+	<h2>Welcome, create your account</h2>
 	<br>
 
-	<div style="background-color: #bdc6fc; width: 600px; text-align: left; padding: 5px; font-family: verdana;">
+	<div style="background-color: #bdc6fc; width: 600px; text-align: right; padding: 5px; font-family: verdana;">
 		<form action="/signup" method="post">
-		<label for="username">Email (userID)</label>
-		<input type="text" name="username"><br>
-		
-		<label for="name">Name</label>
-		<input type="text" name="name"><br>
-		
-		<label for="firstname">Firstname</label>
-		<input type="text" name="firstname"><br>
-		
-		<label for="address">Address</label>
-		<input type="text" name="address"><br>
-		
-		<label for="postalcode">Postal code</label>
-		<input type="text" name="postalcode"><br>
-		
-		<label for="town">Town</label>
-		<input type="text" name="town"><br>
-		
-		<label for="password">New Password</label>
-		<input type="password" name="password"><br>
-		
-		<label for="confirmpassword">Confirm password</label>
-		<input type="password" name="confirmpassword"><br>
-
+		Email (userID)
+		<input type="text" name="username" style="width:180px;"><br><br>
+		Name <input type="text" name="name" style="width:180px;"><br><br>
+		First name <input type="text" name="firstname" style="width:180px;"><br><br>
+		Address <input type="text" name="address" style="width:180px;"><br><br>
+		Postal code <input type="text" name="postalcode" style="width:180px;"><br><br>
+		Town <input type="text" name="town" style="width:180px;"><br><br>
+		New password <input type="password" name="password" style="width:180px;"><br><br>
+		Confirm password <input type="password" name="confirmpassword" style="width:180px;"><br><br>
 		<button type="submit">Submit</button>
 		</form>
+		<br>
+		<p>
+<strong th:text="${message}"></strong>
+</p>
+		
+	</div>
 		
 		<br>
-<strong>
-<p th:text="${message}"></p>
-</strong>
+
 
 	</div>

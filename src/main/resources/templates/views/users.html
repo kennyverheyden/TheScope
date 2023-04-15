@@ -15,7 +15,7 @@
 <span class="td">
 Rolename<br>
 <select name="roleName">
-<option value="" selected></option>
+<option selected value="">Select role</option>
     <option
             th:each="roleName : ${roles}"
             th:text="${roleName.getRoleName}"
@@ -42,7 +42,7 @@ Rolename<br>
 
 <span class="td">
 <strong>Username/role</strong><br>
-<span th:text="${user.userName}"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
+<span th:text="${user.userName}" style="display:block; width:180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;font-size:11px"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
             th:each="role : ${roles}"
@@ -53,7 +53,7 @@ Rolename<br>
 </span>
 
 <span class="td">
-<strong>Name/Firstname</strong><br>
+<strong>Name/First name</strong><br>
 <input th:value="${user.name}" type="text" name="name"><br>
 <input th:value="${user.firstName}" type="text" name="firstName">
 </span>
@@ -67,11 +67,8 @@ Rolename<br>
 
 <span class="td">
 <strong>Password</strong><br>
-<input type="password" name="secret">
-</span>
-
-<span class="td">
-<strong>Delete?</strong><br>
+<input type="password" name="secret"><br><br>
+<strong>Delete?</strong>
  &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButton(' + ${index.index} + ')'">
 </span>
 

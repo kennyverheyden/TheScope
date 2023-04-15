@@ -6,33 +6,23 @@
 <p><strong><span th:text="${userName}"></span></strong></p>
 <br><br>
 
+<div style="background-color: #bdc6fc; width: 400px; text-align: right; padding: 5px; font-family: verdana;">
 	<form action="/account" method="post">
-	<input type="hidden" name="userName" th:value="${userName}" readonly>
-
-		<label for="name">Name</label>
-		<input type="text" name="name" th:value="${name}"><br>
-		
-		<label for="firstname">Firstname</label>
-			<input type="text" name="firstName"
-			th:value="${firstName}"><br>
-			
-			<label for="address">Address</label>
-			<input type="text" name="address"
-			th:value="${address}"><br>
-			
-			<label for="postalCode">Postal code</label>
-			<input type="text" name="postalCode"
-			th:value="${postalCode}"><br>
-			
-			<label for="town">Town</label>
-			<input type="text" name="town"
-			th:value="${town}"><br>
-
-		<button type="submit">Update your profile</button>
+			<input type="hidden" name="userName" th:value="${userName}"><br>
+			Name <input type="text" name="name" th:value="${name}" style="width:180px;"><br><br>
+			First name <input type="text" name="firstName" th:value="${firstName}" style="width:180px;"><br><br>
+			Address <input type="text" name="address" th:value="${address}" style="width:180px;"><br><br>
+			Postal code <input type="text" name="postalCode" th:value="${postalCode}" style="width:180px;"><br><br>
+			Town <input type="text" name="town" th:value="${town}" style="width:180px;"><br><br>
+			<button type="submit">Update your profile</button>
 	</form>
-
-	<strong>
-		<p th:text="${message}"></p>
-	</strong>
+	<br>
+	<p>
+		<strong th:text="${message}"></strong>
+	</p>
+	
+	</div>
+	
+		
 
 </div>

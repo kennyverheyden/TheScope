@@ -1,5 +1,6 @@
 package thescope.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,15 @@ public class ShopListService {
 	public List<ShopList> findByCatFilter(String cat)
 	{
 		List<ShopList> products = shopListRepository.findAll();
-		for(int i=0;i<products.size();i++)
+		List<ShopList> filteredProducts = new ArrayList();
+		for(ShopList product:products)
 		{
-			if(!products.get(i).getCategory().toString().equalsIgnoreCase(cat))
+			if(product.getCategory().toString().equalsIgnoreCase(cat))
 			{
-				products.remove(i);
+				filteredProducts.add(product);
 			}
 		}
-		return products;
+		return filteredProducts;
 	}
 
 	public ShopList findShopListById(long id) {

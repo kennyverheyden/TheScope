@@ -2,48 +2,71 @@
   
 <h2>Shop</h2>
 <br>
-<div style="width:500px;  padding:16px;  font-family: sans-serif; letter-spacing: 4px;">    
+ 
 
-    <table style="width: 100%; border-collapse: collapse;" border="1">
+<table style="border:0px solid #000000">
 <tbody>
-<tr><td style="width: 30%;">
+
+<tr><td style="width:250px;vertical-align:top;">
+
 <div>
+
+<h5>Categories:</h5><br>
+
 <form action="/shop/filter" method="post">
-  <label for="category">Categories:
-  </label>
-  <select name="cat" size="4" multiple style="width: 100%;">
-<option value="Drinks">Drinks</option>
-<option value="Candy">Candy</option>
-<option value="Popcorn">Popcorn</option>
-<option value="Chips">Chips</option>
+<select name="cat" size="4" style="width:150px;height:160px;border:0px;" multiple>
+<option value="DRINKS">Drinks</option>
+<option value="CANDY">Candy</option>
+<option value="POPCORN">Popcorn</option>
+<option value="CHIPS">Chips</option>
 </select>
-<button type="submit">Filter</button>
+<br><br>
+<button type="submit" style="width:120px;">Filter</button>
 </form>
+
 </div>
 
-</td><td style="width: 70%;"> 
+</td><td style="vertical-align:top;"> 
 
-  <label for="products">Chose products:</label><br>
-  <select id="products" name="products" multiple>
+  <h5>Choose products:</h5><br>
+  <form action="/shop/select" method="post">
+  <select name="select" multiple style="border:0px;width:390px;height:250px;">
     <option th:each="product : ${products}" th:value="${product.getArticleId()}" th:text="${product.getDescription() + ' - €' + product.getPriceTaxIn}">
     </option>
 </select>
+<br><br>
+<button type="submit" style="width:120px;">Add to list</button>
+</form>
 
 </td></tr>
-<tr><td>
+
+<tr><td><br><td></td></tr> <!-- Add break for layout -->
+
+<tr><td style="text-align:left;vertical-align:top;">
   
-  <div th:if="${isLoggedIn}==true"> <label for="user" >User information:</label>
-  <br>
-    <span th:text="${welcomeName}"></span> &nbsp;(<span th:text="${role}"></span>)
-    </div>
+  <div th:if="${isLoggedIn}==true"><h5>User information:</h5><br>
+  <span th:text="${welcomeName}"></span> &nbsp;(<span th:text="${role}"></span>)
+  </div><br>
+  
+  <img th:src="@{/assets/shop.png}" width="200" height="150" alt="TheScope shop" title="TheScope shop">
     
-    </td><td>
+ </td><td style="vertical-align:top;">
     
-    <div>
-    <label for="products">Shopping list:</label>
-    </div>
-    
-    </td></tr>
+    <h5>Shopping list:</h5><br>
+    <form action="/shop">
+      <select id="selectedProducts" name="selectedProducts" multiple style="border:0px;width:390px;height:200px">
+    <option th:each="product : ${selectedProducts}" th:value="${product.getArticleId()}" th:text="${product.getDescription() + ' - €' + product.getPriceTaxIn}">
+    </option>
+</select>
+<br><br>
+<button style="width:120px;" th:onclick="'alert(\'Thank you for buying!\');'">Buy</button>
+</form>
+<br>
+<form action="/shop/clearSelectedItems" method="post">
+<button type="submit" style="width:120px;">Clear</button>
+</form>
+
+</td></tr>
 </tbody>
 </table>
     

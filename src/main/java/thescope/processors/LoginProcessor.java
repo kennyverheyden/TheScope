@@ -5,6 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
+
+import thescope.models.User;
 import thescope.repositories.UserRepository;
 import thescope.services.UserService;
 
@@ -17,8 +19,7 @@ public class LoginProcessor {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserRepository userRepository;
+
 	private  PasswordEncoder passwordEncoder;
 	
 	public LoginProcessor()
@@ -34,15 +35,15 @@ public class LoginProcessor {
 		userService.setSecret(secret);
 		
 		// Check if username and password exist
-		for(int i=0;i<userRepository.findAll().size();i++)
+		for(User user:userService.list())
 		{
-			if(userRepository.findAll().get(i).getUserName().equals(userService.getUserName()) && passwordEncoder.matches(userService.getSecret(),userRepository.findAll().get(i).getSecret()))
+			if(user.getUserName().equals(userService.getUserName()) && passwordEncoder.matches(userService.getSecret(),user.getSecret()))
 			{
 				// Shown on logged welcome page
-				userService.setName(userRepository.findAll().get(i).getName());
-				userService.setFirstname(userRepository.findAll().get(i).getFirstName());
-				userService.setUserRole(userRepository.findAll().get(i).getUserRole().getRoleName());
-				userService.setRoleID(userRepository.findAll().get(i).getUserRole().getPKuserRole());
+				userService.setName(user.getName());
+				userService.setFirstname(user.getFirstName());
+				userService.setUserRole(user.getUserRole().getRoleName());
+				userService.setRoleID(user.getUserRole().getPKuserRole());
 				return true;
 			}
 		}
