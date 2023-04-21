@@ -10,7 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import thescope.models.Booking;
 import thescope.models.ShopList;
+import thescope.models.ShopListLine;
+import thescope.models.ShopListOrder;
+import thescope.services.BookingService;
+import thescope.services.ShopListLineService;
+import thescope.services.ShopListOrderService;
 import thescope.services.ShopListService;
 import thescope.services.UserService;
 
@@ -22,10 +29,17 @@ public class ShopController {
 	private ShopListService shopListService;
 	@Autowired
 	private UserService userService; // If you want to print user name on shop page
+	@Autowired
+	ShopListLineService shopListLineService;
+	@Autowired
+	ShopListOrderService shopListOrderService;
+	@Autowired
+	BookingService bookingService;
 	
 	List<ShopList> filteredProducts = new ArrayList(); // Products FILTERED by category
 	List<ShopList> selectedProducts= new ArrayList(); // Collect SELECTED product from user
 
+	
 	public ShopController() {}
 
 	@GetMapping("/shop") // get request
@@ -85,4 +99,28 @@ public class ShopController {
 		return "index";
 	}
 
+	@PostMapping("/shop/buySelectedItems")
+	public String buySelectedItems(Model model) {
+		System.out.println("Hallokes " +userService.getName());
+		
+		
+		Booking currentBooking= bookingService.findBookingByUser(userService.getName());
+		System.out.println(currentBooking.getPKbooking()+" aaaaaaaa");
+	
+		for (ShopList shopList : selectedProducts) {
+			ShopListLine s=new ShopListLine(shopList,1);
+			shopListLineService.addShopListLine(s);
+			shopListOrderService.addShopListOrder(new ShopListOrder(currentBooking,s ));
+		}
+		selectedProducts.clear();
+		
+		
+		model.addAttribute("content", "shop"); // Map to shop page
+		model.addAttribute("welcomeName",userService.getName()); // Print user name on shop page
+		model.addAttribute("role",userService.getUserRole()); // Print user role name on shop page
+		model.addAttribute("products",shopListService.findAll()); // Otherwise the choose products will be empty
+		model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
+		return "index";
+		
+	}
 }

@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Entity(name="tblshopListline")
+@Entity(name="tblShopListLine")
 public class ShopListLine {
 
 	@Id
@@ -20,9 +20,18 @@ public class ShopListLine {
 	
 	private long quantity;
 	
+	public ShopListLine() {}
+	
+	public ShopListLine(ShopList shopList, long quantity) {
+		this.shopList= shopList;
+		this.quantity = quantity;
+	}
+	
+	
 	public ShopList getShopList() {
 		return shopList;
 	}
+	
 	public void setShopList(ShopList shopList) {
 		this.shopList = shopList;
 	}
