@@ -40,7 +40,10 @@ public class UserService{
 	public List<User> list() {
 		return userRepository.findAll();
 	}
-
+	public User findUserById(long id) {
+		return userRepository.findById(id).get();
+	}
+	
 	public List<UserRole> userRoles() {
 		return userRoleRepository.findAll();
 	}

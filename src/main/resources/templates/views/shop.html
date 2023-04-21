@@ -58,8 +58,9 @@
     <option th:each="product : ${selectedProducts}" th:value="${product.getArticleId()}" th:text="${product.getDescription() + ' - €' + product.getPriceTaxIn}">
     </option>
 </select>
-<br><br>
-<button style="width:120px;" th:onclick="'alert(\'Thank you for buying!\');'">Buy</button>
+<br><br></form>
+<form action="/shop/buySelectedItems" method="post" th:if="${isCustomer}==true" th:onclick="'alert(\'Artikelen toegevoegd aan uw order!\');'">
+<button style="width:120px;" type="submit">Buy</button>
 </form>
 <br>
 <form action="/shop/clearSelectedItems" method="post">

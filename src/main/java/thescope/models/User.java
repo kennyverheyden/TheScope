@@ -9,8 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
-@Entity(name="tblUsers")
+@Entity
+@Table(name="tblUsers")
 public class User {
 
 	@Id

@@ -79,7 +79,7 @@ SPAN.td
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/movies">Movies</a></li>
-										<li><a href="">Index-II</a></li>
+										<li><a href="/shedule">Shedule</a></li>
 										<li><a href="">Index-III</a></li>
 										<li><a href="">Index-IV</a></li>
 									</ul></li>
@@ -93,7 +93,7 @@ SPAN.td
 										<li><a href="">Index-IV</a></li>
 									</ul></li>
 									
-									<li class="parent"><a href="/shop">Shop</a>
+									<li class="parent" th:if="${isCustomer}==true"><a href="/shop">Shop</a>
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/shop">Shop</a></li>
