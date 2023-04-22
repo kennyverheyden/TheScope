@@ -79,8 +79,8 @@ SPAN.td
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/movies">Movies</a></li>
+										<li th:if="${isAdmin==true or isDesk}"><a href="/addmovies">Add movie</a></li>
 										<li><a href="/shedule">Shedule</a></li>
-										<li><a href="">Index-III</a></li>
 										<li><a href="">Index-IV</a></li>
 									</ul></li>
 

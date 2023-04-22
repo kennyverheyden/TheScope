@@ -7,6 +7,7 @@ import thescope.exceptions.MovieNotFoundException;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,64 +15,82 @@ import java.util.Optional;
 @Transactional
 public class MovieService {
 
-    /** enkel movierepo is geinjecteerd
-     * methoden van JPArepo toegepast ipv entityManager
-     * **/
-	
+	/** enkel movierepo is geinjecteerd
+	 * methoden van JPArepo toegepast ipv entityManager
+	 * **/
+
 	@Autowired
-    private MovieRepository movieRepository;
+	private MovieRepository movieRepository;
 
-    public MovieService() {}
-  
+	public MovieService() {}
 
-    public Movie findMovieById(Long id) {
-        Optional<Movie> entity = movieRepository.findById(id);      //exceptions worden opgevangen zonder overal throws exception te moeten bijvoegen
-        Movie unwrappedMovie = unwrapMovie(entity, id);
-        return unwrappedMovie;
-    }
 
-    public List<Movie> findMoviesByGenre (String genre) {
-        return movieRepository.findMoviesByGenre(genre);
-    }
-    
-    public List<Movie> findMoviesByTitle (String title) {
-        return movieRepository.findMoviesByTitle(title);
-    }
+	public Movie findMovieById(Long id) {
+		Optional<Movie> entity = movieRepository.findById(id);      //exceptions worden opgevangen zonder overal throws exception te moeten bijvoegen
+		Movie unwrappedMovie = unwrapMovie(entity, id);
+		return unwrappedMovie;
+	}
 
-    public List<Movie> findAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies;
-    }
+	public List<Movie> findMoviesByGenre (String genre) {
+		return movieRepository.findMoviesByGenre(genre);
+	}
 
-    //functies enkel toegankelijk na authenticatie als manager, etc ..
-    public Movie updateMovie(Movie movie, Long id) {
-        Optional<Movie> entity = movieRepository.findById(id);
-        Movie unwrappedMovie = unwrapMovie(entity, id);
-        unwrappedMovie.setTitle(movie.getTitle());
-        unwrappedMovie.setGenre(movie.getGenre());
-        unwrappedMovie.setLength(movie.getLength());
-        unwrappedMovie.setRating(movie.getRating());
-        unwrappedMovie.setThreeD(movie.isThreeD());
-        movieRepository.save(unwrappedMovie);
-        return unwrappedMovie;
-    }
+	public List<Movie> findMoviesByTitle (String title) {
+		return movieRepository.findMoviesByTitle(title);
+	}
 
-    public void addMovie(Movie movie) {
-        movieRepository.save(movie);        //zelfde functie als persist normaal
-    }
+	public List<Movie> findAllMovies() {
+		List<Movie> movies = movieRepository.findAll();
+		return movies;
+	}
 
-    public void deleteMovieById(Long id) {
-        Optional<Movie> entity = movieRepository.findById(id);
-        Movie unwrappedMovie = unwrapMovie(entity, id);
-        movieRepository.delete(unwrappedMovie);
-    }
+	// Make list of genres without duplicates
+	// Used for html frontend, select a genre
+	public List<String> getGenres() {
+		List<String> genres = new ArrayList();
+		List<Movie> movies = movieRepository.findAll();
+		for(int i=0;i<movies.size();i++){
+			boolean duplicate = false;
+			int j=0;
+			while(j < genres.size()){
+				if(movies.get(i).getGenre().equals(genres.get(j))) {
+					duplicate = true;
+					break;}
+				j++;}
+			if(!duplicate){
+				genres.add(movies.get(i).getGenre());}
+		}return genres;
+	}
 
-public static Movie unwrapMovie(Optional<Movie> movie, Long id) {   //optional<T> is een helper klasse om exceptions op te vangen
-        if (movie.isPresent()) {
-            return movie.get();
-        } else {
-        throw new MovieNotFoundException(id);   //deze kan veranderd worden naar een algemene entityNotFoundException(T.class, id)
-        }
-    }
+	//functies enkel toegankelijk na authenticatie als manager, etc ..
+	public Movie updateMovie(Movie movie, Long id) {
+		Optional<Movie> entity = movieRepository.findById(id);
+		Movie unwrappedMovie = unwrapMovie(entity, id);
+		unwrappedMovie.setTitle(movie.getTitle());
+		unwrappedMovie.setGenre(movie.getGenre());
+		unwrappedMovie.setLength(movie.getLength());
+		unwrappedMovie.setRating(movie.getRating());
+		unwrappedMovie.setThreeD(movie.isThreeD());
+		movieRepository.save(unwrappedMovie);
+		return unwrappedMovie;
+	}
+
+	public void addMovie(Movie movie) {
+		movieRepository.save(movie);        //zelfde functie als persist normaal
+	}
+
+	public void deleteMovieById(Long id) {
+		Optional<Movie> entity = movieRepository.findById(id);
+		Movie unwrappedMovie = unwrapMovie(entity, id);
+		movieRepository.delete(unwrappedMovie);
+	}
+
+	public static Movie unwrapMovie(Optional<Movie> movie, Long id) {   //optional<T> is een helper klasse om exceptions op te vangen
+		if (movie.isPresent()) {
+			return movie.get();
+		} else {
+			throw new MovieNotFoundException(id);   //deze kan veranderd worden naar een algemene entityNotFoundException(T.class, id)
+		}
+	}
 
 }
