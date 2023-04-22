@@ -22,48 +22,57 @@ import thescope.services.MovieService;
 public class MovieController {
 
 	@Autowired
-    private MovieService movieService;
+	private MovieService movieService;
 
-    public MovieController() {}
-    
+	public MovieController() {}
 
-    @GetMapping("/movies") // get request
+
+	@GetMapping("/movies") // get request
 	public String selectGet(Model model) {
 		model.addAttribute("content", "movies"); // redirect to movie view (movies.html)
 		model.addAttribute("movies",movieService.findAllMovies());  // map content to html elements
 		return "index";
 	}
-    
-    @GetMapping("/addmovies") // get request
+
+	@GetMapping("/addmovies") // get request
 	public String addMovie(Model model) {
 		model.addAttribute("content", "addmovies"); // redirect to movie view (addmovies.html)
 		model.addAttribute("genres", movieService.getGenres());  // map content to html elements
 		model.addAttribute("movies",movieService.findAllMovies());  // map content to html elements
 		return "index";
 	}
-    
+
 	@PostMapping("/addmovies/add") 
 	public String createMovie(@RequestParam (required = false) String title, @RequestParam (required = false) String genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean treeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile multipartFile, Model model, RedirectAttributes rm){
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		Movie movie = new Movie();
-		movie.setTitle(title);
-		movie.setGenre(genre);
-		movie.setRating(rating);
-		movie.setLength(length);
-		movie.setThreeD(treeD);
-		movie.setPhoto(fileName);
-		movieService.addMovie(movie);
-		String uploadDir = "images/" + movie.getPKmovie();
-        try {
-			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!title.equals("") && !genre.equals("") && rating!=0 && length!=0 && multipartFile!= null)
+		{
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			Movie movie = new Movie();
+			movie.setTitle(title);
+			movie.setGenre(genre);
+			movie.setRating(rating);
+			movie.setLength(length);
+			movie.setThreeD(treeD);
+			movie.setPhoto(fileName);
+			movieService.addMovie(movie);
+			String uploadDir = "images/" + movie.getPKmovie();
+			try {
+				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rm.addFlashAttribute("message","Movie added");
+			model.addAttribute("content", "addmovies");
+			return "redirect:/addmovies";
 		}
-		rm.addFlashAttribute("message","Movie added");
-		model.addAttribute("content", "addmovies");
-		return "redirect:/addmovies";
+		else
+		{
+			rm.addFlashAttribute("message","Fill in all fields");
+			model.addAttribute("content", "addmovies");
+			return "redirect:/addmovies";
+		}
 	}
-	
+
 
 }
