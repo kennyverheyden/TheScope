@@ -45,7 +45,7 @@ public class Movie {
 	/**get&set**/
 
 	@Transient
-	// Get path to the photo
+	// Get path to the photo, we need this for html
 	public String getPhotoImagePath() {
 		if (photo == null) {
 			return null;

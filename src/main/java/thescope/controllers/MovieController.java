@@ -3,6 +3,7 @@ package thescope.controllers;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.JpaSort.Path;
 import org.springframework.stereotype.Controller;
@@ -157,11 +158,25 @@ public class MovieController {
 		}
 		else
 		{
-			movieService.deleteMovieById(movieID);
-			rm.addFlashAttribute("message","Movie deleted");
-			model.addAttribute("content", "addmovies");
-			return "redirect:/editmovies";
+			// Delete movie
+			Movie movie = movieService.findMovieById(movieID); // Find movie
+			String photo = movie.getPhoto(); // Get the filename
+			String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
+			File file = new File(path+photo);  // Construct the path and filename
+			if (file.delete()) { // Delete the file
+				File dir = new File(path); //// Init dir path
+				dir.delete(); // Delete the directory
+				movieService.deleteMovieById(movieID); // Delete the movie from the database
+				rm.addFlashAttribute("message","Movie deleted"); // Send output message
+				model.addAttribute("content", "addmovies");
+				return "redirect:/editmovies";
 
+			} else {
+				System.out.println("Failed to delete the file.");
+				rm.addFlashAttribute("message","Failed to delete the movie");
+				model.addAttribute("content", "addmovies");
+				return "redirect:/editmovies";
+			} 
 		}
 	}
 
