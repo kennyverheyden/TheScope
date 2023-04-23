@@ -71,6 +71,7 @@ public class MovieService {
 		unwrappedMovie.setLength(movie.getLength());
 		unwrappedMovie.setRating(movie.getRating());
 		unwrappedMovie.setThreeD(movie.isThreeD());
+		unwrappedMovie.setPhoto(movie.getPhoto());
 		movieRepository.save(unwrappedMovie);
 		return unwrappedMovie;
 	}

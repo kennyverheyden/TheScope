@@ -15,10 +15,10 @@
         <span th:text="${movie.genre}" style="font-weight:bold; font-size:15px"></span><br>
         <span th:text="${movie.rating}"></span> rating<br>
         <span th:text="${movie.length}"></span> minutes<br>
-        <span><input type="checkbox" name="mycheckbox" disabled="disabled"  th:checked="${movie.threeD}"> 3D</span>
+        <span><input type="checkbox" name="threeD" disabled="disabled"  th:checked="${movie.threeD}"> 3D</span>
         </span>
         <span class="td">
-       <img th:src="${movie.photoImagePath}" width="220" height="350" alt="${movie.title}" title="${movie.title}">
+       <img th:src="${movie.photoImagePath}" width="220" height="350" th:alt="${movie.title}" th:title="${movie.title}">
     </span>
 </div>
 </div>
