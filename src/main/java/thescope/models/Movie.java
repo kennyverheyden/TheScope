@@ -28,6 +28,8 @@ public class Movie {
 	@NotNull (message = "3D attribute cannot be null")
 	@Column(name="3D")
 	private boolean threeD;
+	@Column(nullable = true, length = 64)
+	private String photo;
 
 
 	/**contructor**/
@@ -51,6 +53,18 @@ public class Movie {
 	}
 
 	/**get&set**/
+
+	@Transient
+	// Get path to the photo, we need this for html
+	public String getPhotoImagePath() {
+		if (photo == null) {
+			return null;
+		}
+		else
+		{
+			return "/images/" + PKmovie + "/" + photo;
+		}
+	}
 
 	public String getTitle() {
 		return title;
@@ -83,14 +97,21 @@ public class Movie {
 	public void setThreeD(boolean threeD) {
 		this.threeD = threeD;
 	}
-	
+
 	public String getGenre() {
 		return genre;
 	}
-	
+
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	
-	
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public long getPKmovie() {
+		return PKmovie;
+	}
 }

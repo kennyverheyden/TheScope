@@ -1,0 +1,37 @@
+<div th:fragment="addmovies">
+
+	<h2>Add movie</h2>
+	<br>
+
+	<div style="background-color: #bdc6fc; width: 400px; text-align: right; padding: 25px; font-family: verdana;">
+		<form action="/addmovies/add"  enctype="multipart/form-data" method="post">Title <input type="text" name="title" style="width:180px;"><br><br>
+		Rating <input type="number" value="1" step="0.1" name="rating" max="10" min="1" style="text-align:right;width:70px;"><br><br>
+		Length <input type="number" value="1" step="1" max="400" min="1" name="length" style="text-align:right;width:70px;"><br><br>
+		<input type="radio" id="yes" name="treed" value="true">
+		<label for="yes">3D</label> <br>
+		<input type="radio" id="no" name="treed" value="false" checked="checked">
+		<label for="no">No 3D</label><br><br>
+ <select name="genre">
+<option selected value="">Select genre</option>
+    <option
+            th:each="genre : ${genres}"
+            th:text="${genre}"
+            th:value="${genre}">
+    </option>
+</select><br><br>
+Upload image<br><input type="file" name="image" accept="image/png, image/jpeg">
+ 			<br><br>
+		<button type="submit">Add movie</button>
+		</form>
+		<br>
+		<p>
+<strong th:text="${message}"></strong>
+</p>
+		
+		</div>
+		
+		
+		<br>
+
+
+</div>

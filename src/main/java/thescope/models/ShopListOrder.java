@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Entity(name="tblshopListOrder")
+@Entity(name="tblShopListOrder")
 public class ShopListOrder {
 
 	@Id
@@ -22,6 +22,11 @@ public class ShopListOrder {
 	@JoinColumn(name= "FKShopListLineId")
 	private ShopListLine shopListLine;
 	
+	public ShopListOrder() {}
+	public ShopListOrder(Booking booking,ShopListLine shopListLine ) {
+		this.booking= booking;
+		this.shopListLine= shopListLine;
+	}
 	
 	public Booking getBooking() {
 		return booking;

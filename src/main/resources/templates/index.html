@@ -50,6 +50,41 @@ SPAN.td
     width:200px;
 }
 </style>
+<script>
+function show_alert(index) {
+	 if(document.getElementById(index).checked == true)
+	 {
+		 
+	  	if(confirm("Do you really want to check for delete?")) {
+			  document.getElementById(index).checked = true;
+		  }
+	  		else
+	  		{
+	  document.getElementById(index).checked = false;
+		}
+	}
+	}
+		
+	function changeSubmitButton(index)
+	{
+		if(document.getElementById(index).checked)
+		{
+		document.getElementById("submit"+index).innerHTML="Delete user";
+		}
+		else
+		document.getElementById("submit"+index).innerHTML="Update details";
+	}
+
+	function changeSubmitButtonMovie(index)
+	{
+		if(document.getElementById(index).checked)
+		{
+		document.getElementById("submit"+index).innerHTML="Delete movie";
+		}
+		else
+		document.getElementById("submit"+index).innerHTML="Update movie";
+	}
+</script>
 </head>
 <body>
 
@@ -79,9 +114,9 @@ SPAN.td
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/movies">Movies</a></li>
-										<li><a href="">Index-II</a></li>
-										<li><a href="">Index-III</a></li>
-										<li><a href="">Index-IV</a></li>
+										<li th:if="${isAdmin==true or isDesk}"><a href="/addmovies">Add movie</a></li>
+										<li th:if="${isAdmin==true or isDesk}"><a href="/editmovies">Edit movies</a></li>
+										<li><a href="/schedule">Schedule</a></li>
 									</ul></li>
 
 								<li class="parent" th:if="${isCustomer}==true"><a href="/bookings">Bookings</a>
@@ -93,7 +128,7 @@ SPAN.td
 										<li><a href="">Index-IV</a></li>
 									</ul></li>
 									
-									<li class="parent"><a href="/shop">Shop</a>
+									<li class="parent" th:if="${isCustomer}==true"><a href="/shop">Shop</a>
 									<ul class="lg-submenu">
 										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/shop">Shop</a></li>

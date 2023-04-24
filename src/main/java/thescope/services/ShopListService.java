@@ -48,5 +48,7 @@ public class ShopListService {
 	public void AddShopList(ShopList shopList) {
 		shopListRepository.save(shopList);
 	}
-
+	public void removeShopList(ShopList shopList) {
+		shopListRepository.delete(shopList);
+	}
 }

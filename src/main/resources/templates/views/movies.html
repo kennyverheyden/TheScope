@@ -1,22 +1,23 @@
 <div th:fragment="movies">
+
+
+
 <h2>Movies</h2>
 <br>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Genre</th>
-        <th>rating</th>
-        <th>length</th>
-        <th>threeD</th>
-    </tr>
-    <tr th:each="movies: ${movies}">
-        <td th:text="${movies.title}"></td>
-        <td th:text="${movies.genre}"></td>
-        <td th:text="${movies.rating}"></td>
-        <td th:text="${movies.length}"></td>
-        <td th:text="${movies.threeD}"></td>
-    </tr>
+<div class="table">
+    <div class="tr" th:each="movie: ${movies}">
+        <span class="td" style="vertical-align:top;font-size:16px;">
+        <br><span th:text="${movie.title}" style="font-weight:bold; font-variant: small-caps;"></span><br><br>
+        <span th:text="${movie.genre}" style="font-weight:bold; font-size:15px"></span><br>
+        <span th:text="${movie.rating}"></span> rating<br>
+        <span th:text="${movie.length}"></span> minutes<br>
+        <span><input type="checkbox" name="mycheckbox" disabled="disabled"  th:checked="${movie.threeD}"> 3D</span>
+        </span>
+        <span class="td">
+       <img th:src="${movie.photoImagePath}" width="220" height="315" th:alt="${movie.title}" th:title="${movie.title}">
+    </span>
+</div>
 
-    <form type = 'hidden'></form>
-</table>
+</div>
+
 </div>
