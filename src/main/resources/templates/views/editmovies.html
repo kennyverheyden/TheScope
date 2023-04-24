@@ -1,0 +1,41 @@
+<div th:fragment="editmovies">
+
+
+
+<h2>Edit movie</h2>
+<br>
+		<p>
+<strong th:text="${message}"></strong>
+</p>
+<br>		
+<div class="table">
+    <form action="/editmovies/edit" method="post" class="tr" th:each="movie, index: ${movies}" enctype="multipart/form-data">
+        <span class="td" style="vertical-align:top;">
+        <input type="hidden" th:value="${movie.PKmovie}" name="movieID">
+        <br><input type="text" th:value="${movie.title}" name="title" style="width:230px;"><br><br>
+        <select name="genre">
+    <option
+            th:each="genre : ${genres}"
+            th:text="${genre}"
+            th:value="${genre}" th:selected="${ #strings.equals(genre, movie.genre)}">
+    </option>
+</select><br><br>
+        <input type="number" name="rating" min="0" max="10" th:value="${movie.rating}" style="width:80px;"> rating<br>
+        <input type="number" name="length" min="1" th:value="${movie.length}" style="width:80px;"> minutes<br>
+       	<input type="checkbox" name="threeD" th:checked="${movie.threeD}"> 3D<br><br>
+       	Change image<br><input type="file" name="image" accept="image/png, image/jpeg">
+       	 </span>
+        <span class="td">
+       <img th:src="${movie.photoImagePath}" width="220" height="315" th:alt="${movie.title}" th:title="${movie.title}">
+    </span>
+    <span class="td">
+           	 <strong>Delete?</strong>
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonMovie(' + ${index.index} + ')'"><br><br>
+    <button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:100px;">Update movie</button>
+    </span>
+</form>
+
+</div>
+
+
+</div>
