@@ -3,7 +3,7 @@ package thescope;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import thescope.exceptions.MovieNotFoundException;
+import thescope.exceptions.EntityNotFoundException;
 import thescope.models.Movie;
 import thescope.services.MovieService;
 
@@ -51,7 +51,7 @@ public class MovieTest {
     public void deleteMovieTest() {
         Long id = 4L;
         movieService.deleteMovieById(id);
-        Exception exception = assertThrows(MovieNotFoundException.class, () -> Integer.parseInt("4"));
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> Integer.parseInt("4"));
         String expectedMessage = "The movie with id";
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));

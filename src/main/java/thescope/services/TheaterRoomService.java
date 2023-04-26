@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import thescope.exceptions.EntityNotFoundException;
 import thescope.models.Movie;
 import thescope.models.TheaterRoom;
 import thescope.repositories.MovieRepository;
@@ -42,7 +43,7 @@ public class TheaterRoomService {
         if (entity.isPresent()) {
             return entity.get();
         } else {
-            throw new RuntimeException();
+            throw new EntityNotFoundException(id, TheaterRoom.class);
         }
     }
 

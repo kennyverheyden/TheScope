@@ -28,7 +28,7 @@ public class Movie {
 	@NotNull (message = "3D attribute cannot be null")
 	@Column(name="3D")
 	private boolean threeD;
-	@Column(nullable = true, length = 64)
+	@Column(length = 64)
 	private String photo;
 
 

@@ -3,7 +3,7 @@ package thescope.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import thescope.exceptions.MovieNotFoundException;
+import thescope.exceptions.EntityNotFoundException;
 import thescope.models.Movie;
 import thescope.repositories.MovieRepository;
 
@@ -90,7 +90,7 @@ public class MovieService {
 		if (movie.isPresent()) {
 			return movie.get();
 		} else {
-			throw new MovieNotFoundException(id);   //deze kan veranderd worden naar een algemene entityNotFoundException(T.class, id)
+			throw new EntityNotFoundException(id, Movie.class);   //entityNotFoundException(T.class, id)
 		}
 	}
 
