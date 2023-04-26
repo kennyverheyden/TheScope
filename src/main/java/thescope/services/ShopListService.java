@@ -2,11 +2,13 @@ package thescope.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import thescope.exceptions.EntityNotFoundException;
 import thescope.models.ShopList;
 import thescope.repositories.ShopListRepository;
 
@@ -42,7 +44,8 @@ public class ShopListService {
 	}
 
 	public ShopList findShopListById(long id) {
-		return shopListRepository.findById(id).get();
+		Optional<ShopList> entity = shopListRepository.findById(id);
+		return unwrapShopList(entity, id);
 	}
 
 	public void AddShopList(ShopList shopList) {
@@ -50,5 +53,13 @@ public class ShopListService {
 	}
 	public void removeShopList(ShopList shopList) {
 		shopListRepository.delete(shopList);
+	}
+
+	public static ShopList unwrapShopList(Optional<ShopList> entity, Long id) {
+		if (entity.isPresent()) {
+			return entity.get();
+		} else {
+			throw new EntityNotFoundException(id, ShopList.class);
+		}
 	}
 }
