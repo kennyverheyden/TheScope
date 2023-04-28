@@ -48,7 +48,7 @@ public class HomeController {
 		// ***** AUTO LOGIN ADMIN account *****
 		// ***** Development mode *************
 
-		if(doAutoTestLogin(false)) // <-- TRUE or FALSE
+		if(doAutoTestLogin(true)) // <-- TRUE or FALSE
 			return "redirect:/";
 
 		// ***********************************
