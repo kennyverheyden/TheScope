@@ -19,20 +19,22 @@ public class TheaterRoomController {
 
 	@Autowired
 	private TheaterRoomService theaterRoomService;
-	
+
 	public TheaterRoomController() {}
-	
+
 
 	@GetMapping("/rooms") // get request
 	public String selectGet(Model model) {
 		List<TheaterRoom> rooms= theaterRoomService.findAllTheaterRooms();
-			model.addAttribute("content", "rooms"); 
+		model.addAttribute("content", "rooms"); 
 		model.addAttribute("rooms",rooms);  // map content to html elements
 		return "index";
 	}
-	
+
 	@PostMapping("/rooms/add") 
 	public String addRoom(@RequestParam (required = false) String location, @RequestParam (required=false) int maxVipSeats, int maxNormalSeats, Model model, RedirectAttributes rm){
+		if(!location.equals("") || maxVipSeats!=0 || maxNormalSeats!=0)
+		{
 			TheaterRoom room = new TheaterRoom();
 			room.setLocation(location);
 			room.setMaxNormalSeats(maxNormalSeats);
@@ -41,20 +43,45 @@ public class TheaterRoomController {
 			model.addAttribute("content", "rooms");
 			// rm.addFlashAttribute("message","Fill in all fields");
 			return "redirect:/rooms";
-		
-	}
-	
-	@PostMapping("/rooms/update") 
-	public String updateRoom(@RequestParam (required = false) String location, @RequestParam (required=false) int maxVipSeats, int maxNormalSeats, Model model, RedirectAttributes rm){
-			
-		
-			// update room 
-		
-		
+		}
+		else
+		{
 			model.addAttribute("content", "rooms");
-			// rm.addFlashAttribute("message","Fill in all fields");
+			rm.addFlashAttribute("message","Fill in all fields");
 			return "redirect:/rooms";
-		
+		}
+	}
+
+	@PostMapping("/rooms/update") 
+	public String updateRoom(@RequestParam (required=false) Long PKtheaterRoom,@RequestParam (required = false) String location, @RequestParam (required=false) int maxVipSeats, int maxNormalSeats, @RequestParam (required=false) boolean delete, Model model, RedirectAttributes rm){
+
+		if(delete)
+		{
+			theaterRoomService.deleteTheaterRoomById(PKtheaterRoom);
+			model.addAttribute("content", "rooms");
+			rm.addFlashAttribute("message","Room deleted");
+			return "redirect:/rooms";
+		}
+		else
+		{
+			if(!location.equals("") || maxVipSeats!=0 || maxNormalSeats!=0 )
+			{
+				TheaterRoom room=theaterRoomService.findTheatherRoomById(PKtheaterRoom);
+				room.setLocation(location);
+				room.setMaxNormalSeats(maxNormalSeats);
+				room.setMaxVipSeats(maxVipSeats);
+				theaterRoomService.updateTheaterRoom(room);
+				model.addAttribute("content", "rooms");
+				rm.addFlashAttribute("message","Room updated");
+				return "redirect:/rooms";
+			}
+			else
+			{
+				model.addAttribute("content", "rooms");
+				rm.addFlashAttribute("message","Fill in all fields");
+				return "redirect:/rooms";
+			}
+		}
 	}
 
 }

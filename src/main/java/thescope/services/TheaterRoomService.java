@@ -34,6 +34,10 @@ public class TheaterRoomService {
     public void addTheaterRoom(TheaterRoom theaterRoom) {
         theaterRoomRepository.save(theaterRoom);
     }
+    
+    public void updateTheaterRoom(TheaterRoom theaterRoom) {
+        theaterRoomRepository.save(theaterRoom);
+    }
 
     public void deleteTheaterRoomById(Long id) {
         theaterRoomRepository.deleteById(id);
