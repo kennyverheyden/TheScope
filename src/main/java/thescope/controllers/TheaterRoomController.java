@@ -12,19 +12,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.TheaterRoom;
+import thescope.services.ScheduleShowService;
 import thescope.services.TheaterRoomService;
+import thescope.services.UserService;
 
 @Controller
 public class TheaterRoomController {
 
 	@Autowired
 	private TheaterRoomService theaterRoomService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ScheduleShowService scheduleShowService;
 
 	public TheaterRoomController() {}
 
 
 	@GetMapping("/rooms") // get request
 	public String selectGet(Model model) {
+		String username = userService.getUserName();
+		// When user is not logged on, the String is null
+		if(username==null)
+		{
+			model.addAttribute("content", "login");
+			return "redirect:/";
+		}
+
 		List<TheaterRoom> rooms= theaterRoomService.findAllTheaterRooms();
 		model.addAttribute("content", "rooms"); 
 		model.addAttribute("rooms",rooms);  // map content to html elements
@@ -57,10 +71,19 @@ public class TheaterRoomController {
 
 		if(delete)
 		{
-			theaterRoomService.deleteTheaterRoomById(PKtheaterRoom);
-			model.addAttribute("content", "rooms");
-			rm.addFlashAttribute("message","Room deleted");
-			return "redirect:/rooms";
+			if(scheduleShowService.roomHasSchedule(theaterRoomService.findTheatherRoomById(PKtheaterRoom)))
+			{
+				model.addAttribute("content", "rooms");
+				rm.addFlashAttribute("message","Cannot delete, this room has one or more schedules assigned");
+				return "redirect:/rooms";
+			}
+			else
+			{
+				theaterRoomService.deleteTheaterRoomById(PKtheaterRoom);
+				model.addAttribute("content", "rooms");
+				rm.addFlashAttribute("message","Room deleted");
+				return "redirect:/rooms";
+			}
 		}
 		else
 		{

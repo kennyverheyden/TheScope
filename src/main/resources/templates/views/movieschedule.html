@@ -1,0 +1,27 @@
+<div th:fragment="movieschedule">
+  
+<h2>The movie schedule</h2>
+<br>
+
+<p th:if="${isAdmin==true or isDesk==true or isShop==true}">You are a staff member. <strong><a href="/schedule">Manage the schedule</a></strong></p><br>
+
+<!--  Schedule list -->
+<div class="table">
+<div class="tr" th:each="schedule: ${schedules}">
+
+<span class="td" style="vertical-align:top;">
+<span th:text="${schedule.getMovie.getTitle}" style="font-weight:bold; font-variant: small-caps;font-size:14px;"></span><br><br>
+<span th:text="${schedule.time}" style="font-weight:bold; font-size:15px;"></span><br>
+<span th:text="${schedule.date}" style="font-weight:bold; font-size:15px;"></span><br><br>
+Room: <span th:text="${schedule.getTheaterRoom.getLocation}" style="font-weight:bold; font-size:15px;"></span>
+</span>
+<span class="td">
+<img th:src="${schedule.getMovie.getPhotoImagePath.toString}" width="140" height="200" th:alt="${schedule.getMovie.getTitle}" th:title="${schedule.getMovie.getTitle}">
+</span>
+
+</div>
+</div>
+ <!--  End schedule list -->
+ 
+ 
+</div>

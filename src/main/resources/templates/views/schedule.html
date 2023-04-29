@@ -2,7 +2,119 @@
   
 <h2>Schedule</h2>
 <br>
-    
+
+<!--  Search schedule -->
+ <p>Search schedule</p>
+<div class="table">
+<form action="/schedule/find" method="post" name="findSchedule" class="tr">
+<span class="td">Theater room<br>
+<select name="room" style="width:120px;">
+    <option
+            th:each="room: ${rooms}"
+            th:text="${room.location}"
+            th:value="${room.location}">
+    </option>
+</select>
+<button type="submit">Search</button>
+</span>
+</form>
+</div>
+<!--  End search schedule -->
+
+
+<!--  Add schedule -->
+<p>Add schedule</p>
+<div class="table">
+<form action="/schedule/add" method="post" name="addSchedule" class="tr">
+<span class="td">Movie<br>
+<select name="movieID">
+<option selected value="0">Select movie</option>
+    <option
+            th:each="movie : ${movies}"
+            th:text="${movie.title}"
+            th:value="${movie.PKmovie}">
+    </option>
+</select>
+</span>
+<span class="td">Theater<br>
+<select name="roomID" style="width:120px;">
+    <option
+            th:each="room: ${rooms}"
+            th:text="${room.location}"
+            th:value="${room.PKtheaterRoom}">
+    </option>
+</select>
+</span>
+ <span class="td">Date<br><input type="date" name="date" style="width:115px" required></span>
+ <span class="td">Time<br><input type="time" name="time" step="1" style="width:115px" required></span>
+<span class="td">
+<br><button type="submit">Add</button>
+</span>
+</form>
+</div>
+<!--  End add schedule -->
+
+<!-- Output message -->
+<strong>
+		<span th:text="${message}"></span>
+	</strong><br>
+<br>
+<!--  End output message -->
+  
+  <!--  Edit list -->
+   <p>Schedules</p>
+ <span style="font-size:12px;"><strong>* Only 50 schedules are preloaded, use the search button to find a schedule </strong></span>
+<div class="table">
+
+<form action="/schedule/update" method="post" class="tr" th:each="schedule, index: ${schedules}" th:unless="${index.index > 49}">
+
+<span class="td">
+<input th:value="${schedule.getPKscheduleShow}" type="hidden" name="schedulePK"><br>
+<select name="PKmovie">
+    <option
+            th:each="movie : ${movies}"
+            th:text="${movie.title}"
+            th:value="${movie.PKmovie}"  th:selected="${ #strings.equals(movie.title, schedule.getMovie.title)}">
+    </option>
+</select>
+</span>
+
+<span class="td">
+<strong>Theater</strong><br>
+<select name="PKtheaterRoom">
+    <option
+            th:each="room: ${rooms}"
+            th:text="${room.location}"
+            th:value="${room.PKtheaterRoom}" th:selected="${ #strings.equals(room.getLocation, schedule.getTheaterRoom.getLocation)}">
+    </option>
+</select>
+</span>
+
+<span class="td">
+<strong>Date</strong><br>
+<input th:value="${schedule.getDate}" type="date" name="date" style="width:115px;" required><br>
+</span>
+
+<span class="td">
+<strong>Time</strong><br>
+<input th:value="${schedule.getTime}" type="time" name="time" style="width:115px;" required><br>
+</span>
+
+<span class="td">
+<strong>Delete?</strong><br>
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonSchedule(' + ${index.index} + ')'">
+</span>
+
+<span class="td">
+<br>
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:120px;">Update schedule</button>
+</span>
+
+</form>
+
+</div>
+<!-- End edit list -->
+ 
  
     
 </div>

@@ -55,5 +55,29 @@ public class ScheduleShow {
 		return PKscheduleShow;
 	}
 
+	public TheaterRoom getTheaterRoom() {
+		return theaterRoom;
+	}
+
+	public void setTheaterRoom(TheaterRoom theaterRoom) {
+		this.theaterRoom = theaterRoom;
+	}
+
+	public Time getTime() {
+		return time;
+	}
+
+	public void setTime(Time time) {
+		this.time = time;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 }
 

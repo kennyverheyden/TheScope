@@ -6,7 +6,7 @@
 <!--  Add room -->    
  <div class="table">
 <form action="/rooms/add" method="post" name="add" class="tr">
-<span class="td">Room<br><input type="text" name="location" style="width:200px"></span>
+<span class="td">Room (location)<br><input type="text" name="location" style="width:200px"></span>
 <span class="td">maxNormalSeats<br><input type="number" name="maxNormalSeats" value="0" style="width:80px"></span>
 <span class="td">maxVipSeats<br><input type="number" name="maxVipSeats" value="0" style="width:80px"></span>
 <span class="td"><br><button type="submit">Add room</button></span>
@@ -26,7 +26,7 @@
 <form action="/rooms/update" method="post" class="tr" th:each="room, index:${rooms}">
 
 <span class="td">
-<strong>ROOM</strong><br>
+<strong>ROOM (location)</strong><br>
 <input type="hidden" th:value="${room.PKtheaterRoom}" name="PKtheaterRoom">
 <input th:value="${room.location}" type="text" name="location">
 </span>
@@ -40,8 +40,8 @@
 </span>
 <span class="td">
 <strong>Delete?</strong>
- &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonMovie(' + ${index.index} + ')'"><br>
-<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:100px;">Update details</button>
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonRoom(' + ${index.index} + ')'"><br>
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:100px;">Update room</button>
 </span>
 
 </form>
