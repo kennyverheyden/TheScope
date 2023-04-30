@@ -26,7 +26,7 @@ public class BookingService {
 	@Autowired
 	EntityManager em;
 	
-	private Long bookedMovie;
+	private Long bookedSchedule; // Keep 
 	private String bookingStatus; // Shows message to the customer to login or to create an account
 
 	public BookingService() {}
@@ -90,12 +90,12 @@ public class BookingService {
 		return false;
 	}
 
-	public Long getBookedMovie() {
-		return bookedMovie;
+	public Long getBookedSchedule() {
+		return bookedSchedule;
 	}
 
-	public void setBookedMovie(Long bookedMovie) {
-		this.bookedMovie = bookedMovie;
+	public void setBookedSchedule(Long bookedSchedule) {
+		this.bookedSchedule = bookedSchedule;
 	}
 
 	public String getBookingStatus() {

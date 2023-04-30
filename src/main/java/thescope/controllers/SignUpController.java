@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.processors.LoginProcessor;
+import thescope.services.BookingService;
 import thescope.services.UserService;
 
 @Controller
@@ -17,9 +18,11 @@ public class SignUpController {
 	private UserService userService;
 	@Autowired
 	private LoginProcessor loginProcessor;
+	@Autowired
+	private BookingService bookingService; // If customer made a booking, redirect auto to booking landing page
 
 	public SignUpController() {}
-	
+
 
 	@GetMapping("/signup") // get request
 	public String loginGet(Model model) {
@@ -38,17 +41,25 @@ public class SignUpController {
 				if(password.equals(confirmpassword))
 				{
 					boolean loggedIn = false;
-					
+
 					// Register user
 					userService.createUser(username, password, name, firstname, address, postalcode, town, role);
-					
+
 					loginProcessor.setUserName(username);
 					loginProcessor.setSecret(password);
 					loggedIn = loginProcessor.login();
 
-				//	model.addAttribute("content", "signup");
-				//	rm.addFlashAttribute("message","Welcome, your account has been successfully created!");
-					return "redirect:main";
+					if(bookingService.getBookedSchedule()!=null)// If customer made a booking, redirect auto to booking landing page
+					{
+						model.addAttribute("content", "booknow");
+						return "redirect:/booknow";
+					}
+					else
+					{
+						//	model.addAttribute("content", "signup");
+						//	rm.addFlashAttribute("message","Welcome, your account has been successfully created!");
+						return "redirect:main";
+					}
 				}
 				else
 				{

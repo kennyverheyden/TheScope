@@ -3,9 +3,27 @@
 <h2>Book now</h2>
 <br>
 
-<strong>
-		<span th:utext="${message}" style="font-size:16px;"></span>
-	</strong><br>
+
+		<p>Welcome, <span th:text="${firstname}" style="font-weight:bold;"></span> you want to book <span th:text="${movie}" style="font-size:16px;font-weight:bold;"></span></p><br>
+		<p>Room: <span th:text="${room}" style="font-size:16px;font-weight:bold;"></span></p>
+		<p>Time: <span th:text="${time}" style="font-size:16px;font-weight:bold;"></span></p>
+		<p>Date: <span th:text="${date}" style="font-size:16px;font-weight:bold;"></span></p>
+	<br>
+	
+	<form action="/booking/addbooking" method="post">
+	<p>How many seats?</p>
+	<input type="number" name="seats" required style="width:50px;">
+	<br><br>
+	<p>How many VIP seats?</p>
+	<input type="number" name="VIPseats" required style="width:50px;">
+	<br><br>
+	<button type="submit">Make booking</button>
+	</form>
+	
+	<br>
+	<p>
+	<strong th:text="${message}"></strong>
+	</p>
 	
 <br>
     

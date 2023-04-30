@@ -9,7 +9,7 @@
 <div class="table">
 <div class="tr" th:each="schedule: ${schedules}">
 <form action="/booking/booknow" method="post">
-<span class="td" style="vertical-align:top;">
+<span class="td" style="vertical-align:top;width:400px;">
 <span th:text="${schedule.getMovie.getTitle}" style="font-weight:bold; font-variant: small-caps;font-size:14px;">
 </span><br><br>
 <span th:text="${schedule.time}" style="font-weight:bold; font-size:15px;"></span><br>
@@ -22,7 +22,7 @@ Room: <span th:text="${schedule.getTheaterRoom.getLocation}" style="font-weight:
 <span class="td" style="vertical-align:top;">
 <span style="font-size:22px;font-weight:bold;">Seats available</span>
 <span style="font-size:26px;font-weight:bold;">Book now!</span>
-<input th:value="${schedule.getMovie.getPKmovie}" type="hidden" name="PKmovie">
+<input th:value="${schedule.getPKscheduleShow}" type="hidden" name="PKschedule">
 <button type="submit">Book this show</button>
 </span>
 </form>
