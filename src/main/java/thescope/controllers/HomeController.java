@@ -32,7 +32,8 @@ public class HomeController {
 	boolean doAutoTestLogin(boolean on)
 	{
 		if(on && userService.getUserName()==null && userService.getSecret()==null){
-			loginProcessor.setUserName("admin@thescope.com");
+			//loginProcessor.setUserName("admin@thescope.com");
+			loginProcessor.setUserName("customer@thescope.com");
 			loginProcessor.setSecret("test");
 			if(loginProcessor.login())
 			{
@@ -48,7 +49,7 @@ public class HomeController {
 		// ***** AUTO LOGIN ADMIN account *****
 		// ***** Development mode *************
 
-		if(doAutoTestLogin(false)) // <-- TRUE or FALSE
+		if(doAutoTestLogin(true)) // <-- TRUE or FALSE
 			return "redirect:/";
 
 		// ***********************************

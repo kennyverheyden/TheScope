@@ -1,26 +1,25 @@
 <div th:fragment="bookingsstaff">
  
-<h2>Bookings</h2>
+<h2>Bookings staff view</h2>
 <br>
 
-<h1>Staff side</h1>
  
 <table>
 <tr>
-<th>Firstname</th>
+<th>First name</th>
 <th>Name</th>
 <th>Movie</th>
 <th>Time</th>
 <th>Date</th>
 <th>Location</th>
 </tr>
-<tr th:each="bookings: ${bookings}">
-<td th:text="${bookings.firstname}"></td>
-<td th:text="${bookings.name}"></td>
-<td th:text="${bookings.movie}"></td>
-<td th:text="${bookings.time}"></td>
-<td th:text="${bookings.date}"></td>
-<td th:text="${bookings.location}"></td>
+<tr th:each="booking: ${allBookings}">
+<td th:text="${booking.getUser.getFirstName}" style="width:130px;"></td>
+<td th:text="${booking.getUser.getName}"  style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getTime}" style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getDate}"  style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="width:130px;"></td>
 </tr>
 </table>
     

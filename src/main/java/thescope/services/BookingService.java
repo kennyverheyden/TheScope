@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import thescope.exceptions.EntityNotFoundException;
 import thescope.models.Booking;
 import thescope.models.ScheduleShow;
+import thescope.models.User;
 import thescope.repositories.BookingRepository;
 
 
@@ -23,6 +25,9 @@ public class BookingService {
 	private BookingRepository bookingRepository;
 	@Autowired
 	EntityManager em;
+	
+	private Long bookedMovie;
+	private String bookingStatus; // Shows message to the customer to login or to create an account
 
 	public BookingService() {}
 
@@ -30,6 +35,20 @@ public class BookingService {
 	{
 		return bookingRepository.findAll();
 	} 
+
+	public List<Booking> findByUser(User user)
+	{
+		List<Booking> allBookings = bookingRepository.findAll();
+		List<Booking> bookings= new ArrayList();
+		for(Booking booking:allBookings)
+		{
+			if(booking.getUser().getPKuser()==user.getPKuser())
+			{
+				bookings.add(booking);
+			}
+		}
+		return bookings;
+	}
 
 	public Booking findBookingById(long id) {
 		Optional<Booking> entity = bookingRepository.findById(id);
@@ -70,4 +89,21 @@ public class BookingService {
 		}
 		return false;
 	}
+
+	public Long getBookedMovie() {
+		return bookedMovie;
+	}
+
+	public void setBookedMovie(Long bookedMovie) {
+		this.bookedMovie = bookedMovie;
+	}
+
+	public String getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
+
 }

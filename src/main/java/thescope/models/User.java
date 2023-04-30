@@ -17,7 +17,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int PKuser;
+	Long PKuser;
 	
 	@OneToOne
 	@JoinColumn(name="FKuserRole")
@@ -62,11 +62,11 @@ public class User {
 		this.userRole=userRole;
 	}
 
-	public int getPKuser() {
+	public Long getPKuser() {
 		return PKuser;
 	}
 
-	public void setPKuser(int pKuser) {
+	public void setPKuser(Long pKuser) {
 		PKuser = pKuser;
 	}
 

@@ -1,9 +1,22 @@
 <div th:fragment="bookingscustomer">
  
-<h2>Bookings</h2>
+<h2>My bookings</h2>
 <br>
 
-<h1>Customer side</h1>
+<table>
+<tr>
+<th>Movie</th>
+<th>Time</th>
+<th>Date</th>
+<th>Location</th>
+</tr>
+<tr th:each="booking: ${bookings}">
+<td th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getTime}" style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getDate}"  style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="width:130px;"></td>
+</tr>
+</table>
  
     
     

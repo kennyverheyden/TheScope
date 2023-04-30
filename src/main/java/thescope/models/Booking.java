@@ -33,27 +33,26 @@ public class Booking {
 	public Booking(User user, ScheduleShow scheduleShow) {
 		this.user= user;
 		this.scheduleShow= scheduleShow;
-		
-	
 	}
+	
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	public ScheduleShow getScheduleShow() {
 		return scheduleShow;
 	}
+	
 	public void setScheduleShow(ScheduleShow scheduleShow) {
 		this.scheduleShow = scheduleShow;
 	}
+	
 	public Long getPKbooking() {
 		return PKbooking;
 	}
-	
-	
-
-
 	
 }

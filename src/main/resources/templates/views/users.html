@@ -42,7 +42,8 @@ Rolename<br>
 
 <span class="td">
 <strong>Username/role</strong><br>
-<span th:text="${user.userName}" style="display:block; width:180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;font-size:11px"></span><input th:value="${user.userName}" type="hidden" name="userName"><br>
+<span th:text="${user.userName}" style="display:block; width:180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;font-size:11px"></span>
+<input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
             th:each="role : ${roles}"
