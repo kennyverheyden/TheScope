@@ -21,9 +21,9 @@ Room: <span th:text="${schedule.getTheaterRoom.getLocation}" style="font-weight:
 </span>
 <span class="td" style="vertical-align:top;">
 <span th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)>0} or ${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)>0}"   style="font-size:22px;font-weight:bold; color:green">Seats available</span><br>
-<span th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)==0} and ${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)==0}"   style="font-size:18px;font-weight:bold; color:red">No seats available</span><br>
-<span style="font-size:12px;font-weight:bold;"><span th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)>0} or ${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)>0}">Seats left: <span th:text="${schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats}"></span></span><br>
-<span th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)>0} or ${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)>0}">Vip seats left: <span th:text="${schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats}"></span></span></span>
+<span th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)<1} and ${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)<1}"   style="font-size:22px;font-weight:bold; color:red">No seats available</span><br>
+<span style="font-size:12px;font-weight:bold;"><span th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)>0}">Seats left: <span th:text="${schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats}"></span></span><br>
+<span th:if="${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)>0}">Vip seats left: <span th:text="${schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats}"></span></span></span>
 <input th:value="${schedule.getPKscheduleShow}" type="hidden" name="PKschedule">
 <br><br>
 <button type="submit" th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)>0} or ${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)>0}" >Book this show</button>
