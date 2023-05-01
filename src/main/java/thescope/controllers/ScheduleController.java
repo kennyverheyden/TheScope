@@ -152,7 +152,9 @@ public class ScheduleController {
 
 	@GetMapping("/movieschedule") // get request
 	public String movieSchedule(Model model) {
+		 
 		List <ScheduleShow> schedules =scheduleShowService.findAll();
+		
 		model.addAttribute("schedules",schedules);
 		model.addAttribute("content","movieschedule"); // redirect to schedule.html
 		return "index";

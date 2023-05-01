@@ -9,16 +9,20 @@
 
 <table>
 <tr>
-<th>Movie</th>
-<th>Time</th>
-<th>Date</th>
-<th>Location</th>
+<th style="padding:6px;">Movie</th>
+<th style="padding:6px;">Time</th>
+<th style="padding:6px;">Date</th>
+<th style="padding:6px;">Location</th>
+<th style="padding:6px;">Seats</th>
+<th style="padding:6px;">VIP</th>
 </tr>
 <tr th:each="booking: ${bookings}">
-<td th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getTime}" style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getDate}"  style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="width:130px;"></td>
+<td th:text="${booking.getScheduleShow.getMovie.getTitle}" style="width:130px;padding:6px;"></td>
+<td th:text="${booking.getScheduleShow.getTime}" style="width:130px;padding:6px;"></td>
+<td th:text="${booking.getScheduleShow.getDate}" style="width:130px;padding:6px;"></td>
+<td th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}" style="width:130px;padding:6px;"></td>
+<td th:text="${booking.getSeats}" style="width:70px;"></td>
+<td th:text="${booking.getVipSeats}" style="width:70px;"></td>
 </tr>
 </table>
  

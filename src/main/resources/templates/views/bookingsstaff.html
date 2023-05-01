@@ -3,25 +3,44 @@
 <h2>Bookings staff view</h2>
 <br>
 
+<strong>
+		<span th:text="${message}"></span>
+	</strong><br>
+	
+<br>
  
-<table>
-<tr>
-<th>First name</th>
-<th>Name</th>
-<th>Movie</th>
-<th>Time</th>
-<th>Date</th>
-<th>Location</th>
-</tr>
-<tr th:each="booking: ${allBookings}">
-<td th:text="${booking.getUser.getFirstName}" style="width:130px;"></td>
-<td th:text="${booking.getUser.getName}"  style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getTime}" style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getDate}"  style="width:130px;"></td>
-<td th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="width:130px;"></td>
-</tr>
-</table>
+<div class="table">
+<div class="tr">
+<span class="td">First name</span>
+<span class="td">Name</span>
+<span class="td">Movie</span>
+<span class="td">Time</span>
+<span class="td">Date</span>
+<span class="td">Location</span>
+<span class="td">Seats</span>
+<span class="td">Vip</span>
+<span class="td"></span>
+</div>
+
+<form class="tr" method="post" action="/bookingsstaff/deletebooking" th:each="booking, index: ${allBookings}" style="border:1px dotted black;">
+<input type="hidden" th:value="${booking.getPKbooking}" name="pkBooking">
+<span class="td" th:text="${booking.getUser.getFirstName}" style="border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" th:text="${booking.getUser.getName}"  style="border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" th:text="${booking.getScheduleShow.getTime}" style="border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" th:text="${booking.getScheduleShow.getDate}"  style="border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="border:1px dotted black;padding:10px;font-size:11px;"></span>
+<span class="td" th:text="${booking.getSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" th:text="${booking.getVipSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
+<span class="td" style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;">
+<strong>Delete?</strong>
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonBooking(' + ${index.index} + ')'">
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:70px;">Confirm</button>
+</span>
+
+</form>
+</div>
+
     
     
 </div>

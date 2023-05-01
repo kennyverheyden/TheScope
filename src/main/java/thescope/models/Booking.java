@@ -25,6 +25,12 @@ public class Booking {
 	@JoinColumn(name="FKScheduleShow")
 	private ScheduleShow scheduleShow;
 	
+	@Column(name="seats")
+	int seats;
+	
+	@Column(name="vipSeats")
+	int vipSeats;
+	
 	public Booking(){}
 	public Booking(User user) {
 		this.user= user;
@@ -53,6 +59,22 @@ public class Booking {
 	
 	public Long getPKbooking() {
 		return PKbooking;
+	}
+	
+	public int getSeats() {
+		return seats;
+	}
+	
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+	
+	public int getVipSeats() {
+		return vipSeats;
+	}
+	
+	public void setVipSeats(int vipSeats) {
+		this.vipSeats = vipSeats;
 	}
 	
 }

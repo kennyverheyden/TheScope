@@ -34,7 +34,7 @@ public class BookingController {
 	// Customer side (visible when customer is logged on)
 	@GetMapping("/bookingscustomer") // get request
 	public String selectGet(Model model) {
-		
+
 		// Avoid customer to come here when not logged on
 		String username = userService.getUserName();
 		if(username==null)
@@ -42,7 +42,7 @@ public class BookingController {
 			model.addAttribute("content", "booknownotloggedon");
 			return "redirect:/booknownotloggedon";
 		}
-		
+
 		List<Booking> customerBookings = bookingService.findByUser(userService.findUserByUsername(userService.getUserName()));
 		model.addAttribute("bookings",customerBookings);
 		model.addAttribute("content", "bookingscustomer");
@@ -69,16 +69,22 @@ public class BookingController {
 	@PostMapping("/booking/booknow") // get request
 	public String bookNowPost(@RequestParam (required = false) Long PKschedule, Model model, RedirectAttributes rm) {
 		String username = userService.getUserName();
-		bookingService.setBookedSchedule(PKschedule); // Keep the scheduleID
-		// 2 When user is not logged on, the String is null
+
+
+		// **************** //
+		bookingService.setBookedSchedule(PKschedule); // Keep the scheduleID of the selected booking to book
+		// **************** //
+
+
+		// 2A When user is not logged on, the String is null
 		if(username==null)
 		{
 			bookingService.setBookingStatus("To continue, please <strong><a href=\"/login\">login</a></strong> or <strong><a href=\"/signup\">create an account</a></strong>");
 			model.addAttribute("content", "booknownotloggedon");
 			return "redirect:/booknownotloggedon";
 		}
-		// 2 Customer is logged on
-	//	bookingService.(PKschedule);
+		// 2B Customer is now logged on
+
 		model.addAttribute("content", "booknow");
 		return "redirect:/booknow";
 	}
@@ -86,7 +92,7 @@ public class BookingController {
 	// 3 Landing page when customer is logged on
 	@GetMapping("/booknow") // get request
 	public String bookNowtGet(Model model) {
-		
+
 		// Avoid customer to come here when not logged on
 		String username = userService.getUserName();
 		if(username==null)
@@ -94,9 +100,10 @@ public class BookingController {
 			model.addAttribute("content", "booknownotloggedon");
 			return "redirect:/booknownotloggedon";
 		}
-		
+
 		ScheduleShow schedule=scheduleService.findScheduleShowById(bookingService.getBookedSchedule());
 		model.addAttribute("firstname", userService.findUserByUsername(userService.getUserName()).getFirstName());
+		model.addAttribute("schedule", schedule);
 		model.addAttribute("movie", schedule.getMovie().getTitle());
 		model.addAttribute("room", schedule.getTheaterRoom().getLocation());
 		model.addAttribute("date", schedule.getDate());
@@ -104,8 +111,8 @@ public class BookingController {
 		model.addAttribute("content", "booknow");
 		return "index";
 	}
-	
-	
+
+
 	// 3 Landing page when the customer is not logged on
 	@GetMapping("/booknownotloggedon") // get request
 	public String bookNowNotLoggedInGet(Model model) {
@@ -113,17 +120,72 @@ public class BookingController {
 		model.addAttribute("content", "booknownotloggedon");
 		return "index";
 	}
-	
+
 	@PostMapping("/booking/addbooking") // get request
-	public String addBookingPost(@RequestParam (required = false) int seats, @RequestParam (required = false) int VIPseats, Model model, RedirectAttributes rm) {
-		
+	public String addBookingPost(@RequestParam (required = false) int seats, @RequestParam (required = false) int vipSeats, Model model, RedirectAttributes rm) {
+		Long schedulePK = bookingService.getBookedSchedule(); // Get PK of selected schedule to book 
+		if(bookingService.checkSeats(schedulePK, seats))
+		{
+			if(bookingService.checkVipSeats(schedulePK, vipSeats)) // If seats
+			{
+				return commitBooking(seats, vipSeats, model,rm); // Make the booking
+			}
+			else // No vip seats
+			{
+				model.addAttribute("content", "booknow");
+				rm.addFlashAttribute("message","Sorry, no VIP seats available");
+				return "redirect:/booknow";
+			}
+		}
+		else // No normal seats
+		{
+			model.addAttribute("content", "booknow");
+			rm.addFlashAttribute("message","Sorry, no seats available");
+			return "redirect:/booknow";
+		}
+	}
+
+	// Make the booking
+	private String commitBooking(int seats, int vipSeats,Model model, RedirectAttributes rm)
+	{
+		// Add booking
 		Booking booking = new Booking();
 		booking.setUser(userService.findUserByUsername(userService.getUserName()));
 		booking.setScheduleShow(scheduleService.findScheduleShowById(bookingService.getBookedSchedule()));
+		booking.setSeats(seats);
+		booking.setVipSeats(vipSeats);
 		bookingService.addBooking(booking);
-		
+
+		// Update count seats for this schedule
+		ScheduleShow show = scheduleService.findScheduleShowById(bookingService.getBookedSchedule());
+		show.setCountSeats(show.getCountSeats()+seats);
+		show.setCountVipSeats(show.getCountVipSeats()+vipSeats);
+		scheduleService.addScheduleShow(show);
+
 		model.addAttribute("message","Thank you, your booking has been succesfully added!");
 		model.addAttribute("content", "bookingscustomer");
 		return "redirect:/bookingscustomer";
 	}
+
+	@PostMapping("/bookingsstaff/deletebooking")
+	public String deleteBookingPost(@RequestParam (required = false) Long pkBooking, Model model, RedirectAttributes rm) {
+		System.out.println(pkBooking);		// Find the booking
+		Booking booking = bookingService.findBookingById(pkBooking);
+
+		// Update the seats
+		ScheduleShow schedule = booking.getScheduleShow();
+		schedule.setCountSeats(schedule.getCountSeats()-booking.getSeats());
+		schedule.setCountVipSeats(schedule.getCountVipSeats()-booking.getVipSeats());
+		scheduleService.addScheduleShow(schedule);
+
+		// Delete the booking
+		bookingService.deleteBooking(booking);
+
+		model.addAttribute("content", "bookingsstaff");
+		rm.addFlashAttribute("message","Booking deleted");
+		return "redirect:/bookingsstaff";
+
+	}
 }
+
+

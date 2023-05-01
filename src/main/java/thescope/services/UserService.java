@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import thescope.exceptions.EntityNotFoundException;
+import thescope.models.Booking;
 import thescope.models.User;
 import thescope.models.UserRole;
 import thescope.repositories.UserRepository;
@@ -26,7 +27,9 @@ public class UserService{
 	private  UserRoleRepository userRoleRepository;
 	private  PasswordEncoder passwordEncoder;
 
-	
+	@Autowired
+	BookingService bookingService; // Cannot delete a user when he has one or more bookings
+
 	public UserService() {
 		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
@@ -46,7 +49,7 @@ public class UserService{
 		Optional<User> entity = userRepository.findById(id);
 		return unwrapUser(entity, id);
 	}
-	
+
 	public List<UserRole> userRoles() {
 		return userRoleRepository.findAll();
 	}
@@ -54,6 +57,19 @@ public class UserService{
 	public User findUserByUsername(String userName)
 	{
 		return userRepository.findUserByUserName(userName);
+	}
+
+	public boolean hasBookings(User user)
+	{
+		List<Booking> bookings = bookingService.findByUser(user);
+		if(bookings.size()==0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	// Used for searching users by admin

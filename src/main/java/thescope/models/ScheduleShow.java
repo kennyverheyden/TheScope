@@ -31,7 +31,15 @@ public class ScheduleShow {
 	@Column(name = "date")
 	Date date;
 
+	@Column(name="countSeats")
+	int countSeats;
+
+	@Column(name="countVipSeats")
+	int countVipSeats;
+
 	public ScheduleShow() {
+		this.countSeats=0;
+		this.countVipSeats=0;
 	}
 
 	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, Time time, Date date)
@@ -41,6 +49,8 @@ public class ScheduleShow {
 		this.theaterRoom = theaterRoom;
 		this.time = time;
 		this.date = date;
+		this.countSeats=0;
+		this.countVipSeats=0;
 	}
 
 	public Movie getMovie() {
@@ -77,6 +87,22 @@ public class ScheduleShow {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public int getCountSeats() {
+		return countSeats;
+	}
+
+	public void setCountSeats(int countSeats) {
+		this.countSeats = countSeats;
+	}
+
+	public int getCountVipSeats() {
+		return countVipSeats;
+	}
+
+	public void setCountVipSeats(int countVipSeats) {
+		this.countVipSeats = countVipSeats;
 	}
 
 }

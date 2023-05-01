@@ -74,7 +74,7 @@
     <option
             th:each="movie : ${movies}"
             th:text="${movie.title}"
-            th:value="${movie.PKmovie}"  th:selected="${ #strings.equals(movie.title, schedule.getMovie.title)}">
+            th:value="${movie.PKmovie}"  th:selected="${movie.PKmovie== schedule.getMovie.PKmovie}">
     </option>
 </select>
 </span>

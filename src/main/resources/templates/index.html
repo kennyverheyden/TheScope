@@ -102,6 +102,15 @@ function show_alert(index) {
 		else
 		document.getElementById("submit"+index).innerHTML="Update room";
 	}
+	function changeSubmitButtonBookings(index)
+	{
+		if(document.getElementById(index).checked)
+		{
+		document.getElementById("submit"+index).innerHTML="Confirm";
+		}
+		else
+		document.getElementById("submit"+index).innerHTML="Confirm";
+	}
 </script>
 </head>
 <body>
@@ -134,6 +143,11 @@ function show_alert(index) {
 										<li><a href="/movies">Movies</a></li>
 										<li th:if="${isAdmin==true or isDesk}"><a href="/addmovies">Add movie</a></li>
 										<li th:if="${isAdmin==true or isDesk}"><a href="/editmovies">Edit movies</a></li>
+									</ul></li>
+									
+									<li class="parent"><a href="/movieschedule">Schedule</a>
+									<ul class="lg-submenu">
+										<li class="dl-back"><a href="#">back</a></li>
 										<li><a href="/movieschedule">Schedule</a></li>
 									</ul></li>
 
