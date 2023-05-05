@@ -1,0 +1,9 @@
+<div th:fragment="shopstaff">
+  
+<h2>Welcome <span th:text="${welcomeName}"></span> (<span th:text="${role}"></span>)</h2>
+<br>
+<h3>Welke actie wilt U uitvoeren?</h3>
+<br>
+<a th:href="@{/ordershoplist}" >Stock Bestellen - </a>
+<a th:href ="@{/editshoplist}">Onderhoud shoplist - </a>
+<a th:href ="@{/newshoplist}">Nieuw item Shoplist</a>

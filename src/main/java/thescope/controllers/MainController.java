@@ -40,13 +40,40 @@ public class MainController {
 		{
 			model.addAttribute("content", "login");
 			return "redirect:/";
+			
+		}else {	// When user is logged in, the user will be directed to another page
+			
+			switch (userService.getUserRole()) {
+			case "Shop staff": 
+				model.addAttribute("role",userService.getUserRole());
+				model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
+				model.addAttribute("content", "shopstaff");
+				break;
+			case "Desk staff": 
+				model.addAttribute("role",userService.getUserRole());
+				model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
+				model.addAttribute("content", "deskstaff");
+				break;
+			case "Clean staff": 
+				model.addAttribute("role",userService.getUserRole());
+				model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
+				model.addAttribute("content", "cleanstaff");
+				break;
+			case "Admin": 
+				model.addAttribute("role",userService.getUserRole());
+				model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
+				model.addAttribute("content", "admin");
+				break;
+			case "Customer": 		//start automatisch nieuwe booking bij inloggen
+				bookingService.addBooking(new Booking(userService.findUserByUsername(username)));
+				model.addAttribute("role",userService.getUserRole());
+				model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
+				model.addAttribute("content", "main");
+			default:
+				break;
+			}
 		}
 		
-		// When user is logged in, the user will be directed to another page
-
-		model.addAttribute("role",userService.getUserRole());
-		model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
-		model.addAttribute("content", "main");
 		return "index";
 	}
 
