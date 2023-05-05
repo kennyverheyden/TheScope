@@ -21,7 +21,7 @@ public class UserController {
 	private UserService userService;
 
 	public UserController() {}
-	
+
 
 	@GetMapping("/users") // get request
 	public String selectGet(Model model) {
@@ -70,10 +70,19 @@ public class UserController {
 				}
 				else
 				{
-					userService.deleteUser(userName);
-					model.addAttribute("content", "users");
-					rm.addFlashAttribute("message","User deleted");
-					return "redirect:users";
+					if(userService.hasBookings(userService.findUserByUsername(userName)))
+					{
+						model.addAttribute("content", "users");
+						rm.addFlashAttribute("message","User not deleted because user has one or more bookings");
+						return "redirect:users";
+					}
+					else
+					{
+						userService.deleteUser(userName);
+						model.addAttribute("content", "users");
+						rm.addFlashAttribute("message","User deleted");
+						return "redirect:users";
+					}
 				}
 			}
 		}

@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.processors.LoginProcessor;
+import thescope.services.BookingService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
 	private LoginProcessor loginProcessor;
+	@Autowired
+	private BookingService bookingService; // If customer made a booking, redirect auto to booking landing page
 
 	public LoginController() {}
 
@@ -37,8 +40,16 @@ public class LoginController {
 
 		if(loggedIn == true)
 		{
-			model.addAttribute("content", "main");
-			return "redirect:main";
+			if(bookingService.getBookedSchedule()!=null)// If customer made a booking, redirect auto to booking landing page
+			{
+				model.addAttribute("content", "booknow");
+				return "redirect:/booknow";
+			}
+			else
+			{
+				model.addAttribute("content", "main");
+				return "redirect:/main";
+			}
 		}
 		else
 		{

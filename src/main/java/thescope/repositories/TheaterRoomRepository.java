@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import thescope.models.TheaterRoom;
 
 @Repository
-public interface TheaterRoomRepository extends JpaRepository<TheaterRoom,Long>{
-	
+public interface TheaterRoomRepository extends JpaRepository<TheaterRoom,Long>{	
 
 }

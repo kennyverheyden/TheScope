@@ -20,7 +20,7 @@
             th:value="${genre}" th:selected="${ #strings.equals(genre, movie.genre)}">
     </option>
 </select><br><br>
-        <input type="number" name="rating" min="0" max="10" th:value="${movie.rating}" style="width:80px;"> rating<br>
+        <input type="number" step="0.1" name="rating" min="0" max="10" th:value="${movie.rating}" style="width:80px;"> rating<br>
         <input type="number" name="length" min="1" th:value="${movie.length}" style="width:80px;"> minutes<br>
        	<input type="checkbox" name="threeD" th:checked="${movie.threeD}"> 3D<br><br>
        	Change image<br><input type="file" name="image" accept="image/png, image/jpeg">

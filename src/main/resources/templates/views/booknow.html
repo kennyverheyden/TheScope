@@ -1,0 +1,43 @@
+<div th:fragment="booknow">
+    
+<h2>Book now</h2>
+<br>
+		<p>Welcome, <span th:text="${firstname}" style="font-weight:bold;"></span> you want to book <span th:text="${movie}" style="font-size:16px;font-weight:bold;"></span></p><br>
+		<p>Room: <span th:text="${room}" style="font-size:16px;font-weight:bold;"></span></p>
+		<p>Time: <span th:text="${time}" style="font-size:16px;font-weight:bold;"></span></p>
+		<p>Date: <span th:text="${date}" style="font-size:16px;font-weight:bold;"></span></p>
+	<br>
+	
+	<form action="/booking/addbooking" method="post">
+	
+	<div th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)>0}">
+	<p>How many seats?</p>
+	<input type="number" name="seats" value="0" style="width:50px;">
+	<br><br>
+	</div>
+	<div th:if="${(schedule.getTheaterRoom.getMaxNormalSeats-schedule.getCountSeats)==0}">
+	<input type="hidden" name="seats" value="0">
+	</div>
+	
+	<div th:if="${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)>0}">
+	<p>How many VIP seats?</p>
+	<input type="number" name="vipSeats" value="0" style="width:50px;">
+	</div>
+	<div th:if="${(schedule.getTheaterRoom.getMaxVipSeats-schedule.getCountVipSeats)==0}">
+	<input type="hidden" name="vipSeats" value="0">
+	</div>
+	
+	
+	<br><br>
+	
+	<button type="submit">Make booking</button>
+	</form>
+	
+	<br>
+	<p>
+	<strong th:text="${message}"></strong>
+	</p>
+	
+<br>
+    
+</div>

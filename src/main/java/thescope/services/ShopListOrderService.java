@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import thescope.exceptions.EntityNotFoundException;
 import thescope.models.ShopListOrder;
 import thescope.repositories.ShopListOrderRepository;
 import thescope.repositories.ShopListRepository;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,7 +23,8 @@ public class ShopListOrderService {
 	public ShopListOrderService() {}
 	
 	public ShopListOrder findShopListOrderBuId(long id) {
-		return shopListOrderRepository.findById(id).get();
+		Optional<ShopListOrder> entity = shopListOrderRepository.findById(id);
+		return unwrapShopListOrder(entity, id);
 	}
 	public void addShopListOrder(ShopListOrder shopListOrder) {
 		shopListOrderRepository.save(shopListOrder);
@@ -30,5 +34,13 @@ public class ShopListOrderService {
 	}
 	public double calculateOrder(ShopListOrder shopListOrder) {
 		return shopListLineService.calculateLine(shopListOrder.getShopListLine());
+	}
+
+	public static ShopListOrder unwrapShopListOrder(Optional<ShopListOrder> entity, Long id) {
+		if (entity.isPresent()) {
+			return entity.get();
+		} else {
+			throw new EntityNotFoundException(id, ShopListOrder.class);
+		}
 	}
 }

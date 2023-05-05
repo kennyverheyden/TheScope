@@ -5,8 +5,10 @@ import org.springframework.stereotype.Repository;
 import thescope.models.Booking;
 import thescope.models.User;
 
+import java.util.List;
+
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,Long>{
 	
-
+    List<Booking> findBookingsByUser(Long id);
 }

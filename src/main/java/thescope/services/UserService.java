@@ -3,12 +3,15 @@ package thescope.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+import thescope.exceptions.EntityNotFoundException;
+import thescope.models.Booking;
 import thescope.models.User;
 import thescope.models.UserRole;
 import thescope.repositories.UserRepository;
@@ -24,7 +27,9 @@ public class UserService{
 	private  UserRoleRepository userRoleRepository;
 	private  PasswordEncoder passwordEncoder;
 
-	
+	@Autowired
+	BookingService bookingService; // Cannot delete a user when he has one or more bookings
+
 	public UserService() {
 		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
@@ -41,9 +46,10 @@ public class UserService{
 		return userRepository.findAll();
 	}
 	public User findUserById(long id) {
-		return userRepository.findById(id).get();
+		Optional<User> entity = userRepository.findById(id);
+		return unwrapUser(entity, id);
 	}
-	
+
 	public List<UserRole> userRoles() {
 		return userRoleRepository.findAll();
 	}
@@ -51,6 +57,19 @@ public class UserService{
 	public User findUserByUsername(String userName)
 	{
 		return userRepository.findUserByUserName(userName);
+	}
+
+	public boolean hasBookings(User user)
+	{
+		List<Booking> bookings = bookingService.findByUser(user);
+		if(bookings.size()==0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	// Used for searching users by admin
@@ -170,6 +189,7 @@ public class UserService{
 	}
 
 	public void createUser(String userName, String password, String name, String firstname, String address, String postalcode, String town, long role) {
+		Optional<UserRole> entity = userRoleRepository.findById(role);
 		User user = new User();
 		user.setUserName(userName);
 		String encodedPassword = this.passwordEncoder.encode(password);
@@ -179,7 +199,7 @@ public class UserService{
 		user.setAddress(address);
 		user.setPostalCode(postalcode);
 		user.setTown(town);
-		user.setUserRole(userRoleRepository.findById(role).get());
+		user.setUserRole(unwrapUserRole(entity, role));
 		userRepository.findAll().add(user);
 		userRepository.save(user);
 	}
@@ -197,6 +217,7 @@ public class UserService{
 	}
 
 	public void updateUser(String userName, String name, String firstname, String address, String postalcode, String town, String password, String userRole) {
+		Optional<UserRole> entity = userRoleRepository.findById(findbyRoleName(userRole));
 		User user = this.findUserByUsername(userName);
 		user.setName(name);
 		user.setFirstName(firstname);
@@ -209,7 +230,7 @@ public class UserService{
 			String encodedPassword = this.passwordEncoder.encode(password);
 			user.setSecret(encodedPassword);
 		}
-		user.setUserRole(userRoleRepository.findById(findbyRoleName(userRole)).get());
+		user.setUserRole(unwrapUserRole(entity, findbyRoleName(userRole)));
 		userRepository.save(user);
 
 	}
@@ -296,6 +317,22 @@ public class UserService{
 		else
 		{
 			return false;
+		}
+	}
+
+	public static User unwrapUser(Optional<User> entity, Long id) {
+		if (entity.isPresent()) {
+			return entity.get();
+		} else {
+			throw new EntityNotFoundException(id, User.class);
+		}
+	}
+
+	public static UserRole unwrapUserRole(Optional<UserRole> entity, Long id) {
+		if (entity.isPresent()) {
+			return entity.get();
+		} else {
+			throw new EntityNotFoundException(id, UserRole.class);
 		}
 	}
 

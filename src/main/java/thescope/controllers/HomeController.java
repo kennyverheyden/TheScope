@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.Movie;
 import thescope.processors.LoginProcessor;
+import thescope.services.BookingService;
 import thescope.services.MovieService;
 import thescope.services.UserService;
 
@@ -24,7 +25,9 @@ public class HomeController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private LoginProcessor loginProcessor;
+	private LoginProcessor loginProcessor; // Auto login for development
+	@Autowired
+	private BookingService bookingService; // When the customer logged out, erase last booking (scheduleID)
 
 	public HomeController() {}
 
@@ -33,6 +36,7 @@ public class HomeController {
 	{
 		if(on && userService.getUserName()==null && userService.getSecret()==null){
 			loginProcessor.setUserName("admin@thescope.com");
+			//loginProcessor.setUserName("customer@thescope.com");
 			loginProcessor.setSecret("test");
 			if(loginProcessor.login())
 			{
@@ -53,6 +57,10 @@ public class HomeController {
 
 		// ***********************************
 
+		
+		// When the customer logged out, erase last booking (scheduleID)
+		bookingService.setBookedSchedule(null);
+		
 		model.addAttribute("content", "home"); // redirect to movie view (home.html)
 		return "index";
 	}

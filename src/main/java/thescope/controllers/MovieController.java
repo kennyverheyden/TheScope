@@ -3,9 +3,7 @@ package thescope.controllers;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.JpaSort.Path;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.configuration.FileUploadUtil;
 import thescope.models.Movie;
 import thescope.services.MovieService;
+import thescope.services.ScheduleShowService;
 import thescope.services.UserService;
 
 @Controller
@@ -26,6 +25,8 @@ public class MovieController {
 	private MovieService movieService;
 	@Autowired
 	private UserService userService; // Check if user is logged on in case if the user access the page directly
+	@Autowired
+	private ScheduleShowService scheduleShowService; // User cannot delete a movie when assigned to one or more schedules
 
 	public MovieController() {}
 
@@ -158,25 +159,34 @@ public class MovieController {
 		}
 		else
 		{
-			// Delete movie
 			Movie movie = movieService.findMovieById(movieID); // Find movie
-			String photo = movie.getPhoto(); // Get the filename
-			String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
-			File file = new File(path+photo);  // Construct the path and filename
-			if (file.delete()) { // Delete the file
-				File dir = new File(path); //// Init dir path
-				dir.delete(); // Delete the directory
-				movieService.deleteMovieById(movieID); // Delete the movie from the database
-				rm.addFlashAttribute("message","Movie deleted"); // Send output message
+			if(scheduleShowService.movieHasSchedule(movie))
+			{
+				rm.addFlashAttribute("message","Cannot delete movie, movie assigned to one or more schedules");
 				model.addAttribute("content", "addmovies");
 				return "redirect:/editmovies";
+			}
+			else
+			{
+				// Delete movie
+				String photo = movie.getPhoto(); // Get the filename
+				String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
+				File file = new File(path+photo);  // Construct the path and filename
+				if (file.delete()) { // Delete the file
+					File dir = new File(path); //// Init dir path
+					dir.delete(); // Delete the directory
+					movieService.deleteMovieById(movieID); // Delete the movie from the database
+					rm.addFlashAttribute("message","Movie deleted"); // Send output message
+					model.addAttribute("content", "addmovies");
+					return "redirect:/editmovies";
 
-			} else {
-				System.out.println("Failed to delete the file.");
-				rm.addFlashAttribute("message","Failed to delete the movie");
-				model.addAttribute("content", "addmovies");
-				return "redirect:/editmovies";
-			} 
+				} else {
+					System.out.println("Failed to delete the file.");
+					rm.addFlashAttribute("message","Failed to delete the movie");
+					model.addAttribute("content", "addmovies");
+					return "redirect:/editmovies";
+				} 
+			}
 		}
 	}
 

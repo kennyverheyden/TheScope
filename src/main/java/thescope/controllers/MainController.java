@@ -41,8 +41,6 @@ public class MainController {
 			model.addAttribute("content", "login");
 			return "redirect:/";
 		}
-		//start automatisch nieuwe booking
-		bookingService.addBooking(new Booking(userService.findUserByUsername(username)));
 		
 		// When user is logged in, the user will be directed to another page
 
