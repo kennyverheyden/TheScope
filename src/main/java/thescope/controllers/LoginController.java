@@ -33,10 +33,8 @@ public class LoginController {
 	public String loginPost(@RequestParam String username, @RequestParam String password, Model model, RedirectAttributes rm) {
 		boolean loggedIn = false;
 
-		loginProcessor.setUserName(username);
-		loginProcessor.setSecret(password);
 
-		loggedIn = loginProcessor.login();
+		loggedIn = loginProcessor.login(username,password);
 
 		if(loggedIn == true)
 		{

@@ -45,9 +45,7 @@ public class SignUpController {
 					// Register user
 					userService.createUser(username, password, name, firstname, address, postalcode, town, role);
 
-					loginProcessor.setUserName(username);
-					loginProcessor.setSecret(password);
-					loggedIn = loginProcessor.login();
+					loggedIn = loginProcessor.login(username,password);
 
 					if(bookingService.getBookedSchedule()!=null)// If customer made a booking, redirect auto to booking landing page
 					{

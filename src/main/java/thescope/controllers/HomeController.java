@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.Movie;
-import thescope.processors.LoginProcessor;
 import thescope.services.BookingService;
 import thescope.services.MovieService;
-import thescope.services.UserService;
 
 @Controller
 public class HomeController {
@@ -23,44 +21,18 @@ public class HomeController {
 	@Autowired
 	private MovieService movieService;
 	@Autowired
-	private UserService userService;
-	@Autowired
-	private LoginProcessor loginProcessor; // Auto login for development
-	@Autowired
 	private BookingService bookingService; // When the customer logged out, erase last booking (scheduleID)
 
 	public HomeController() {}
 
-	// **** AUTO LOGIN ADMIN account ****
-	boolean doAutoTestLogin(boolean on)
-	{
-		if(on && userService.getUserName()==null && userService.getSecret()==null){
-			loginProcessor.setUserName("admin@thescope.com");
-			//loginProcessor.setUserName("customer@thescope.com");
-			loginProcessor.setSecret("test");
-			if(loginProcessor.login())
-			{
-				System.out.println("AUTOLOGON ADMIN = activated");
-			}
-			return true; }
-		return false;
-	}
 
 	@GetMapping("/") // get request
 	public String selectGet(Model model) {
 
-		// ***** AUTO LOGIN ADMIN account *****
-		// ***** Development mode *************
-
-		if(doAutoTestLogin(false)) // <-- TRUE or FALSE
-			return "redirect:/";
-
-		// ***********************************
-
-		
+	
 		// When the customer logged out, erase last booking (scheduleID)
 		bookingService.setBookedSchedule(null);
-		
+
 		model.addAttribute("content", "home"); // redirect to movie view (home.html)
 		return "index";
 	}

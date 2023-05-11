@@ -36,7 +36,7 @@ public class UserService{
 
 	// Global credentials for processing
 	private String userName;
-	private String secret;
+	private boolean secret;
 	private String name;
 	private String firstname;
 	private String userRole;
@@ -344,11 +344,11 @@ public class UserService{
 		this.userName = userName;
 	}
 
-	public String getSecret() {
+	public Boolean getSecret() {
 		return secret;
 	}
 
-	public void setSecret(String secret) {
+	public void setSecret(Boolean secret) {
 		this.secret = secret;
 	}
 

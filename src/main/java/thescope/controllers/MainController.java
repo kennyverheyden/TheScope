@@ -26,7 +26,7 @@ public class MainController {
 	{
 		if(logout != null) {
 			userService.setUserName(null);
-			userService.setSecret(null);
+			userService.setSecret(false);
 			userService.setFirstname(null);
 			userService.setName(null);
 			userService.setRoleID(0);

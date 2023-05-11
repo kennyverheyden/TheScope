@@ -14,50 +14,48 @@ import thescope.services.UserService;
 @RequestScope
 public class LoginProcessor {
 
-	private String userName;
-	private String secret;
 
 	@Autowired
 	private UserService userService;
 
 	private  PasswordEncoder passwordEncoder;
-	
+
 	public LoginProcessor()
 	{
 		this.passwordEncoder =  new BCryptPasswordEncoder();
 	}
-	
 
-	public boolean login()
+
+	public boolean login(String userName, String secret)
 	{
-		// Session scope bean, username must be available
-		userService.setUserName(userName);
-		userService.setSecret(secret);
-		
 		// Check if username and password exist
-		for(User user:userService.list())
+		User user = userService.findUserByUsername(userName);
+		if(user==null)
 		{
-			if(user.getUserName().equals(userService.getUserName()) && passwordEncoder.matches(userService.getSecret(),user.getSecret()))
+			return false;
+		}
+		else
+		{
+
+			if(user.getUserName().equals(userName) && passwordEncoder.matches(secret,user.getSecret()))
 			{
 				// Shown on logged welcome page
+				secret=null;
+				userService.setUserName(userName);
 				userService.setName(user.getName());
 				userService.setFirstname(user.getFirstName());
 				userService.setUserRole(user.getUserRole().getRoleName());
 				userService.setRoleID(user.getUserRole().getPKuserRole());
+				userService.setSecret(true);
 				return true;
 			}
+			else
+			{
+				return false;
+			}
 		}
-		return false;
+
 	}
 
-	public void setUserName(String userName)
-	{
-		this.userName=userName;
-	}
-
-	public void setSecret(String secret)
-	{
-		this.secret=secret;
-	}
 
 }
