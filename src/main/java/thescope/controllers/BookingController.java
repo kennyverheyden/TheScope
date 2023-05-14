@@ -1,5 +1,6 @@
 package thescope.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,15 +38,8 @@ public class BookingController {
 	@GetMapping("/bookingscustomer") // get request
 	public String selectGet(Model model) {
 
-		// Avoid customer to come here when not logged on
-		String username = userDetails.getUsername();
-		if(username==null)
-		{
-			model.addAttribute("content", "booknownotloggedon");
-			return "redirect:/booknownotloggedon";
-		}
-
 		List<Booking> customerBookings = bookingService.findByUser(userService.findUserByUsername(userDetails.getUsername()));
+		Collections.reverse(customerBookings); // Show newest first
 		model.addAttribute("bookings",customerBookings);
 		model.addAttribute("content", "bookingscustomer");
 		return "index";
@@ -56,6 +50,7 @@ public class BookingController {
 	public String editBookingsGet(Model model) {
 	
 		List<Booking> allBookings = bookingService.findAll();
+		Collections.reverse(allBookings); // Show newest first
 		model.addAttribute("allBookings",allBookings);  // map content to html elements
 		model.addAttribute("content", "bookingsstaff");
 		return "index";

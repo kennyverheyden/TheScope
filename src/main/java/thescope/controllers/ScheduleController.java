@@ -2,6 +2,7 @@ package thescope.controllers;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ public class ScheduleController {
 	public String schedule(Model model) {
 
 		List <ScheduleShow> schedules =scheduleShowService.findAll();
+		Collections.reverse(schedules); // Show newest first
 		List <Movie> movies = movieService.findAllMovies();
+		Collections.reverse(movies); // Show newest first
 		List<TheaterRoom> rooms= theaterRoomService.findAllTheaterRooms();
 		model.addAttribute("movies",movies); 
 		model.addAttribute("schedules",schedules);
@@ -79,7 +82,7 @@ public class ScheduleController {
 			else
 			{
 				model.addAttribute("content","schedule"); // redirect to schedule.html
-				rm.addFlashAttribute("message","Room is already planned");
+				rm.addFlashAttribute("message","Room is already planned, you cannot book 3 hours before and after the start hour");
 				return "redirect:/schedule";
 			}
 		}
@@ -101,8 +104,6 @@ public class ScheduleController {
 
 		if(!delete)
 		{
-			if(!scheduleShowService.checkIfRoomIsOccupied(PKtheaterRoom, date, time))
-			{
 				schedule.setMovie(movieService.findMovieById(PKmovie));
 				schedule.setTheaterRoom(theaterRoomService.findTheatherRoomById(PKtheaterRoom));
 				schedule.setTime(time);
@@ -111,13 +112,6 @@ public class ScheduleController {
 				model.addAttribute("content","schedule"); // redirect to schedule.html
 				rm.addFlashAttribute("message","Schedule updated");
 				return "redirect:/schedule";
-			}
-			else
-			{
-				model.addAttribute("content","schedule"); // redirect to schedule.html
-				rm.addFlashAttribute("message","Room is already planned");
-				return "redirect:/schedule";
-			}
 		}
 		else
 		{
@@ -141,7 +135,7 @@ public class ScheduleController {
 	public String movieSchedule(Model model) {
 		 
 		List <ScheduleShow> schedules =scheduleShowService.findAll();
-		
+		Collections.reverse(schedules); // Show newest first
 		model.addAttribute("schedules",schedules);
 		model.addAttribute("content","movieschedule"); // redirect to schedule.html
 		return "index";

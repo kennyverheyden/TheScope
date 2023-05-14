@@ -2,6 +2,8 @@ package thescope.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,28 +36,32 @@ public class MovieController {
 	// Open movie page
 	@GetMapping("/movies") // get request
 	public String selectGet(Model model) {
+		List<Movie> movies = movieService.findAllMovies();
+		Collections.reverse(movies); // Show newest first
 		model.addAttribute("content", "movies"); // redirect to movie view (movies.html)
-		model.addAttribute("movies",movieService.findAllMovies());  // map content to html elements
+		model.addAttribute("movies",movies);  // map content to html elements
 		return "index";
 	}
 
 	// Open edit movie page
 	@GetMapping("/editmovies") // get request
 	public String editMovie(Model model) {
-
+		List<Movie> movies = movieService.findAllMovies();
+		Collections.reverse(movies); // Show newest first
 		model.addAttribute("content", "editmovies"); // redirect to movie view (moviesedit.html)
 		model.addAttribute("genres", movieService.getGenres());  // map content to html elements
-		model.addAttribute("movies",movieService.findAllMovies());  // map content to html elements
+		model.addAttribute("movies",movies);  // map content to html elements
 		return "index";
 	}
 
 	// Open add movie page
 	@GetMapping("/addmovies") // get request
 	public String addMovie(Model model) {
-	
+		List<Movie> movies = movieService.findAllMovies();
+		Collections.reverse(movies); // Show newest first
 		model.addAttribute("content", "addmovies"); // redirect to movie view (addmovies.html)
 		model.addAttribute("genres", movieService.getGenres());  // map content to html elements
-		model.addAttribute("movies",movieService.findAllMovies());  // map content to html elements
+		model.addAttribute("movies",movies);  // map content to html elements
 		return "index";
 	}
 

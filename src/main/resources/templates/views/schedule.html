@@ -56,7 +56,7 @@
 
 <!-- Output message -->
 <strong>
-		<span th:text="${message}"></span>
+		<span th:text="${message}" style="color:#3d4470;"></span>
 	</strong><br>
 <br>
 <!--  End output message -->
@@ -69,7 +69,7 @@
 <form action="/schedule/update" method="post" class="tr" th:each="schedule, index: ${schedules}" th:unless="${index.index > 49}">
 
 <span class="td">
-<input th:value="${schedule.getPKscheduleShow}" type="hidden" name="schedulePK"><br>
+<input th:value="${schedule.getPKscheduleShow}" type="hidden" name="schedulePK" style="width:200px;"><br>
 <select name="PKmovie">
     <option
             th:each="movie : ${movies}"

@@ -4,7 +4,7 @@
 <br>
 
 <strong>
-		<span th:text="${message}"></span>
+		<span th:text="${message}" style="color:#3d4470;"></span>
 	</strong><br>
 	
 <br>
@@ -33,9 +33,8 @@
 <span class="td" th:text="${booking.getSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
 <span class="td" th:text="${booking.getVipSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
 <span class="td" style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;">
-<strong>Delete?</strong>
- &nbsp; &nbsp;
-<button type="submit" th:id="${'submit'+index.index}" th:onclick="if(!(confirm('Are you sure you want to delete this booking?') )) return false" style="width:70px;">Confirm</button>
+ &nbsp; &nbsp; &nbsp;
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="if(!(confirm('Are you sure you want to delete this booking?') )) return false" style="width:70px;">Delete</button>
 </span>
 
 </form>

@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @EnableMethodSecurity(securedEnabled=true) // Method security
 @EnableGlobalAuthentication
-@SpringBootApplication() // Ignore login screen from Spring Security
+@SpringBootApplication()
 public class TheScopeApplication {
 
 	public static void main(String[] args) {
