@@ -193,7 +193,7 @@ function show_alert(index) {
 				<div class="prs_top_login_btn_wrapper">
 					<div class="prs_animate_btn1">
 						<ul th:if="${isLoggedIn}==false">
-							<li><a href="signup" class="button button--tamaya"
+							<li><a href="/signup" class="button button--tamaya"
 								data-text="sign up" data-toggle="modal" data-target="#myModal"><span>Sign
 										up</span></a></li>
 						</ul>
@@ -206,7 +206,7 @@ function show_alert(index) {
 							<li th:if="${isLoggedIn}==false"><a href="/login" class="button button--tamaya"
 								data-text="login" data-toggle="modal" data-target="#myModal"><span>Login</span></a>
 							</li>
-							<li th:if="${isLoggedIn}==true"><a href="logout" class="button button--tamaya"
+							<li th:if="${isLoggedIn}==true"><a href="/logout" class="button button--tamaya"
 								data-text="logout" data-toggle="modal" data-target="#myModal"><span>Logout</span></a>
 							</li>
 						</ul>
