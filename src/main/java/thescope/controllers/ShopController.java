@@ -15,6 +15,7 @@ import thescope.models.Booking;
 import thescope.models.ShopList;
 import thescope.models.ShopListLine;
 import thescope.models.ShopListOrder;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.BookingService;
 import thescope.services.ShopListLineService;
 import thescope.services.ShopListOrderService;
@@ -28,18 +29,18 @@ public class ShopController {
 	@Autowired
 	private ShopListService shopListService;
 	@Autowired
-	private UserService userService; // If you want to print user name on shop page
-	@Autowired
 	ShopListLineService shopListLineService;
 	@Autowired
 	ShopListOrderService shopListOrderService;
 	@Autowired
 	BookingService bookingService;
-	
+	@Autowired
+	UserDetailsImpl userDetails;
+
 	List<ShopList> filteredProducts = new ArrayList(); // Products FILTERED by category
 	List<ShopList> selectedProducts= new ArrayList(); // Collect SELECTED product from user
 
-	
+
 	public ShopController() {}
 
 	@GetMapping("/shop") // get request
@@ -47,8 +48,11 @@ public class ShopController {
 
 		List<ShopList> products = shopListService.findAll(); 
 		model.addAttribute("content", "shop"); // Map to shop page
-		model.addAttribute("welcomeName",userService.getName()); // print user name on shop page
-		model.addAttribute("role",userService.getUserRole()); // print user role name on shop page
+		if(userDetails.getUser()!=null)
+		{
+			model.addAttribute("welcomeName",userDetails.getUser().getFirstName()); // print user name on shop page
+			model.addAttribute("role",userDetails.getUser().getUserRole().getRoleName()); // print user role name on shop page
+		}
 		model.addAttribute("products", products); // Bind products array to html elements
 		model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
 		return "index";
@@ -61,39 +65,48 @@ public class ShopController {
 		List<ShopList> filteredProducts = shopListService.findByCatFilter(cat);
 
 		model.addAttribute("content", "shop"); // Map to shop page
-		model.addAttribute("welcomeName",userService.getName()); // Print user name on shop page
-		model.addAttribute("role",userService.getUserRole()); // Print user role name on shop page
+		if(userDetails.getUser()!=null)
+		{
+			model.addAttribute("welcomeName",userDetails.getUser().getFirstName()); // print user name on shop page
+			model.addAttribute("role",userDetails.getUser().getUserRole().getRoleName()); // print user role name on shop page
+		}
 		model.addAttribute("products",filteredProducts); // Bind FILTERED products array to html elements
 		model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
 		return "index";
 	}
-	
+
 	@PostMapping("/shop/select") 
 	public String selectProduct(@RequestParam (required = false) Long select, Model model){
 
 		// Collect selected product from user
 		if(select!=null)
 		{
-		selectedProducts.add(shopListService.findShopListById(select));
+			selectedProducts.add(shopListService.findShopListById(select));
 		}
-		
+
 		model.addAttribute("content", "shop"); // Map to shop page
-		model.addAttribute("welcomeName",userService.getName()); // Print user name on shop page
-		model.addAttribute("role",userService.getUserRole()); // Print user role name on shop page
+		if(userDetails.getUser()!=null)
+		{
+			model.addAttribute("welcomeName",userDetails.getUser().getFirstName()); // print user name on shop page
+			model.addAttribute("role",userDetails.getUser().getUserRole().getRoleName()); // print user role name on shop page
+		}
 		model.addAttribute("products",shopListService.findAll()); // Otherwise the choose products will be empty
 		model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
 		return "index";
 	}
-	
+
 	@PostMapping("/shop/clearSelectedItems") 
 	public String selectProduct(Model model){
 
 		// Collect selected product from user
 		selectedProducts.clear();
-		
+
 		model.addAttribute("content", "shop"); // Map to shop page
-		model.addAttribute("welcomeName",userService.getName()); // Print user name on shop page
-		model.addAttribute("role",userService.getUserRole()); // Print user role name on shop page
+		if(userDetails.getUser()!=null)
+		{
+			model.addAttribute("welcomeName",userDetails.getUser().getFirstName()); // print user name on shop page
+			model.addAttribute("role",userDetails.getUser().getUserRole().getRoleName()); // print user role name on shop page
+		}
 		model.addAttribute("products",shopListService.findAll()); // Otherwise the choose products will be empty
 		model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
 		return "index";
@@ -101,26 +114,31 @@ public class ShopController {
 
 	@PostMapping("/shop/buySelectedItems")
 	public String buySelectedItems(Model model) {
-		System.out.println("Hallokes " +userService.getName());
-		
-		
-		Booking currentBooking= bookingService.findBookingByUser(userService.getName());
-		System.out.println(currentBooking.getPKbooking()+" aaaaaaaa");
-	
-		for (ShopList shopList : selectedProducts) {
-			ShopListLine s=new ShopListLine(shopList,1);
-			shopListLineService.addShopListLine(s);
-			shopListOrderService.addShopListOrder(new ShopListOrder(currentBooking,s ));
+
+		if(userDetails.getUser()!=null)
+		{
+
+			System.out.println("Hallokes " +userDetails.getUser().getFirstName());
+
+			Booking currentBooking= bookingService.findBookingByUser(userDetails.getUser().getName());
+			System.out.println(currentBooking.getPKbooking()+" aaaaaaaa");
+
+			for (ShopList shopList : selectedProducts) {
+				ShopListLine s=new ShopListLine(shopList,1);
+				shopListLineService.addShopListLine(s);
+				shopListOrderService.addShopListOrder(new ShopListOrder(currentBooking,s ));
+			}
+			selectedProducts.clear();
+
+			model.addAttribute("welcomeName",userDetails.getUser().getFirstName()); // print user name on shop page
+			model.addAttribute("role",userDetails.getUser().getUserRole().getRoleName()); // print user role name on shop page
+			model.addAttribute("products",shopListService.findAll()); // Otherwise the choose products will be empty
+			model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
+
 		}
-		selectedProducts.clear();
-		
-		
+
 		model.addAttribute("content", "shop"); // Map to shop page
-		model.addAttribute("welcomeName",userService.getName()); // Print user name on shop page
-		model.addAttribute("role",userService.getUserRole()); // Print user role name on shop page
-		model.addAttribute("products",shopListService.findAll()); // Otherwise the choose products will be empty
-		model.addAttribute("selectedProducts",selectedProducts); // Bind SELECTED products array to html elements
 		return "index";
-		
+
 	}
 }

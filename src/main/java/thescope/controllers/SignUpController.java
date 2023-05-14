@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import thescope.models.User;
+import thescope.models.UserRole;
 import thescope.processors.LoginProcessor;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.BookingService;
 import thescope.services.UserService;
 
@@ -20,6 +24,8 @@ public class SignUpController {
 	private LoginProcessor loginProcessor;
 	@Autowired
 	private BookingService bookingService; // If customer made a booking, redirect auto to booking landing page
+	@Autowired
+	private UserDetailsImpl userDetails;
 
 	public SignUpController() {}
 
@@ -40,12 +46,9 @@ public class SignUpController {
 			{
 				if(password.equals(confirmpassword))
 				{
-					boolean loggedIn = false;
-
 					// Register user
-					userService.createUser(username, password, name, firstname, address, postalcode, town, role);
-
-					loggedIn = loginProcessor.login(username,password);
+					User user=userService.createUser(username, password, name, firstname, address, postalcode, town, role);
+					userDetails.setUser(user);
 
 					if(bookingService.getBookedSchedule()!=null)// If customer made a booking, redirect auto to booking landing page
 					{
@@ -54,9 +57,7 @@ public class SignUpController {
 					}
 					else
 					{
-						//	model.addAttribute("content", "signup");
-						//	rm.addFlashAttribute("message","Welcome, your account has been successfully created!");
-						return "redirect:main";
+						return "redirect:/main";
 					}
 				}
 				else
@@ -64,7 +65,7 @@ public class SignUpController {
 					// Check if password boxes are the same
 					model.addAttribute("content", "signup");
 					rm.addFlashAttribute("message","Confirmation password not the same");
-					return "redirect:signup";
+					return "redirect:/signup";
 				}
 			}
 			else
@@ -72,7 +73,7 @@ public class SignUpController {
 				// Check if all fields are filled in
 				model.addAttribute("content", "signup");
 				rm.addFlashAttribute("message","Username (email) already taken");
-				return "redirect:signup";
+				return "redirect:/signup";
 			}
 		}
 		else
@@ -80,7 +81,7 @@ public class SignUpController {
 			// Check if all fields are filled in
 			model.addAttribute("content", "signup");
 			rm.addFlashAttribute("message","Fill in all fields");
-			return "redirect:signup";
+			return "redirect:/signup";
 		}
 	}
 

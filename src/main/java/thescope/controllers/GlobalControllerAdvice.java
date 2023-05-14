@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import thescope.processors.UserDetailsImpl;
 import thescope.services.UserService;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
-
 
 	/*****************************************************************************
 	 * 
@@ -16,106 +16,29 @@ public class GlobalControllerAdvice {
 	 * 
 	 ******************************************************************************/
 
-	@Autowired
-	private UserService userService;
-
-	
 	public GlobalControllerAdvice() {}
-	
 
+	@Autowired
+	private UserDetailsImpl userDetails;
+
+	// Set logged in user firstname in the menu for the main page
 	@ModelAttribute("firstNameINmenu")
 	public String firstNameINmenu()
 	{
-		return userService.getFirstname();
+		if(userDetails.getUser()!=null)
+		{
+			return userDetails.getUser().getFirstName();
+		}
+		return null;
 	}
 
+	// Check loggedIn status
 	@ModelAttribute("isLoggedIn")
 	public boolean isLoggedIn()
 	{
-
-		if(userService.getUserName()!=null && userService.getSecret()!=null && userService.getUserRole()!=null)
+		if(userDetails.getUser()!=null)
 		{
 			return true;
-		}
-		else
-		{
-			// User is not logged in
-			return false;
-		}
-	}
-
-	@ModelAttribute("isStaff")
-	public boolean isStaff() {
-
-		// Check if user is logged in, to avoid error
-		if(userService.getUserRole()!=null)
-		{
-			// Check if user is staff member
-			return userService.isStaff();
-		}
-		else
-		{
-			// User is not logged in
-			return false;
-		}
-	}
-
-	@ModelAttribute("isCustomer")
-	public boolean isCustomer() {
-
-		// Check if user is logged in, to avoid error
-		if(userService.getUserRole()!=null)
-		{
-			// Check if user is customer member
-			return userService.isCustomer();
-		}
-		else
-		{
-			// User is not logged in
-			return false;
-		}
-	}
-
-	@ModelAttribute("isAdmin")
-	public boolean isAdmin() {
-
-		// Check if user is logged in, to avoid error
-		if(userService.getUserRole()!=null)
-		{
-			// Check if user is customer member
-			return userService.isAdmin();
-		}
-		else
-		{
-			// User is not logged in
-			return false;
-		}
-	}
-
-	@ModelAttribute("isCleaning")
-	public boolean isCleaning() {
-
-		// Check if user is logged in, to avoid error
-		if(userService.getUserRole()!=null)
-		{
-			// Check if user is customer member
-			return userService.isCleaning();
-		}
-		else
-		{
-			// User is not logged in
-			return false;
-		}
-	}
-
-	@ModelAttribute("isDesk")
-	public boolean isDesk() {
-
-		// Check if user is logged in, to avoid error
-		if(userService.getUserRole()!=null)
-		{
-			// Check if user is customer member
-			return userService.isDesk();
 		}
 		else
 		{
@@ -127,11 +50,16 @@ public class GlobalControllerAdvice {
 	@ModelAttribute("isShop")
 	public boolean isShop() {
 
-		// Check if user is logged in, to avoid error
-		if(userService.getUserRole()!=null)
+
+		if(userDetails.getUser()!=null)
 		{
-			// Check if user is customer member
-			return userService.isShop();
+			if(userDetails.getUser().getUserRole().getPKuserRole()==1) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
@@ -139,5 +67,108 @@ public class GlobalControllerAdvice {
 			return false;
 		}
 	}
+
+	@ModelAttribute("isStaff")
+	public boolean isStaff() {
+
+		if(userDetails.getUser()!=null)
+		{
+			if(userDetails.getUser().getUserRole().getPKuserRole()==1 ||
+					userDetails.getUser().getUserRole().getPKuserRole()==2 ||
+					userDetails.getUser().getUserRole().getPKuserRole()==3 ||
+					userDetails.getUser().getUserRole().getPKuserRole()==4) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			// User is not logged in
+			return false;
+		}
+	}
+
+	@ModelAttribute("isDesk")
+	public boolean isDesk() {
+
+		if(userDetails.getUser()!=null)
+		{
+			if(userDetails.getUser().getUserRole().getPKuserRole()==2) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	@ModelAttribute("isCleaning")
+	public boolean isCleaning() {
+
+		if(userDetails.getUser()!=null)
+		{
+			if(userDetails.getUser().getUserRole().getPKuserRole()==3) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			// User is not logged in
+			return false;
+		}
+	}
+
+	@ModelAttribute("isAdmin")
+	public boolean isAdmin() {
+
+		if(userDetails.getUser()!=null)
+		{
+			if(userDetails.getUser().getUserRole().getPKuserRole()==4) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			// User is not logged in
+			return false;
+		}
+	}
+
+	@ModelAttribute("isCustomer")
+	public boolean isCustomer() {
+
+		if(userDetails.getUser()!=null)
+		{
+			if(userDetails.getUser().getUserRole().getPKuserRole()==5) {
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			// User is not logged in
+			return false;
+		}
+	}
+
 }
 

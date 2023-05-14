@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.configuration.FileUploadUtil;
 import thescope.models.Movie;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.MovieService;
 import thescope.services.ScheduleShowService;
 import thescope.services.UserService;
@@ -24,9 +25,9 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 	@Autowired
-	private UserService userService; // Check if user is logged on in case if the user access the page directly
-	@Autowired
 	private ScheduleShowService scheduleShowService; // User cannot delete a movie when assigned to one or more schedules
+	@Autowired
+	private UserDetailsImpl userDetails;
 
 	public MovieController() {}
 
@@ -41,13 +42,6 @@ public class MovieController {
 	// Open edit movie page
 	@GetMapping("/editmovies") // get request
 	public String editMovie(Model model) {
-		String username = userService.getUserName();
-		// When user is not logged on, the String is null
-		if(username==null)
-		{
-			model.addAttribute("content", "login");
-			return "redirect:/";
-		}
 
 		model.addAttribute("content", "editmovies"); // redirect to movie view (moviesedit.html)
 		model.addAttribute("genres", movieService.getGenres());  // map content to html elements
@@ -58,14 +52,7 @@ public class MovieController {
 	// Open add movie page
 	@GetMapping("/addmovies") // get request
 	public String addMovie(Model model) {
-		String username = userService.getUserName();
-		// When user is not logged on, the String is null
-		if(username==null)
-		{
-			model.addAttribute("content", "login");
-			return "redirect:/";
-		}
-
+	
 		model.addAttribute("content", "addmovies"); // redirect to movie view (addmovies.html)
 		model.addAttribute("genres", movieService.getGenres());  // map content to html elements
 		model.addAttribute("movies",movieService.findAllMovies());  // map content to html elements

@@ -6,25 +6,32 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import jakarta.transaction.Transactional;
 import thescope.exceptions.EntityNotFoundException;
 import thescope.models.Booking;
 import thescope.models.User;
 import thescope.models.UserRole;
+import thescope.processors.UserDetailsImpl;
 import thescope.repositories.UserRepository;
 import thescope.repositories.UserRoleRepository;
 
 @Service
 @Transactional 
-public class UserService{
+public class UserService implements UserDetailsService{
 
 	@Autowired
 	private  UserRepository userRepository;
 	@Autowired
 	private  UserRoleRepository userRoleRepository;
+	@Autowired UserDetailsImpl userDetails;
+
 	private  PasswordEncoder passwordEncoder;
 
 	@Autowired
@@ -41,6 +48,20 @@ public class UserService{
 	private String firstname;
 	private String userRole;
 	long roleID;
+
+	// Part of Spring security
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findUserByUserName(username);
+		if(user==null) {
+			throw new UsernameNotFoundException(username);
+		}
+		else
+		{
+			userDetails.setUser(user);
+		}
+		return userDetails;
+	}
 
 	public List<User> list() {
 		return userRepository.findAll();
@@ -178,17 +199,18 @@ public class UserService{
 
 	public boolean userExist(String username)
 	{
-		for (User i:userRepository.findAll())
+		User user = userRepository.findUserByUserName(username);
+		if(user==null)
 		{
-			if(i.getUserName().equals(username))
-			{
-				return true;
-			}
+			return false;
 		}
-		return false;
+		else
+		{
+			return true;
+		}
 	}
 
-	public void createUser(String userName, String password, String name, String firstname, String address, String postalcode, String town, long role) {
+	public User createUser(String userName, String password, String name, String firstname, String address, String postalcode, String town, long role) {
 		Optional<UserRole> entity = userRoleRepository.findById(role);
 		User user = new User();
 		user.setUserName(userName);
@@ -202,6 +224,7 @@ public class UserService{
 		user.setUserRole(unwrapUserRole(entity, role));
 		userRepository.findAll().add(user);
 		userRepository.save(user);
+		return user;
 	}
 
 	public void updateAccount(String userName, String name, String firstname, String address, String postalcode, String town) {
@@ -232,7 +255,6 @@ public class UserService{
 		}
 		user.setUserRole(unwrapUserRole(entity, findbyRoleName(userRole)));
 		userRepository.save(user);
-
 	}
 
 	public void deleteUser(String userName)
@@ -246,78 +268,6 @@ public class UserService{
 		String encodedPassword = this.passwordEncoder.encode(password);
 		user.setSecret(encodedPassword);
 		userRepository.save(user);
-	}
-
-	// Check roles used by GlobalControllerAdvice
-	public boolean isStaff()
-	{
-		if(roleID==1 || roleID==2 || roleID==3 || roleID==4)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	public boolean isCustomer()
-	{
-		if(roleID==5) // 5 = Customer
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public boolean isAdmin()
-	{
-		if(roleID==4) // 4 = Admin
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public boolean isCleaning()
-	{
-		if(roleID==3) // 3 = Cleaning staff
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public boolean isDesk()
-	{
-		if(roleID==2) // 2 = Desk
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public boolean isShop()
-	{
-		if(roleID==1) // 1 = Shop
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	public static User unwrapUser(Optional<User> entity, Long id) {
@@ -334,54 +284,6 @@ public class UserService{
 		} else {
 			throw new EntityNotFoundException(id, UserRole.class);
 		}
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public Boolean getSecret() {
-		return secret;
-	}
-
-	public void setSecret(Boolean secret) {
-		this.secret = secret;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
-
-	public long getRoleID() {
-		return roleID;
-	}
-
-	public void setRoleID(long roleID) {
-		this.roleID = roleID;
 	}
 
 }

@@ -1,6 +1,5 @@
 package thescope.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.models.User;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.UserService;
 
 @Controller
@@ -16,21 +16,15 @@ public class AccountController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserDetailsImpl userDetails;
 
 	public AccountController() {}
-	
 
 	@GetMapping("/account") // get request
 	public String selectGet(Model model) {
 
-
-		if(userService.getUserName()==null)
-		{
-			model.addAttribute("content", "login");
-			return "index";
-		}
-
-		User user = userService.findUserByUsername(userService.getUserName());
+		User user = userService.findUserByUsername(userDetails.getUsername());
 
 		model.addAttribute("content", "account");
 		model.addAttribute("userName",user.getUserName());  // map content to html elements

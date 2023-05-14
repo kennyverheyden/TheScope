@@ -206,7 +206,7 @@ function show_alert(index) {
 							<li th:if="${isLoggedIn}==false"><a href="/login" class="button button--tamaya"
 								data-text="login" data-toggle="modal" data-target="#myModal"><span>Login</span></a>
 							</li>
-							<li th:if="${isLoggedIn}==true"><a href="/main?logout" class="button button--tamaya"
+							<li th:if="${isLoggedIn}==true"><a href="logout" class="button button--tamaya"
 								data-text="logout" data-toggle="modal" data-target="#myModal"><span>Logout</span></a>
 							</li>
 						</ul>

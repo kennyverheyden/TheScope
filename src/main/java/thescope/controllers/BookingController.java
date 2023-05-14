@@ -1,10 +1,9 @@
 package thescope.controllers;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.Booking;
 import thescope.models.ScheduleShow;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.BookingService;
 import thescope.services.ScheduleShowService;
 import thescope.services.UserService;
@@ -27,6 +27,8 @@ public class BookingController {
 	private UserService userService;
 	@Autowired
 	private ScheduleShowService scheduleService;
+	@Autowired
+	private UserDetailsImpl userDetails;
 
 	public BookingController() {}
 
@@ -36,14 +38,14 @@ public class BookingController {
 	public String selectGet(Model model) {
 
 		// Avoid customer to come here when not logged on
-		String username = userService.getUserName();
+		String username = userDetails.getUsername();
 		if(username==null)
 		{
 			model.addAttribute("content", "booknownotloggedon");
 			return "redirect:/booknownotloggedon";
 		}
 
-		List<Booking> customerBookings = bookingService.findByUser(userService.findUserByUsername(userService.getUserName()));
+		List<Booking> customerBookings = bookingService.findByUser(userService.findUserByUsername(userDetails.getUsername()));
 		model.addAttribute("bookings",customerBookings);
 		model.addAttribute("content", "bookingscustomer");
 		return "index";
@@ -52,13 +54,7 @@ public class BookingController {
 	// Staff side
 	@GetMapping("/bookingsstaff") // get request
 	public String editBookingsGet(Model model) {
-		String username = userService.getUserName();
-		// When user is not logged on, the String is null
-		if(username==null)
-		{
-			model.addAttribute("content", "login");
-			return "redirect:/";
-		}
+	
 		List<Booking> allBookings = bookingService.findAll();
 		model.addAttribute("allBookings",allBookings);  // map content to html elements
 		model.addAttribute("content", "bookingsstaff");
@@ -68,16 +64,13 @@ public class BookingController {
 	// 1 Receive and start processing booking
 	@PostMapping("/booking/booknow") // get request
 	public String bookNowPost(@RequestParam (required = false) Long PKschedule, Model model, RedirectAttributes rm) {
-		String username = userService.getUserName();
-
 
 		// **************** //
 		bookingService.setBookedSchedule(PKschedule); // Keep the scheduleID of the selected booking to book
 		// **************** //
 
-
 		// 2A When user is not logged on, the String is null
-		if(username==null)
+		if(userDetails.getUser()==null)
 		{
 			bookingService.setBookingStatus("To continue, please <strong><a href=\"/login\">login</a></strong> or <strong><a href=\"/signup\">create an account</a></strong>");
 			model.addAttribute("content", "booknownotloggedon");
@@ -93,16 +86,8 @@ public class BookingController {
 	@GetMapping("/booknow") // get request
 	public String bookNowtGet(Model model) {
 
-		// Avoid customer to come here when not logged on
-		String username = userService.getUserName();
-		if(username==null)
-		{
-			model.addAttribute("content", "booknownotloggedon");
-			return "redirect:/booknownotloggedon";
-		}
-
 		ScheduleShow schedule=scheduleService.findScheduleShowById(bookingService.getBookedSchedule());
-		model.addAttribute("firstname", userService.findUserByUsername(userService.getUserName()).getFirstName());
+		model.addAttribute("firstname", userService.findUserByUsername(userDetails.getUsername()).getFirstName());
 		model.addAttribute("schedule", schedule);
 		model.addAttribute("movie", schedule.getMovie().getTitle());
 		model.addAttribute("room", schedule.getTheaterRoom().getLocation());
@@ -150,7 +135,7 @@ public class BookingController {
 	{
 		// Add booking
 		Booking booking = new Booking();
-		booking.setUser(userService.findUserByUsername(userService.getUserName()));
+		booking.setUser(userService.findUserByUsername(userDetails.getUsername()));
 		booking.setScheduleShow(scheduleService.findScheduleShowById(bookingService.getBookedSchedule()));
 		booking.setSeats(seats);
 		booking.setVipSeats(vipSeats);
@@ -187,5 +172,3 @@ public class BookingController {
 
 	}
 }
-
-

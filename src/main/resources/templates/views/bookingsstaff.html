@@ -34,8 +34,8 @@
 <span class="td" th:text="${booking.getVipSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
 <span class="td" style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;">
 <strong>Delete?</strong>
- &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonBooking(' + ${index.index} + ')'">
-<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:70px;">Confirm</button>
+ &nbsp; &nbsp;
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="if(!(confirm('Are you sure you want to delete this booking?') )) return false" style="width:70px;">Confirm</button>
 </span>
 
 </form>

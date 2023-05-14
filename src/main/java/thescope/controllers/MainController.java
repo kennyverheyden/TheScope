@@ -6,47 +6,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import thescope.models.Booking;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.BookingService;
-import thescope.services.UserService;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private UserService userService;
-	@Autowired
 	BookingService bookingService;
+	@Autowired
+	UserDetailsImpl userDetails;
 	
 	public MainController() {}
 
-	
 	@GetMapping("/main")
 	public String home(@RequestParam(required = false)String logout, Model model)
 	{
-		if(logout != null) {
-			userService.setUserName(null);
-			userService.setSecret(false);
-			userService.setFirstname(null);
-			userService.setName(null);
-			userService.setRoleID(0);
-			userService.setUserRole(null);
-		}
-
-		String username = userService.getUserName();
-		// When user is not logged on, the String is null
-
-		if(username==null)
-		{
-			model.addAttribute("content", "login");
-			return "redirect:/";
-		}
-		
-		// When user is logged in, the user will be directed to another page
-
-		model.addAttribute("role",userService.getUserRole());
-		model.addAttribute("welcomeName",userService.getFirstname()+" "+userService.getName());
 		model.addAttribute("content", "main");
+		model.addAttribute("role",userDetails.getUser().getUserRole().getRoleName());
+		model.addAttribute("welcomeName",userDetails.getUser().getFirstName()+" "+userDetails.getUser().getName());
 		return "index";
 	}
 

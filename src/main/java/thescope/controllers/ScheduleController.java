@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import thescope.models.Movie;
 import thescope.models.ScheduleShow;
 import thescope.models.TheaterRoom;
@@ -19,13 +18,10 @@ import thescope.services.BookingService;
 import thescope.services.MovieService;
 import thescope.services.ScheduleShowService;
 import thescope.services.TheaterRoomService;
-import thescope.services.UserService;
 
 @Controller
 public class ScheduleController {
 
-	@Autowired
-	private UserService userService; // Only logged on user can access this page
 	@Autowired
 	private ScheduleShowService scheduleShowService;
 	@Autowired
@@ -35,19 +31,10 @@ public class ScheduleController {
 	@Autowired
 	private BookingService bookingService; // User cannot delete schedule when booking is assigned
 
-
 	public ScheduleController() {}
-
 
 	@GetMapping("/schedule") // get request
 	public String schedule(Model model) {
-
-		if(userService.getUserName()==null)
-		{
-			model.addAttribute("content", "login");
-			return "index";
-		}
-
 
 		List <ScheduleShow> schedules =scheduleShowService.findAll();
 		List <Movie> movies = movieService.findAllMovies();

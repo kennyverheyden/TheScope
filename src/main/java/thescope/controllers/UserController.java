@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import thescope.models.User;
 import thescope.models.UserRole;
+import thescope.processors.UserDetailsImpl;
 import thescope.services.UserService;
 
 @Controller
@@ -19,6 +20,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserDetailsImpl userDetails;
 
 	public UserController() {}
 
@@ -26,17 +29,8 @@ public class UserController {
 	@GetMapping("/users") // get request
 	public String selectGet(Model model) {
 
-		String username = userService.getUserName();
-		// When user is not logged on, the String is null
-		if(username==null)
-		{
-			model.addAttribute("content", "login");
-			return "redirect:/";
-		}
-
 		List<User> users = userService.list();
 		List<UserRole> roles = userService.userRoles();
-
 
 		model.addAttribute("content", "users"); 
 		model.addAttribute("users",users);  // map content to html elements
@@ -54,7 +48,7 @@ public class UserController {
 
 		if(delete)
 		{
-			if(userName.equals(userService.getUserName())) // Admin cannot delete his own account
+			if(userName.equals(userDetails.getUsername())) // Admin cannot delete his own account
 			{
 				model.addAttribute("content", "users");
 				rm.addFlashAttribute("message","You cannot delete your own account");
@@ -117,14 +111,6 @@ public class UserController {
 
 	@GetMapping("/adduser") // get request
 	public String loginGet(Model model) {
-		String username = userService.getUserName();
-
-		// When user is not logged on, the String is null
-		if(username==null)
-		{
-			model.addAttribute("content", "login");
-			return "redirect:/";
-		}
 
 		model.addAttribute("content", "adduser");
 		return "index";
