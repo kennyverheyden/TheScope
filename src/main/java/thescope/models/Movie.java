@@ -62,7 +62,7 @@ public class Movie {
 		}
 		else
 		{
-			return "/images/" + PKmovie + "/" + photo;
+			return "/assets/images/" + PKmovie + "/" + photo;
 		}
 	}
 
