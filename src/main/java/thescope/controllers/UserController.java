@@ -46,66 +46,77 @@ public class UserController {
 			delete=false;
 		}
 
-		if(delete)
+		// Internet demo account is not allowed to edit or delete content
+		if(!userDetails.getUsername().equals("demo@thescope.site"))
 		{
-			if(userName.equals(userDetails.getUsername())) // Admin cannot delete his own account
+			if(delete)
 			{
-				model.addAttribute("content", "users");
-				rm.addFlashAttribute("message","You cannot delete your own account");
-				return "redirect:users";
-			}
-			else
-			{
-				if(userName.equals("admin@thescope.com"))
+				if(userName.equals(userDetails.getUsername())) // Admin cannot delete his own account
 				{
 					model.addAttribute("content", "users");
-					rm.addFlashAttribute("message","You cannot delete the primary admin account");
+					rm.addFlashAttribute("message","You cannot delete your own account");
 					return "redirect:users";
 				}
 				else
 				{
-					if(userService.hasBookings(userService.findUserByUsername(userName)))
+					if(userName.equals("admin@thescope.site") || userName.equals("admin@thescope.com"))
 					{
 						model.addAttribute("content", "users");
-						rm.addFlashAttribute("message","User not deleted because user has one or more bookings");
+						rm.addFlashAttribute("message","You cannot delete the primary admin account");
 						return "redirect:users";
 					}
 					else
 					{
-						userService.deleteUser(userName);
+						if(userService.hasBookings(userService.findUserByUsername(userName)))
+						{
+							model.addAttribute("content", "users");
+							rm.addFlashAttribute("message","User not deleted because user has one or more bookings");
+							return "redirect:users";
+						}
+						else
+						{
+							userService.deleteUser(userName);
+							model.addAttribute("content", "users");
+							rm.addFlashAttribute("message","User deleted");
+							return "redirect:users";
+						}
+					}
+				}
+			}
+			else
+			{
+				if(!name.equals("") && !firstName.equals("") && !address.equals("") && !postalCode.equals("") && !town.equals(""))
+				{
+					if(userName.equals("admin@thescope.site") && !userRole.equals("Admin") || userName.equals("admin@thescope.com") && !userRole.equals("Admin")) {
+
 						model.addAttribute("content", "users");
-						rm.addFlashAttribute("message","User deleted");
+						rm.addFlashAttribute("message","You cannot change the role of the primary admin account");
 						return "redirect:users";
 					}
+					else
+					{
+						// Update user
+						userService.updateUser(userName, name, firstName, address, postalCode, town, secret, userRole);
+						model.addAttribute("content", "users");
+						rm.addFlashAttribute("message","Information succesfully updated");
+						return "redirect:users";
+					}
+				}
+				else
+				{
+					// Check if all fields are filled in
+					model.addAttribute("content", "users");
+					rm.addFlashAttribute("message","Fill in all fields");
+					return "redirect:users";
 				}
 			}
 		}
 		else
 		{
-			if(!name.equals("") && !firstName.equals("") && !address.equals("") && !postalCode.equals("") && !town.equals(""))
-			{
-				if(userName.equals("admin@thescope.com") && !userRole.equals("Admin")) {
-
-					model.addAttribute("content", "users");
-					rm.addFlashAttribute("message","You cannot change the role of the primary admin account");
-					return "redirect:users";
-				}
-				else
-				{
-					// Update user
-					userService.updateUser(userName, name, firstName, address, postalCode, town, secret, userRole);
-					model.addAttribute("content", "users");
-					rm.addFlashAttribute("message","Information succesfully updated");
-					return "redirect:users";
-				}
-			}
-			else
-			{
-				// Check if all fields are filled in
-				model.addAttribute("content", "users");
-				rm.addFlashAttribute("message","Fill in all fields");
-				return "redirect:users";
-			}
+			// Check if all fields are filled in
+			model.addAttribute("content", "users");
+			rm.addFlashAttribute("message","Demo account is not allowed to edit or delete content");
+			return "redirect:users";
 		}
 	}
 

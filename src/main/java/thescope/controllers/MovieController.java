@@ -19,7 +19,6 @@ import thescope.models.Movie;
 import thescope.processors.UserDetailsImpl;
 import thescope.services.MovieService;
 import thescope.services.ScheduleShowService;
-import thescope.services.UserService;
 
 @Controller
 public class MovieController {
@@ -30,6 +29,7 @@ public class MovieController {
 	private ScheduleShowService scheduleShowService; // User cannot delete a movie when assigned to one or more schedules
 	@Autowired
 	private UserDetailsImpl userDetails;
+
 
 	public MovieController() {}
 
@@ -109,78 +109,84 @@ public class MovieController {
 			delete=false;
 		}
 
-		if(!delete)
+		// Internet demo account is not allowed to edit or delete content
+		if(!userDetails.getUsername().equals("demo@thescope.site"))
 		{
-			// Edit the movie
-			if(!title.equals("") && !genre.equals("") && rating!=0 && length!=0)
+			if(!delete)
 			{
+				// Edit the movie
+				if(!title.equals("") && !genre.equals("") && rating!=0 && length!=0)
+				{
 
-				Movie movie = movieService.findMovieById(movieID); // Load movie
-				// Determine the filename
-				String fileName = StringUtils.cleanPath(image.getOriginalFilename()); // Define filename
-				movie.setTitle(title);
-				movie.setGenre(genre);
-				movie.setRating(rating);
-				movie.setLength(length);
-				movie.setThreeD(threeD);
-				if(image.getOriginalFilename().toString()!="") // Check if image is uploaded or not
-				{
-					movie.setPhoto(fileName);
-				}
-				movieService.updateMovie(movie, movieID);
-				// Write uploaded file to hdd
-				if(image.getOriginalFilename().toString()!="") // If file is not uploaded
-				{
-					String uploadDir = "images/" + movie.getPKmovie(); // Define location
-					try {
-						FileUploadUtil.saveFile(uploadDir, fileName, image);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					Movie movie = movieService.findMovieById(movieID); // Load movie
+					// Determine the filename
+					String fileName = StringUtils.cleanPath(image.getOriginalFilename()); // Define filename
+					movie.setTitle(title);
+					movie.setGenre(genre);
+					movie.setRating(rating);
+					movie.setLength(length);
+					movie.setThreeD(threeD);
+					if(image.getOriginalFilename().toString()!="") // Check if image is uploaded or not
+					{
+						movie.setPhoto(fileName);
 					}
+					movieService.updateMovie(movie, movieID);
+					// Write uploaded file to hdd
+					if(image.getOriginalFilename().toString()!="") // If file is not uploaded
+					{
+						String uploadDir = "images/" + movie.getPKmovie(); // Define location
+						try {
+							FileUploadUtil.saveFile(uploadDir, fileName, image);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					rm.addFlashAttribute("message","Movie updated");
+					model.addAttribute("content", "addmovies");
+					return "redirect:/editmovies";
 				}
-				rm.addFlashAttribute("message","Movie updated");
-				model.addAttribute("content", "addmovies");
-				return "redirect:/editmovies";
+				else
+				{
+					rm.addFlashAttribute("message","Fill in all fields");
+					model.addAttribute("content", "addmovies");
+					return "redirect:/editmovies";
+				}
 			}
 			else
 			{
-				rm.addFlashAttribute("message","Fill in all fields");
-				model.addAttribute("content", "addmovies");
-				return "redirect:/editmovies";
-			}
-		}
-		else
-		{
-			Movie movie = movieService.findMovieById(movieID); // Find movie
-			if(scheduleShowService.movieHasSchedule(movie))
-			{
-				rm.addFlashAttribute("message","Cannot delete movie, movie assigned to one or more schedules");
-				model.addAttribute("content", "addmovies");
-				return "redirect:/editmovies";
-			}
-			else
-			{
-				// Delete movie
-				String photo = movie.getPhoto(); // Get the filename
-				String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
-				File file = new File(path+photo);  // Construct the path and filename
-				if (file.delete()) { // Delete the file
-					File dir = new File(path); //// Init dir path
-					dir.delete(); // Delete the directory
-					movieService.deleteMovieById(movieID); // Delete the movie from the database
-					rm.addFlashAttribute("message","Movie deleted"); // Send output message
+				Movie movie = movieService.findMovieById(movieID); // Find movie
+				if(scheduleShowService.movieHasSchedule(movie))
+				{
+					rm.addFlashAttribute("message","Cannot delete movie, movie assigned to one or more schedules");
 					model.addAttribute("content", "addmovies");
 					return "redirect:/editmovies";
-
-				} else {
-					System.out.println("Failed to delete the file.");
-					rm.addFlashAttribute("message","Failed to delete the movie");
-					model.addAttribute("content", "addmovies");
-					return "redirect:/editmovies";
-				} 
+				}
+				else
+				{
+					// Delete movie
+					String photo = movie.getPhoto(); // Get the filename
+					String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
+					File file = new File(path+photo);  // Construct the path and filename
+					if (file.delete()) { // Delete the file
+						File dir = new File(path); //// Init dir path
+						dir.delete(); // Delete the directory
+						movieService.deleteMovieById(movieID); // Delete the movie from the database
+						rm.addFlashAttribute("message","Movie deleted"); // Send output message
+						model.addAttribute("content", "addmovies");
+						return "redirect:/editmovies";
+					} else {
+						System.out.println("Failed to delete the file.");
+						rm.addFlashAttribute("message","Failed to delete the movie");
+						model.addAttribute("content", "addmovies");
+						return "redirect:/editmovies";
+					} 
+				}
 			}
 		}
+		rm.addFlashAttribute("message","Demo account is not allowed to edit or delete content");
+		model.addAttribute("content", "addmovies");
+		return "redirect:/editmovies";
 	}
 
 }

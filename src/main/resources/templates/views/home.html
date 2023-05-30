@@ -8,6 +8,16 @@
     <span th:text="${title}"></span>
     
 
+ <table style="border-spacing:20px;border-collapse:separate;">
+ <tr><td>
+  School project Java Spring Boot MVC<br>
+  Cinema Management System<br><br>
+  Syntra Aalst
+  </td><td>
+  <img th:src="@{/assets/photo-7991378.jpeg}" width="170" height="200" alt="TheScope" title="TheScope" style="border-radius: 10%;">
+  </td></tr>
+  </table>
+
 <div class="table">
     <div class="tr" th:each="movie: ${movies}">
         <span class="td" style="vertical-align:top;font-size:16px;">
@@ -27,14 +37,6 @@
 <a href="/movieschedule"><img th:src="@{/assets/welcome.png}" width="740" height="440" alt="Welcome" title="Welcome" style="border-radius: 5%;"></a>
 </div><br>
   
-    <table>
-    <tr><td style="text-align:left;font:bold" colspan="3">Testdata<br><span style="font-size:12px">* Menu options depends on user role</span><br><br></td></tr>
-    <tr><td style="font-weight:bold;width:240px;">Role</td><td style="font-weight:bold;width:160px;">Password</td><td></td></tr>
-    <tr><td>customer@thescope.com</td><td>test</td><td rowspan="5"><img th:src="@{/assets/photo-7991378.jpeg}" width="230" height="300" alt="TheScope" title="TheScope" style="border-radius: 10%;"></td></tr>
-    <tr><td>admin@thescope.com</td><td>test</td></tr>
-    <tr><td>desk@thescope.com</td><td>test</td></tr>
-    <tr><td>cleaning@thescope.com</td><td>test</td></tr>
-    <tr><td>shop@thescope.com</td><td>test</td></tr>
-    </table>
+
     
 </div>
