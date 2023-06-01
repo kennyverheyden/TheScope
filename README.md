@@ -3,7 +3,6 @@ Education teamwork 2  - Cinema Organization Management System
 
 URL <a href="https://thescope.site">https://thescope.site</a><br><br>
 <strong>Test user</strong><br>
-| login: demo@thescope.site | password: test<br>
 | login: customer@thescope.site | password: test
 
 <a href="https://github.com/kennyverheyden/TheScope/tree/main/Docs">Inception Document</a> (written in Dutch)<br><br>
