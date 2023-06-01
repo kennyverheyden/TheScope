@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.configuration.FileUploadUtil;
 import thescope.models.Movie;
-import thescope.processors.UserDetailsImpl;
 import thescope.services.MovieService;
 import thescope.services.ScheduleShowService;
 
@@ -27,9 +26,6 @@ public class MovieController {
 	private MovieService movieService;
 	@Autowired
 	private ScheduleShowService scheduleShowService; // User cannot delete a movie when assigned to one or more schedules
-	@Autowired
-	private UserDetailsImpl userDetails;
-
 
 	public MovieController() {}
 
@@ -102,91 +98,79 @@ public class MovieController {
 
 	// Edit movie
 	@PostMapping("/editmovies/edit") 
-	public String editMovie(@RequestParam (required = false) Long movieID, @RequestParam (required = false) String title, @RequestParam (required = false) String genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean threeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile image, @RequestParam (required = false) Boolean delete,Model model, RedirectAttributes rm){
+	public String editMovie(@RequestParam (required = false) Long movieID, @RequestParam (required = false) String title, @RequestParam (required = false) String genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean threeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile image, @RequestParam (required = false) Boolean delete,Model model, RedirectAttributes rm) throws IOException{
 
 		if(delete==null) // avoid error Cannot invoke "java.lang.Boolean.booleanValue()" because "delete" is null
 		{
 			delete=false;
 		}
 
-		// Internet demo account is not allowed to edit or delete content
-		if(!userDetails.getUsername().equals("demo@thescope.site"))
+		if(!delete)
 		{
-			if(!delete)
+			// Edit the movie
+			if(!title.equals("") && !genre.equals("") && rating!=0 && length!=0)
 			{
-				// Edit the movie
-				if(!title.equals("") && !genre.equals("") && rating!=0 && length!=0)
-				{
 
-					Movie movie = movieService.findMovieById(movieID); // Load movie
-					// Determine the filename
-					String fileName = StringUtils.cleanPath(image.getOriginalFilename()); // Define filename
-					movie.setTitle(title);
-					movie.setGenre(genre);
-					movie.setRating(rating);
-					movie.setLength(length);
-					movie.setThreeD(threeD);
-					if(image.getOriginalFilename().toString()!="") // Check if image is uploaded or not
-					{
-						movie.setPhoto(fileName);
-					}
-					movieService.updateMovie(movie, movieID);
-					// Write uploaded file to hdd
-					if(image.getOriginalFilename().toString()!="") // If file is not uploaded
-					{
-						String uploadDir = "images/" + movie.getPKmovie(); // Define location
-						try {
-							FileUploadUtil.saveFile(uploadDir, fileName, image);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					rm.addFlashAttribute("message","Movie updated");
-					model.addAttribute("content", "addmovies");
-					return "redirect:/editmovies";
-				}
-				else
+				Movie movie = movieService.findMovieById(movieID); // Load movie
+				// Determine the filename
+				String fileName = StringUtils.cleanPath(image.getOriginalFilename()); // Define filename
+				movie.setTitle(title);
+				movie.setGenre(genre);
+				movie.setRating(rating);
+				movie.setLength(length);
+				movie.setThreeD(threeD);
+				if(image.getOriginalFilename().toString()!="") // Check if image is uploaded or not
 				{
-					rm.addFlashAttribute("message","Fill in all fields");
-					model.addAttribute("content", "addmovies");
-					return "redirect:/editmovies";
+					movie.setPhoto(fileName);
 				}
+				movieService.updateMovie(movie, movieID);
+				// Write uploaded file to hdd
+				if(image.getOriginalFilename().toString()!="") // If file is not uploaded
+				{
+					String uploadDir = "images/" + movie.getPKmovie(); // Define location
+					FileUploadUtil.saveFile(uploadDir, fileName, image);
+				}
+				rm.addFlashAttribute("message","Movie updated");
+				model.addAttribute("content", "addmovies");
+				return "redirect:/editmovies";
 			}
 			else
 			{
-				Movie movie = movieService.findMovieById(movieID); // Find movie
-				if(scheduleShowService.movieHasSchedule(movie))
-				{
-					rm.addFlashAttribute("message","Cannot delete movie, movie assigned to one or more schedules");
-					model.addAttribute("content", "addmovies");
-					return "redirect:/editmovies";
-				}
-				else
-				{
-					// Delete movie
-					String photo = movie.getPhoto(); // Get the filename
-					String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
-					File file = new File(path+photo);  // Construct the path and filename
-					if (file.delete()) { // Delete the file
-						File dir = new File(path); //// Init dir path
-						dir.delete(); // Delete the directory
-						movieService.deleteMovieById(movieID); // Delete the movie from the database
-						rm.addFlashAttribute("message","Movie deleted"); // Send output message
-						model.addAttribute("content", "addmovies");
-						return "redirect:/editmovies";
-					} else {
-						System.out.println("Failed to delete the file.");
-						rm.addFlashAttribute("message","Failed to delete the movie");
-						model.addAttribute("content", "addmovies");
-						return "redirect:/editmovies";
-					} 
-				}
+				rm.addFlashAttribute("message","Fill in all fields");
+				model.addAttribute("content", "addmovies");
+				return "redirect:/editmovies";
 			}
 		}
-		rm.addFlashAttribute("message","Demo account is not allowed to edit or delete content");
-		model.addAttribute("content", "addmovies");
-		return "redirect:/editmovies";
+		else
+		{
+			Movie movie = movieService.findMovieById(movieID); // Find movie
+			if(scheduleShowService.movieHasSchedule(movie))
+			{
+				rm.addFlashAttribute("message","Cannot delete movie, movie assigned to one or more schedules");
+				model.addAttribute("content", "addmovies");
+				return "redirect:/editmovies";
+			}
+			else
+			{
+				// Delete movie
+				String photo = movie.getPhoto(); // Get the filename
+				String path = "images/"+movieID+"/"; // Get the folder, folder can only be deleted when empty
+				File file = new File(path+photo);  // Construct the path and filename
+				if (file.delete()) { // Delete the file
+					File dir = new File(path); //// Init dir path
+					dir.delete(); // Delete the directory
+					movieService.deleteMovieById(movieID); // Delete the movie from the database
+					rm.addFlashAttribute("message","Movie deleted"); // Send output message
+					model.addAttribute("content", "addmovies");
+					return "redirect:/editmovies";
+				} else {
+					System.out.println("Failed to delete the file.");
+					rm.addFlashAttribute("message","Failed to delete the movie");
+					model.addAttribute("content", "addmovies");
+					return "redirect:/editmovies";
+				} 
+			}
+		}
 	}
 
 }
