@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,9 @@ public class MovieController {
 	@Autowired
 	private ScheduleShowService scheduleShowService; // User cannot delete a movie when assigned to one or more schedules
 
+	//private static final Logger logger = logger.getLogger(MovieController.class.getName());
+	private static final Logger logger = LogManager.getLogger(MovieController.class);
+
 	public MovieController() {}
 
 	// Open movie page
@@ -36,6 +41,11 @@ public class MovieController {
 		Collections.reverse(movies); // Show newest first
 		model.addAttribute("content", "movies"); // redirect to movie view (movies.html)
 		model.addAttribute("movies",movies);  // map content to html elements
+		//logger.info("GET /test");
+		logger.info("info");
+		//logger.log(Level.INFO, "info");
+		logger.debug("debug info");
+		logger.fatal("fatal problem");
 		return "index";
 	}
 
