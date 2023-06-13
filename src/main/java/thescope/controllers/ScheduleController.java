@@ -1,7 +1,5 @@
 package thescope.controllers;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,18 +60,17 @@ public class ScheduleController {
 	}
 
 	@PostMapping("/schedule/add") 
-	public String addSchedule(@RequestParam (required = false) Long movieID, @RequestParam (required = false) Long roomID,  @RequestParam (required = false) Date date,  @RequestParam (required = false) String time, Model model, RedirectAttributes rm)
+	public String addSchedule(@RequestParam (required = false) Long movieID, @RequestParam (required = false) Long roomID,  @RequestParam (required = false) String date,  @RequestParam (required = false) String time, Model model, RedirectAttributes rm)
 	{
 		if(movieID!=null || movieID!=0)
 		{
-			Time sqlTime=java.sql.Time.valueOf(time);
-			if(!scheduleShowService.checkIfRoomIsOccupied(roomID, date, sqlTime))
+			if(!scheduleShowService.checkIfRoomIsOccupied(roomID, date, time))
 			{
 				ScheduleShow schedule = new ScheduleShow();
 				schedule.setMovie(movieService.findMovieById(movieID));
 				schedule.setTheaterRoom(theaterRoomService.findTheatherRoomById(roomID));
 				schedule.setDate(date);
-				schedule.setTime(sqlTime);
+				schedule.setTime(time);
 				scheduleShowService.addScheduleShow(schedule);
 				model.addAttribute("content","schedule"); // redirect to schedule.html
 				rm.addFlashAttribute("message","New schedule added");
@@ -95,7 +92,7 @@ public class ScheduleController {
 	}
 
 	@PostMapping("/schedule/update") 
-	public String updateSchedule(@RequestParam long schedulePK, @RequestParam (required = false) Long PKmovie, @RequestParam (required = false) Long PKtheaterRoom, @RequestParam (required = false) Date date, @RequestParam (required = false) Time time,  @RequestParam (required = false) Boolean delete, Model model, RedirectAttributes rm){
+	public String updateSchedule(@RequestParam long schedulePK, @RequestParam (required = false) Long PKmovie, @RequestParam (required = false) Long PKtheaterRoom, @RequestParam (required = false) String date, @RequestParam (required = false) String time,  @RequestParam (required = false) Boolean delete, Model model, RedirectAttributes rm){
 		ScheduleShow schedule =scheduleShowService.findScheduleShowById(schedulePK);
 		if(delete==null) // avoid error Cannot invoke "java.lang.Boolean.booleanValue()" because "delete" is null
 		{

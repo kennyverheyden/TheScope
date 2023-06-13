@@ -6,27 +6,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 import thescope.models.User;
 import thescope.services.UserService;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class UserTest {
+class UserTest {
 
     @Autowired
     private UserService userService;
- 
+
     @Test
-    public void findUserAndHasBookingTest() {
-        User user=userService.findUserByUsername("customer@thescope.site");
+    void findUserAndHasBookingTest() {
+        User user = userService.findUserByUsername("customer@thescope.site");
         Boolean hasBooking = userService.hasBookings(user);
-        Assertions.assertTrue(hasBooking);
+        assertTrue(hasBooking);
     }
 
     @Test
-    public void findUsersByUserName() {
+    void findUsersByUserName() {
         String userName = "admin@thescope.site";
         User user = userService.findUserByUsername(userName);
         System.out.println(userName);
-        Assertions.assertEquals("admin@thescope.site", user.getUserName());
+        assertEquals("admin@thescope.site", user.getUserName());
     }
 
 }

@@ -94,16 +94,19 @@ public class ScheduleShowService {
 	}
 
 	// Check if room is occupied on a specific time
-	public boolean checkIfRoomIsOccupied(Long roomID, Date date, Time time)
+	public boolean checkIfRoomIsOccupied(Long roomID, String strDate, String strTime)
 	{
 		List<ScheduleShow> schedules = this.findAll();
-
+		Time time = Time.valueOf(strTime);
+		Date date = Date.valueOf(strDate);
+		
 		Long threeHours=10800000L; // 3 hours
 		Long timeL = time.getTime(); // Convert time to 1000ms
 		for(ScheduleShow schedule:schedules)
 		{
-			long c = time.getTime() - schedule.getTime().getTime(); // Calculate difference in 1000ms
-			if(schedule.getTheaterRoom().getPKtheaterRoom()==roomID && schedule.getDate().equals(date) && c<threeHours && c>-threeHours) // Check date and 3 hours before and after
+			Time scheduleTime = Time.valueOf(schedule.getTime());
+			long c = time.getTime() - scheduleTime.getTime(); // Calculate difference in 1000ms
+			if(schedule.getTheaterRoom().getPKtheaterRoom()==roomID && schedule.getDate().equals(strDate) && c<threeHours && c>-threeHours) // Check date and 3 hours before and after
 			{
 				{
 					return true;

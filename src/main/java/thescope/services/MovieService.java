@@ -6,11 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import thescope.exceptions.EntityNotFoundException;
 import thescope.models.Genre;
 import thescope.models.Movie;
-import thescope.models.UserRole;
 import thescope.repositories.GenreRepository;
 import thescope.repositories.MovieRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +21,8 @@ public class MovieService {
 
 	@Autowired
 	private MovieRepository movieRepository;
-	@Autowired GenreRepository genreRepository;
+	@Autowired
+	private GenreRepository genreRepository;
 
 	public MovieService() {}
 
@@ -35,12 +33,12 @@ public class MovieService {
 		return unwrappedMovie;
 	}
 
-	public List<Movie> findMoviesByGenre (String genre) {
+	public List<Movie> findMoviesByGenre (Genre genre) {
 		return movieRepository.findMoviesByGenre(genre);
 	}
 
 	public List<Movie> findMoviesByTitle (String title) {
-		return movieRepository.findMoviesByTitle(title);
+		return movieRepository.findMoviesByTitleIgnoreCase(title);
 	}
 
 	public List<Movie> findAllMovies() {
@@ -49,8 +47,11 @@ public class MovieService {
 	}
 	
 	public Genre findGenreByGenreID(int id) {
-		Genre genre = genreRepository.findGenreByGenreID(id);
-		return genre;
+		return genreRepository.findGenreByGenreID(id);
+	}
+	
+	public Genre findGenreByGenre(String genre) {
+		return genreRepository.findGenreByGenreIgnoreCase(genre);
 	}
 
 	// Used for html frontend, select a genre

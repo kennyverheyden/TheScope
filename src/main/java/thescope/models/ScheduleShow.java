@@ -1,8 +1,5 @@
 package thescope.models;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import jakarta.persistence.Column;
@@ -29,10 +26,10 @@ public class ScheduleShow {
 	private TheaterRoom theaterRoom;
 
 	@Column(name = "time")
-	Time time;
+	String time;
 
 	@Column(name = "date")
-	Date date;
+	String date;
 
 	@Column(name = "countSeats")
 	int countSeats;
@@ -46,7 +43,7 @@ public class ScheduleShow {
 		this.countVipSeats = 0;
 	}
 
-	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, Time time, Date date)
+	public ScheduleShow(Movie movie, TheaterRoom theaterRoom, String time, String date)
 
 	{
 		this.movie = movie;
@@ -62,12 +59,12 @@ public class ScheduleShow {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd/MM/yyyy");
 		return simpleDateFormat.format(date);
 	}
-	
+
 	public String getFormattedTime() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 		return simpleDateFormat.format(time);
 	}
-	
+
 	// Getters & Setters
 	public Movie getMovie() {
 		return movie;
@@ -89,19 +86,19 @@ public class ScheduleShow {
 		this.theaterRoom = theaterRoom;
 	}
 
-	public Time getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Time time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

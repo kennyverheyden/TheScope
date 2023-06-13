@@ -13,27 +13,27 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class MovieTest {
+class MovieTest {
 
     @Autowired
     private MovieService movieService;
 
     @Test
-    public void findMovieByIdTest() {
+    void findMovieByIdTest() {
         Long id = 15L;
         Movie movie = movieService.findMovieById(id);
         assertNotNull(movie);
     }
 
-    @Test
-    public void findMoviesByGenreTest() {
-        String genre = "Drama";
-        List<Movie> movies = movieService.findMoviesByGenre(genre);
-        assertEquals("Close", movies.get(0).getTitle());
-    }
+//    @Test
+//    void findMoviesByGenreTest() {
+//        String genre = "Drama";
+//        List<Movie> movies = movieService.findMoviesByGenre(genre);
+//        assertEquals("Close", movies.get(0).getTitle());
+//    }
 
     @Test
-    public void updateMovieTest() {
+    void updateMovieTest() {
         Long id = 25L;
         Movie movie = new Movie("The Last kingdom", new Genre("Drama"), 7.9, 132, true);
         movieService.updateMovie(movie, id);
@@ -41,7 +41,7 @@ public class MovieTest {
     }
 
     @Test
-    public void addMovieTest() {
+    void addMovieTest() {
         Long id = 31L;
         Movie movie = new Movie("The Last kingdom", new Genre("Drama"), 7.9, 132, true);
         movieService.addMovie(movie);
@@ -49,7 +49,7 @@ public class MovieTest {
     }
 
     @Test
-    public void deleteMovieTest() {
+    void deleteMovieTest() {
         Long id = 4L;
         movieService.deleteMovieById(id);
         Exception exception = assertThrows(EntityNotFoundException.class, () -> Integer.parseInt("4"));

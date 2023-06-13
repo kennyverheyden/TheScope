@@ -15,5 +15,4 @@ public class TheScopeApplication {
 		 SpringApplication.run(TheScopeApplication.class, args);
 	}
 
-
 }

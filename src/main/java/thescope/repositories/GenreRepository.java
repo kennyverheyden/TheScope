@@ -9,5 +9,5 @@ import thescope.models.User;
 	@Repository
 	public interface GenreRepository extends JpaRepository<Genre, Long> {
 		Genre findGenreByGenreID(int pkGenre);
-
+		Genre findGenreByGenreIgnoreCase(String genre);
 }

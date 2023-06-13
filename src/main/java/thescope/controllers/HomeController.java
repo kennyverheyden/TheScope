@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.services.BookingService;
 import thescope.services.MovieService;
@@ -29,7 +30,7 @@ public class HomeController {
 	@GetMapping("/") // get request
 	public String selectGet(Model model) {
 
-	
+
 		// When the customer logged out, erase last booking (scheduleID)
 		bookingService.setBookedSchedule(null);
 
@@ -40,10 +41,14 @@ public class HomeController {
 	@PostMapping("/home/findMovie") 
 	public String findMovie(@RequestParam (required = false) String searchString, Model model, RedirectAttributes rm){
 
-		List<Movie> movies=movieService.findMoviesByGenre(searchString);
+		// Find the Genre object by user input string
+		Genre genre = movieService.findGenreByGenre(searchString);
+	
+		if(genre!=null);
+		List<Movie> movies=movieService.findMoviesByGenre(genre);
+		
 		if(movies.isEmpty()) // Search movie titles when the user did not search on genre
 		{
-			System.out.println(searchString);
 			movies = movieService.findMoviesByTitle(searchString);
 		}
 
