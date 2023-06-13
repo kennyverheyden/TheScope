@@ -16,8 +16,8 @@
         <select name="genre">
     <option
             th:each="genre : ${genres}"
-            th:text="${genre}"
-            th:value="${genre}" th:selected="${ #strings.equals(genre, movie.genre)}">
+            th:text="${genre.getGenre}"
+            th:value="${genre.getGenreID}" th:selected="${ #strings.equals(genre.getGenre, movie.getGenre.getGenre)}">
     </option>
 </select><br><br>
         <input type="number" step="0.1" name="rating" min="0" max="10" th:value="${movie.rating}" style="width:80px;"> rating<br>

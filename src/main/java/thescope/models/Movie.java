@@ -14,11 +14,10 @@ public class Movie {
 	@NotNull (message = "Title cannot be null")
 	@Column(name="movie")
 	private String title;
-
-	@NotBlank(message = "Genre cannot be blank")
 	@NotNull (message = "Genre cannot be null")
-	@Column(name = "genre")
-	private String genre;
+	@OneToOne
+	@JoinColumn(name="FKgenre")
+	private Genre genre;
 	@NotNull (message = "Rating cannot be null")
 	@Column(name="rating")
 	private double rating;
@@ -31,12 +30,11 @@ public class Movie {
 	@Column(length = 64)
 	private String photo;
 
-
 	/**contructor**/
 	public Movie() {
 
 	}
-	public Movie(String title, String genre, double rating, int length, boolean threeD) {
+	public Movie(String title, Genre genre, double rating, int length, boolean threeD) {
 		this.title = title;
 		this.genre = genre;
 		this.rating = rating; 
@@ -93,24 +91,27 @@ public class Movie {
 	public boolean isThreeD() {
 		return threeD;
 	}
-
+	
 	public void setThreeD(boolean threeD) {
 		this.threeD = threeD;
 	}
-
-	public String getGenre() {
+	
+	public Genre getGenre() {
 		return genre;
 	}
-
-	public void setGenre(String genre) {
+	
+	public void setGenre(Genre genre) {
 		this.genre = genre;
 	}
+	
 	public String getPhoto() {
 		return photo;
 	}
+	
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	
 	public long getPKmovie() {
 		return PKmovie;
 	}

@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import thescope.exceptions.EntityNotFoundException;
+import thescope.models.Genre;
 import thescope.models.Movie;
+import thescope.models.UserRole;
+import thescope.repositories.GenreRepository;
 import thescope.repositories.MovieRepository;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class MovieService {
 
 	@Autowired
 	private MovieRepository movieRepository;
+	@Autowired GenreRepository genreRepository;
 
 	public MovieService() {}
 
@@ -43,23 +47,15 @@ public class MovieService {
 		List<Movie> movies = movieRepository.findAll();
 		return movies;
 	}
+	
+	public Genre findGenreByGenreID(int id) {
+		Genre genre = genreRepository.findGenreByGenreID(id);
+		return genre;
+	}
 
-	// Make list of genres without duplicates
 	// Used for html frontend, select a genre
-	public List<String> getGenres() {
-		List<String> genres = new ArrayList();
-		List<Movie> movies = movieRepository.findAll();
-		for(int i=0;i<movies.size();i++){
-			boolean duplicate = false;
-			int j=0;
-			while(j < genres.size()){
-				if(movies.get(i).getGenre().equals(genres.get(j))) {
-					duplicate = true;
-					break;}
-				j++;}
-			if(!duplicate){
-				genres.add(movies.get(i).getGenre());}
-		}return genres;
+	public List<Genre> getGenres() {
+		return genreRepository.findAll();
 	}
 
 	//functies enkel toegankelijk na authenticatie als manager, etc ..

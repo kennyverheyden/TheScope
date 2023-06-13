@@ -59,5 +59,4 @@ public class Tarifs {	//Dit zijn de verschillende tarieven mogelijk te kiezen
 		return id;
 	}
 	
-	
 }

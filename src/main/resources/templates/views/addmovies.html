@@ -15,8 +15,8 @@
 <option selected value="">Select genre</option>
     <option
             th:each="genre : ${genres}"
-            th:text="${genre}"
-            th:value="${genre}">
+            th:text="${genre.getGenre}"
+            th:value="${genre.getGenreID}">
     </option>
 </select><br><br>
 Upload image<br><input type="file" name="image" accept="image/png, image/jpeg">

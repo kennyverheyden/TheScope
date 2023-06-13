@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import thescope.exceptions.EntityNotFoundException;
+import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.services.MovieService;
 
@@ -34,7 +35,7 @@ public class MovieTest {
     @Test
     public void updateMovieTest() {
         Long id = 25L;
-        Movie movie = new Movie("The Last kingdom", "Drama", 7.9, 132, true);
+        Movie movie = new Movie("The Last kingdom", new Genre("Drama"), 7.9, 132, true);
         movieService.updateMovie(movie, id);
         assertEquals(movie.getTitle(), movieService.findMovieById(id).getTitle());
     }
@@ -42,7 +43,7 @@ public class MovieTest {
     @Test
     public void addMovieTest() {
         Long id = 31L;
-        Movie movie = new Movie("The Last kingdom", "Drama", 7.9, 132, true);
+        Movie movie = new Movie("The Last kingdom", new Genre("Drama"), 7.9, 132, true);
         movieService.addMovie(movie);
         assertEquals(movie, movieService.findMovieById(id));
     }

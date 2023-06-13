@@ -104,14 +104,14 @@ public class ScheduleController {
 
 		if(!delete)
 		{
-				schedule.setMovie(movieService.findMovieById(PKmovie));
-				schedule.setTheaterRoom(theaterRoomService.findTheatherRoomById(PKtheaterRoom));
-				schedule.setTime(time);
-				schedule.setDate(date);
-				scheduleShowService.addScheduleShow(schedule);
-				model.addAttribute("content","schedule"); // redirect to schedule.html
-				rm.addFlashAttribute("message","Schedule updated");
-				return "redirect:/schedule";
+			schedule.setMovie(movieService.findMovieById(PKmovie));
+			schedule.setTheaterRoom(theaterRoomService.findTheatherRoomById(PKtheaterRoom));
+			schedule.setTime(time);
+			schedule.setDate(date);
+			scheduleShowService.addScheduleShow(schedule);
+			model.addAttribute("content","schedule"); // redirect to schedule.html
+			rm.addFlashAttribute("message","Schedule updated");
+			return "redirect:/schedule";
 		}
 		else
 		{
@@ -133,7 +133,7 @@ public class ScheduleController {
 
 	@GetMapping("/movieschedule") // get request
 	public String movieSchedule(Model model) {
-		 
+
 		List <ScheduleShow> schedules =scheduleShowService.findAll();
 		Collections.reverse(schedules); // Show newest first
 		model.addAttribute("schedules",schedules);

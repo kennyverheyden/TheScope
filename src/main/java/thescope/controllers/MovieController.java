@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import thescope.configuration.FileUploadUtil;
+import thescope.models.Genre;
 import thescope.models.Movie;
 import thescope.services.MovieService;
 import thescope.services.ScheduleShowService;
@@ -63,14 +64,14 @@ public class MovieController {
 
 	// Add movie
 	@PostMapping("/addmovies/add") 
-	public String createMovie(@RequestParam (required = false) String title, @RequestParam (required = false) String genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean threeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile multipartFile, Model model, RedirectAttributes rm){
-		if(!title.equals("") && !genre.equals("") && multipartFile.getOriginalFilename().toString()!="")
-		{
+	public String createMovie(@RequestParam (required = false) String title, @RequestParam (required = false) Integer genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean threeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile multipartFile, Model model, RedirectAttributes rm){
+		if(!title.equals("") && genre!=null && multipartFile.getOriginalFilename().toString()!="")
+		{	
 			// Determine the file name
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			Movie movie = new Movie();
 			movie.setTitle(title);
-			movie.setGenre(genre);
+			movie.setGenre(movieService.findGenreByGenreID(genre));
 			movie.setRating(rating);
 			movie.setLength(length);
 			movie.setThreeD(threeD);
@@ -98,7 +99,7 @@ public class MovieController {
 
 	// Edit movie
 	@PostMapping("/editmovies/edit") 
-	public String editMovie(@RequestParam (required = false) Long movieID, @RequestParam (required = false) String title, @RequestParam (required = false) String genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean threeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile image, @RequestParam (required = false) Boolean delete,Model model, RedirectAttributes rm) throws IOException{
+	public String editMovie(@RequestParam (required = false) Long movieID, @RequestParam (required = false) String title, @RequestParam (required = false) Integer genre, @RequestParam (required = false) double rating,@RequestParam (required = false)  boolean threeD, @RequestParam (required = false) int length, @RequestParam("image") MultipartFile image, @RequestParam (required = false) Boolean delete,Model model, RedirectAttributes rm) throws IOException{
 
 		if(delete==null) // avoid error Cannot invoke "java.lang.Boolean.booleanValue()" because "delete" is null
 		{
@@ -108,14 +109,13 @@ public class MovieController {
 		if(!delete)
 		{
 			// Edit the movie
-			if(!title.equals("") && !genre.equals("") && rating!=0 && length!=0)
+			if(!title.equals("") && genre!=null && rating!=0 && length!=0)
 			{
-
 				Movie movie = movieService.findMovieById(movieID); // Load movie
 				// Determine the filename
 				String fileName = StringUtils.cleanPath(image.getOriginalFilename()); // Define filename
 				movie.setTitle(title);
-				movie.setGenre(genre);
+				movie.setGenre(movieService.findGenreByGenreID(genre));
 				movie.setRating(rating);
 				movie.setLength(length);
 				movie.setThreeD(threeD);
