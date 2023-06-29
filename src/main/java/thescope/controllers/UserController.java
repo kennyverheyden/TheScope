@@ -22,6 +22,12 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private UserDetailsImpl userDetails;
+	
+	// Store search parameter to keep the info on screen while editing
+	private String findUserName;
+	private String findName;
+	private String findFirstName;
+	private String roleName;
 
 	public UserController() {}
 
@@ -29,12 +35,12 @@ public class UserController {
 	@GetMapping("/users") // get request
 	public String selectGet(Model model) {
 
-		List<User> users = userService.list();
+		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName, roleName);
 		List<UserRole> roles = userService.userRoles();
 
-		model.addAttribute("content", "users"); 
-		model.addAttribute("users",users);  // map content to html elements
+		model.addAttribute("users",foundUsers); 
 		model.addAttribute("roles",roles);  // map content to html elements
+		model.addAttribute("content","users"); 
 		return "index";
 	}
 
@@ -160,6 +166,10 @@ public class UserController {
 	@PostMapping("/users/find") 
 	public String findUser(@RequestParam (required = false) String findUserName, @RequestParam (required = false) String findFirstName, @RequestParam (required = false) String findName, @RequestParam (required = false) String roleName, Model model, RedirectAttributes rm){
 
+		this.findUserName=findUserName;
+		this.findFirstName=findFirstName;
+		this.findName=findName;
+		this.roleName=roleName;
 		List<User> foundUsers = userService.findUsers(findUserName, findName, findFirstName, roleName);
 		List<UserRole> roles = userService.userRoles(); // List is used for dropdown select box
 		model.addAttribute("content", "users"); 

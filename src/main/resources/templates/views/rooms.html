@@ -4,11 +4,11 @@
 <br>
     
 <!--  Add room -->    
- <div class="table">
+<div class="table" style="max-width:320px;">
 <form action="/rooms/add" method="post" name="add" class="tr">
-<span class="td">Room (location)<br><input type="text" name="location" style="width:200px"></span>
-<span class="td">maxNormalSeats<br><input type="number" name="maxNormalSeats" value="0" style="width:80px"></span>
-<span class="td">maxVipSeats<br><input type="number" name="maxVipSeats" value="0" style="width:80px"></span>
+<span class="td">Room<br><input type="text" name="location" class="small"></span>
+<span class="td">max seats<br><input type="number" name="maxNormalSeats" value="0" class="small"></span>
+<span class="td">max Vip<br><input type="number" name="maxVipSeats" value="0" class="small"></span>
 <span class="td"><br><button type="submit">Add room</button></span>
 </form>
 </div>
@@ -21,22 +21,22 @@
 <br>    
     
 <!-- Rooms list -->    
-<div class="table">
+<div class="table" style="max-width:320px;">
 
 <form action="/rooms/update" method="post" class="tr" th:each="room, index:${rooms}">
 
 <span class="td">
-<strong>ROOM (location)</strong><br>
+<strong>ROOM</strong><br>
 <input type="hidden" th:value="${room.PKtheaterRoom}" name="PKtheaterRoom">
-<input th:value="${room.location}" type="text" name="location">
+<input th:value="${room.location}" type="text" name="location" class="small">
 </span>
 <span class="td">
-<strong>max normal seats</strong><br>
-<input th:value="${room.maxNormalSeats}" type="text" name="maxNormalSeats"><br>
+<strong>max seats</strong><br>
+<input th:value="${room.maxNormalSeats}" type="text" name="maxNormalSeats" class="small"><br>
 </span>
 <span class="td">
-<strong>max vip seats</strong><br>
-<input th:value="${room.maxVipSeats}" type="text" name="maxVipSeats"><br>
+<strong>max vip</strong><br>
+<input th:value="${room.maxVipSeats}" type="text" name="maxVipSeats" class="small"><br>
 </span>
 <span class="td">
 <strong>Delete?</strong>

@@ -19,14 +19,18 @@
 </span>
 </form>
 </div>
+<br>
 <!--  End search schedule -->
 
 
 <!--  Add schedule -->
 <p>Add schedule</p>
-<div class="table">
-<form action="/schedule/add" method="post" name="addSchedule" class="tr">
-<span class="td">Movie<br>
+
+<form action="/schedule/add" method="post" name="addSchedule" style="width:100%;">
+
+<span class="table">
+<span class="tr"><span class="td">
+Movie<br>
 <select name="movieID">
 <option selected value="0">Select movie</option>
     <option
@@ -35,8 +39,12 @@
             th:value="${movie.PKmovie}">
     </option>
 </select>
+</span></span>
 </span>
-<span class="td">Theater<br>
+
+<span class="table">
+<span class="tr"><span class="td">
+Theater<br>
 <select name="roomID" style="width:120px;">
     <option
             th:each="room: ${rooms}"
@@ -44,14 +52,22 @@
             th:value="${room.PKtheaterRoom}">
     </option>
 </select>
+</span><span class="td">
+Date<br><input type="date" name="date" style="width:115px" required>
+</span><span class="td">
+Time<br><input type="time" name="time" step="1" style="width:115px" required>
+</span></span>
 </span>
- <span class="td">Date<br><input type="date" name="date" style="width:115px" required></span>
- <span class="td">Time<br><input type="time" name="time" step="1" style="width:115px" required></span>
-<span class="td">
-<br><button type="submit">Add</button>
+
+<span class="table">
+<span class="tr"><span class="td">
+<button type="submit">Add</button>
 </span>
+</span>
+</span>
+
 </form>
-</div>
+
 <!--  End add schedule -->
 
 <!-- Output message -->
@@ -64,11 +80,13 @@
   <!--  Edit list -->
    <p>Schedules</p>
  <span style="font-size:12px;"><strong>* Only 50 schedules are preloaded, use the search button to find a schedule </strong></span>
+
+
+<form action="/schedule/update" method="post" th:each="schedule, index: ${schedules}" th:unless="${index.index > 49}" style="width:100%;border-bottom:0.5px solid black;">
+
 <div class="table">
-
-<form action="/schedule/update" method="post" class="tr" th:each="schedule, index: ${schedules}" th:unless="${index.index > 49}">
-
-<span class="td">
+<span class="tr">
+<span class="td" style="padding-top:0px;padding-bottom:0px;">
 <input th:value="${schedule.getPKscheduleShow}" type="hidden" name="schedulePK" style="width:200px;"><br>
 <select name="PKmovie">
     <option
@@ -78,7 +96,11 @@
     </option>
 </select>
 </span>
+</span>
+</div>
 
+<div class="table">
+<span class="tr">
 <span class="td">
 <strong>Theater</strong><br>
 <select name="PKtheaterRoom">
@@ -90,6 +112,7 @@
 </select>
 </span>
 
+
 <span class="td">
 <strong>Date</strong><br>
 <input th:value="${schedule.getDate}" type="date" name="date" style="width:115px;" required><br>
@@ -99,7 +122,11 @@
 <strong>Time</strong><br>
 <input th:value="${schedule.getTime}" type="time" name="time" style="width:115px;" required><br>
 </span>
+</span>
+</div>
 
+<div class="table">
+<span class="tr">
 <span class="td">
 <strong>Delete?</strong><br>
  &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButtonSchedule(' + ${index.index} + ')'">
@@ -109,10 +136,11 @@
 <br>
 <button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:120px;">Update schedule</button>
 </span>
+</span>
+</div>
 
 </form>
 
-</div>
 <!-- End edit list -->
  
  

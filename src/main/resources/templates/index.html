@@ -4,7 +4,7 @@
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org" lang="en">
+xmlns:th="http://www.thymeleaf.org" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths pfagbczlf idc0_347" lang="en">	
 <!--[endif]-->
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -14,14 +14,11 @@
 <meta name="keywords" content="TheScope">
 <meta name="author" content="">
 <meta name="MobileOptimized" content="320">
-<link rel="stylesheet" type="text/css" th:href="@{/assets/animate.css}">
-<link rel="stylesheet" type="text/css"
-	th:href="@{/assets/bootstrap.css}">
-<link rel="stylesheet" type="text/css"
-	th:href="@{/assets/font-awesome.css}">
+<link rel="stylesheet" type="text/css" th:href="@{assets/animate.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/bootstrap.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/font-awesome.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/assets/fonts.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/assets/dl-menu.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/assets/slick.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/assets/style3.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/assets/responsive3.css}">
 <script th:src="@{/assets/actions.js}"></script>
@@ -31,22 +28,39 @@ DIV.table
 {
     display:table;
     font-size:12px;
-    text-align: left;
-    font-family: verdana;
+    text-align:left;
+    font-family:verdana;
+}
+SPAN.table 
+{
+    display:table;
+    font-size:12px;
+    text-align:left;
+    font-family:verdana;
 }
 FORM.tr, DIV.tr
 {
     display:table-row;
-    padding: 6px;
+    padding:0px;
     text-align:left;
     vertical-align:top;
 }
 SPAN.td
 {
     display:table-cell;
-    padding: 6px;
+    padding-top:2px;
+    padding-bottom:0px;
+    padding-right:6px;
     text-align:left;
-    width:200px;
+}
+INPUT.small
+{
+	width:50px;
+}
+BUTTON
+{
+	background-color:#ffffe0;
+	border-radius:8px;
 }
 </style>
 <script th:if="${isAdmin==true or isCleaning==true or isDesk==true or isShop==true}">
@@ -115,113 +129,158 @@ function show_alert(index) {
 <body>
 
 	<!-- navigation Start -->
-	<div class="prs_navigation_main_wrapper menu_fixed animated fadeInDown">
-		<div class="container-fluid">
-			<div id="search_open" class="gc_search_box">
-				<input type="text" placeholder="Search here">
-				<button>
-					<i class="fa fa-search" aria-hidden="true"></i>
-				</button>
-			</div>
-			<div class="prs_navi_left_main_wrapper">
-				<div class="prs_logo_main_wrapper">
-					<a href="/"><img th:src="@{/assets/logo_yellow.png}" width="130" height="110"
-						alt="TheScope" title="TheScope"></a>
-				</div>
-				<div class="prs_menu_main_wrapper">
-					<nav class="navbar navbar-default">
-						<div id="dl-menu" class="xv-menuwrapper responsive-menu">
-							<div class="prs_mobail_searchbar_wrapper" id="search_button">
-								<i class="fa fa-search"></i>
-							</div>
-							<div class="clearfix"></div>
-							<ul class="dl-menu">
-								<li class="parent"><a href="/movies">Movies</a>
-									<ul class="lg-submenu">
-										<li class="dl-back"><a href="#">back</a></li>
-										<li><a href="/movies">Movies</a></li>
-										<li th:if="${isAdmin==true or isDesk}"><a href="/addmovies">Add movie</a></li>
-										<li th:if="${isAdmin==true or isDesk}"><a href="/editmovies">Edit movies</a></li>
-									</ul></li>
-									
-									<li class="parent"><a href="/movieschedule">Schedule</a>
-									<ul class="lg-submenu">
-										<li class="dl-back"><a href="#">back</a></li>
-										<li><a href="/movieschedule">Schedule</a></li>
-									</ul></li>
+<div class="prs_navigation_main_wrapper menu_fixed animated fadeInDown">
+<div class="container-fluid">
 
-								<li class="parent" th:if="${isCustomer}==true"><a href="/bookingscustomer">Bookings</a>
-									<ul class="lg-submenu">
-										<li class="dl-back"><a href="#">back</a></li>
-										<li><a href="/bookingscustomer">Bookings</a></li>
-									</ul></li>
-									
-									<li class="parent"><a href="/shop">Shop</a>
-									<ul class="lg-submenu">
-										<li class="dl-back"><a href="#">back</a></li>
-										<li><a href="/shop">Shop</a></li>
-									</ul></li>
+<div class="prs_navi_left_main_wrapper">
+<div class="prs_logo_main_wrapper">
+<a href="/">
+<img th:src="@{/assets/logo_yellow.png}" width="60" height="50" alt="Logo The Scope" title="Logo The Scope">
+</a>
+</div>
+<div class="prs_menu_main_wrapper">
+<nav class="navbar navbar-default">
+<div id="dl-menu" class="responsive-menu xv-menuwrapper">
+<button class="dl-trigger">
+<img th:src="@{/assets/bars.png}"  alt="bar_png">
+</button>
 
-								<li class="parent" th:if="${isStaff}==true"><a href="#">Management</a>
-									<ul class="lg-submenu">
-										<li class="dl-back"><a href="#">back</a></li>
-										<li th:if="${isAdmin==true or isDesk==true}"><a href="/bookingsstaff">Bookings</a></li>
-										<li th:if="${isAdmin==true or isDesk or isShop ==true}"><a href="/schedule">Movie Schedule</a></li>
-										<!-- <li th:if="${isAdmin==true or isCleaning==true}"><a href="/cleanings">Cleaning Schedule</a></li>-->
-										<li th:if="${isAdmin==true or isCleaning==true or isDesk==true}"><a href="/rooms">Rooms</a></li>
-										<li th:if="${isAdmin}==true"><a href="/users">Users</a></li>
-										<li th:if="${isAdmin}==true"><a href="/adduser">Add user</a></li>
-									</ul></li>
-									
-									<li class="parent" th:if="${isLoggedIn}==true"><a href="/account">Account</a>
-									<ul class="lg-submenu">
-										<li class="dl-back"><a href="#">back</a></li>
-										<li><a href="/account">Account</a></li>
-										<li><a href="/passwordreset">Password reset</a></li>
-									</ul></li>
+<div class="clearfix"></div>
+<ul class="dl-menu">
 
-								<li class="parent" th:if="${isLoggedIn}==false"><a href="/">HOME</a></li>
-								<li class="parent" th:if="${isLoggedIn}==true"><a href="/main"><span th:text="${firstNameINmenu}"></span></a></li>
-							</ul>
-						</div>
-					</nav>
-				</div>
-			</div>
-			<div class="prs_navi_right_main_wrapper">
+<li class="parent megamenu"><a href="/movies">Movies</a>
+<ul class="lg-submenu">
+<li><a href="/movies">Movies</a></li>
+<li th:if="${isAdmin==true or isDesk}"><a href="/addmovies">Add movie</a></li>
+<li th:if="${isAdmin==true or isDesk}"><a href="/editmovies">Edit movies</a></li>
+</ul>
+</li>
 
-				<div class="prs_top_login_btn_wrapper">
-					<div class="prs_animate_btn1">
-						<ul th:if="${isLoggedIn}==false">
-							<li><a href="/signup" class="button button--tamaya"
-								data-text="sign up" data-toggle="modal" data-target="#myModal"><span>Sign
-										up</span></a></li>
-						</ul>
-					</div>
-				</div>
+<li class="parent megamenu"><a href="/movieschedule">Schedule</a>
+<ul class="lg-submenu">
+<li ><a href="/movieschedule">Schedule</a></li>
+</ul>
+</li>
 
-				<div class="prs_top_login_btn_wrapper">
-					<div class="prs_animate_btn1">
-						<ul>
-							<li th:if="${isLoggedIn}==false"><a href="/login" class="button button--tamaya"
-								data-text="login" data-toggle="modal" data-target="#myModal"><span>Login</span></a>
-							</li>
-							<li th:if="${isLoggedIn}==true"><a href="/logout" class="button button--tamaya"
-								data-text="logout" data-toggle="modal" data-target="#myModal"><span>Logout</span></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-					<form action="/home/findMovie" method="post" style="padding:0px;margin:0px;">
-				<div class="product-heading">
-					<div class="con">
-						<input type="text" name="searchString" placeholder="Type genre or movie"><button type="submit">Go</button>
-					</div>
-				</div>
-				</form>
-			</div>
+<li class="parent megamenu" th:if="${isCustomer}==true"><a href="/bookingscustomer">Bookings</a>
+<ul class="lg-submenu">
+<li ><a href="/bookingscustomer">Bookings</a></li>
+</ul>
+</li>
 
-		</div>
-	</div>
+<li class="parent megamenu"><a href="/shop">Shop</a>
+<ul class="lg-submenu">
+<li ><a href="/shop">Shop</a></li>
+</ul>
+</li>
+
+<li class="parent megamenu" th:if="${isStaff}==true"><a href="#">Management</a>
+<ul class="lg-submenu">
+<li th:if="${isAdmin==true or isDesk==true}"><a href="/bookingsstaff">Bookings</a></li>
+<li th:if="${isAdmin==true or isDesk or isShop ==true}"><a href="/schedule">Movie Schedule</a></li>
+<li th:if="${isAdmin==true or isCleaning==true or isDesk==true}"><a href="/rooms">Rooms</a></li>
+<li th:if="${isAdmin}==true"><a href="/users">Users</a></li>
+<li th:if="${isAdmin}==true"><a href="/adduser">Add user</a></li>
+</ul>
+</li>
+
+<li class="parent megamenu"><a href="#">Account</a>
+<ul class="lg-submenu">
+<li th:if="${isLoggedIn}==false"><a href="/signup">Sign up</a></li>
+<li th:if="${isLoggedIn}==false"><a href="/login">Login</a></li>
+<li th:if="${isLoggedIn}==true"><a href="/logout">Logout</a></li>
+<li th:if="${isLoggedIn}==true"><a href="/account">Account</a></li>
+<li th:if="${isLoggedIn}==true"><a href="/passwordreset">Password reset</a></li>
+</ul>
+</li>
+
+<li class="parent megamenu" th:if="${isLoggedIn}==false"><a href="/">HOME</a></li>
+<li class="parent megamenu" th:if="${isLoggedIn}==true"><a href="/main"><span th:text="${firstNameINmenu}"></span></a></li>
+
+</ul>
+
+</div>
+</nav>
+</div>
+</div>
+<div class="prs_navi_right_main_wrapper">
+
+<div class="prs_top_login_btn_wrapper">
+<div class="prs_animate_btn1">
+<ul th:if="${isLoggedIn}==false">
+<li><a href="/signup" class="button button--tamaya" data-text="sign up" data-toggle="modal" data-target="/signup"><span>Sign up</span></a></li>
+</ul>
+
+</div>
+</div>
+
+<div class="prs_top_login_btn_wrapper">
+<div class="prs_animate_btn1">
+<ul>
+<li th:if="${isLoggedIn}==false"><a href="/login" class="button button--tamaya" data-text="login" data-toggle="modal" data-target="/login"><span>Login</span></a>
+</li>
+<li th:if="${isLoggedIn}==true"><a href="/logout" class="button button--tamaya" data-text="logout" data-toggle="modal" data-target="/logout"><span>Logout</span></a>
+</li>
+</ul>
+</div>
+</div>
+
+<form action="/home/findMovie" method="post" style="padding:0px;margin:0px;">
+<div class="product-heading">
+<div class="con">
+<input type="text" name="searchString" placeholder="Type genre or movie"><button type="submit">Go</button>
+</div>
+</div>
+</form>
+
+</div>
+
+<div id="mobile-nav" data-prevent-default="true" data-mouse-events="true">
+<div class="mobail_nav_overlay"></div>
+<div class="mobile-nav-box">
+<div class="mobile-logo">
+<a href="/" class="mobile-main-logo">
+<span>The Scope</span>
+</a>
+<a href="#" class="manu-close"><i class="fa fa-times"></i></a>
+</div>
+
+<ul class="mobile-list-nav">
+<li><a href="/movies">Movies</a></li>
+<li th:if="${isAdmin==true or isDesk}"><a href="/addmovies">Add movie</a></li>
+<li th:if="${isAdmin==true or isDesk}"><a href="/editmovies">Edit movies</a></li>
+
+<li><a href="/movieschedule">Schedule</a></li>
+
+<li th:if="${isCustomer}==true"><a href="/bookingscustomer">Bookings</a></li>
+<li><a href="/bookingscustomer">Bookings</a></li>
+
+<li><a href="/shop">Shop</a></li>
+
+<li th:if="${isAdmin==true or isDesk or isShop ==true}"><a href="/schedule">Movie Schedule</a></li>
+<li th:if="${isAdmin==true or isCleaning==true or isDesk==true}"><a href="/rooms">Rooms</a></li>
+<li th:if="${isAdmin}==true"><a href="/users">Users</a></li>
+<li th:if="${isAdmin}==true"><a href="/adduser">Add user</a></li>
+
+<li th:if="${isLoggedIn}==true"><a href="/account">Account</a></li>
+<li th:if="${isLoggedIn}==true"><a href="/passwordreset">Password reset</a></li>
+
+<li th:if="${isLoggedIn}==false"><a href="/">HOME</a></li>
+
+<li th:if="${isLoggedIn}==true"><a href="/main"><span th:text="${firstNameINmenu}"></span></a></li>
+
+<li th:if="${isLoggedIn}==false"><a href="/signup">Sign up</a></li>
+
+<li th:if="${isLoggedIn}==false"><a href="/login">Login</a></li>
+
+<li th:if="${isLoggedIn}==true"><a href="/logout">Logout</a></li>
+
+</ul>
+
+</div>
+</div>
+</div>
+</div>
 
 	<div class="prs_ln_main_wrapper">
 		<div class="container">
@@ -242,12 +301,13 @@ function show_alert(index) {
 		<div class="container" style="text-align:center;">
 	 <br><script>document.write(new Date().getFullYear())</script> TheScope<br>
 	 </div>
+	 
+<script th:src="@{/assets/jquery_min.js}"></script>
+<script th:src="@{/assets/modernizr.js}"></script>
+<script th:src="@{/assets/bootstrap.js}"></script>
+<script th:src="@{/assets/custom3.js}"></script>
+<script th:src="@{/assets/jquery.dlmenu.js}"></script>
 
 </body>
 </html>
-
-
-
-
-
 

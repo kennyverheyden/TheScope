@@ -8,38 +8,26 @@
 	</strong><br>
 	
 <br>
- 
-<div class="table">
-<div class="tr">
-<span class="td">First name</span>
-<span class="td">Name</span>
-<span class="td">Movie</span>
-<span class="td">Time</span>
-<span class="td">Date</span>
-<span class="td">Location</span>
-<span class="td">Seats</span>
-<span class="td">Vip</span>
-<span class="td"></span>
-</div>
 
-<form class="tr" method="post" action="/bookingsstaff/deletebooking" th:each="booking, index: ${allBookings}" style="border:1px dotted black;">
+
+<div>
+<form method="post" action="/bookingsstaff/deletebooking" th:each="booking, index: ${allBookings}">
+<p>
 <input type="hidden" th:value="${booking.getPKbooking}" name="pkBooking">
-<span class="td" th:text="${booking.getUser.getFirstName}" style="border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" th:text="${booking.getUser.getName}"  style="border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" th:text="${booking.getScheduleShow.getTime}" style="border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" th:text="${booking.getScheduleShow.getDate}"  style="border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="border:1px dotted black;padding:10px;font-size:11px;"></span>
-<span class="td" th:text="${booking.getSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" th:text="${booking.getVipSeats}"  style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;"></span>
-<span class="td" style="text-align:right;border:1px dotted black;padding:10px;font-size:12px;">
- &nbsp; &nbsp; &nbsp;
+Firstname: <span th:text="${booking.getUser.getFirstName}" style="padding:10px;font-size:12px;"></span>
+Name: <span th:text="${booking.getUser.getName}"  style="padding:10px;font-size:12px;"></span><br>
+Title: <span th:text="${booking.getScheduleShow.getMovie.getTitle}"  style="padding:10px;font-size:12px;"></span><br>
+Time: <span th:text="${booking.getScheduleShow.getTime}" style="padding:10px;font-size:12px;"></span>
+Date: <span th:text="${booking.getScheduleShow.getDate}"  style="padding:10px;font-size:12px;"></span><br>
+Location: <span th:text="${booking.getScheduleShow.getTheaterRoom.getLocation}"  style="padding:10px;font-size:11px;"></span>
+Seats: <span  th:text="${booking.getSeats}"  style="text-align:right;padding:10px;font-size:12px;"></span>
+Vip seats: <span th:text="${booking.getVipSeats}"  style="text-align:right;padding:10px;font-size:12px;"></span><br>
+<span  style="text-align:right;padding:10px;font-size:12px;">
 <button type="submit" th:id="${'submit'+index.index}" th:onclick="if(!(confirm('Are you sure you want to delete this booking?') )) return false" style="width:70px;">Delete</button>
 </span>
-
+</p><br>
 </form>
 </div>
 
-    
-    
+      
 </div>

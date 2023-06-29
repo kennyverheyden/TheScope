@@ -4,15 +4,15 @@
 <br>
 
 
-<p>Search users</p>
+<p>Search users</p><br>
 
 
-<div class="table">
-<form action="/users/find" method="post" name="findUser" class="tr">
-<span class="td">Email (Username)<br><input type="text" name="findUserName" style="width:200px"></span>
-<span class="td">Name<br><input type="text" name="findName" style="width:170px"></span>
-<span class="td">Firstname<br><input type="text" name="findFirstName" style="width:170px"></span>
-<span class="td">
+<div>
+<form action="/users/find" method="post" name="findUser">
+<span>Email (Username)<br><input type="text" name="findUserName" style="width:200px"></span><br>
+<span>Name<br><input type="text" name="findName" style="width:200px"></span><br>
+<span>Firstname<br><input type="text" name="findFirstName" style="width:200px"></span><br>
+<span>
 Rolename<br>
 <select name="roleName">
 <option selected value="">Select role</option>
@@ -22,8 +22,8 @@ Rolename<br>
             th:value="${roleName.getRoleName}">
     </option>
 </select>
-</span>
-<span class="td"><br><button type="submit">Search</button></span>
+</span><br>
+<span><br><button type="submit">Search</button></span>
 </form>
 </div>
 
@@ -35,14 +35,15 @@ Rolename<br>
 	
 <br>
      
- <span style="font-size:12px;"><strong>* Only 50 users are preloaded, use the search button to find users </strong></span>
-<div class="table">
 
-<form action="/users" method="post" class="tr" th:each="user, index: ${users}" th:unless="${index.index > 49}">
+<div style="text-align:right;">
 
-<span class="td">
-<strong>Username/role</strong><br>
-<span th:text="${user.userName}" style="display:block; width:180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;font-size:11px"></span>
+<form action="/users" method="post" th:each="user, index: ${users}">
+
+<div style="text-align:left;">
+<strong>Username:</strong><br>
+
+<span th:text="${user.userName}" style="width:280px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;font-size:14px;"></span>
 <input th:value="${user.userName}" type="hidden" name="userName"><br>
 <select name="userRole">
     <option
@@ -51,35 +52,29 @@ Rolename<br>
             th:value="${role.getRoleName}"  th:selected="${ #strings.equals(role.getRoleName, user.userRole)}">
     </option>
 </select>
-</span>
+</div>
 
-<span class="td">
-<strong>Name/First name</strong><br>
-<input th:value="${user.name}" type="text" name="name"><br>
-<input th:value="${user.firstName}" type="text" name="firstName">
-</span>
-
-<span class="td">
-<strong>Address/Postal/Town</strong><br>
-<input th:value="${user.address}" type="text" name="address"><br>
-<input th:value="${user.postalCode}" type="text" name="postalCode"><br>
-<input th:value="${user.town}" type="text" name="town">
-</span>
-
-<span class="td">
-<strong>Password</strong><br>
-<input type="password" name="secret"><br><br>
-<strong>Delete?</strong>
- &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButton(' + ${index.index} + ')'">
-</span>
-
-<span class="td">
 <br>
-<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:100px;">Update details</button>
-</span>
+
+<strong>Name: </strong><input th:value="${user.name}" type="text" name="name"><br>
+
+<strong>Firstname: </strong><input th:value="${user.firstName}" type="text" name="firstName"><br>
+
+<strong>Address: </strong><input th:value="${user.address}" type="text" name="address"><br>
+
+<strong>PostalCode: </strong><input th:value="${user.postalCode}" type="text" name="postalCode"><br>
+
+<strong>Town: </strong><input th:value="${user.town}" type="text" name="town"><br>
+
+<strong>Password: </strong><input type="password" name="secret"><br>
+
+<strong>Delete? </strong>
+ &nbsp; &nbsp;<input type="checkbox" th:id="${index.index}"  name="delete" th:onclick="'javascript:changeSubmitButton(' + ${index.index} + ')'"><br>
+<button type="submit" th:id="${'submit'+index.index}" th:onclick="'javascript:show_alert(' + ${index.index} + ')'" style="width:120px;">Update details</button>
+
+<br><br>
 
 </form>
-
 </div>
     
 </div>
