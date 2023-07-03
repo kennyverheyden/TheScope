@@ -1,9 +1,12 @@
 # TheScope
 Education teamwork 2  - Cinema Organization Management System
 
-<strong>Test user</strong><br>
-| login: admin@thescope.site | password: test<br>
-| login: customer@thescope.site | password: test
+URL <a href="https://thescope.site">https://thescope.site</a><br><br>
+| Online login: demo@thescope.site | password: test<br>
+| Online login: customer@thescope.site | password: test
+
+Project<br>
+| Offline login: admin@thescope.site | password: test<br>
 
 <a href="https://github.com/kennyverheyden/TheScope/tree/main/Docs">Inception Document</a> (written in Dutch)<br><br>
 
