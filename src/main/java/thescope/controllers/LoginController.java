@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletRequest;
 import thescope.processors.LoginProcessor;
 import thescope.services.BookingService;
 
@@ -30,12 +31,13 @@ public class LoginController {
 	}
 
 	@PostMapping("/login/submit") 
-	public String loginPost(@RequestParam String username, @RequestParam String password, Model model, RedirectAttributes rm) throws Exception {
+	public String loginPost(@RequestParam String username, @RequestParam String password, Model model, RedirectAttributes rm, HttpServletRequest request) throws Exception {
 		boolean loggedIn = false;
 
 		try {
 			loggedIn = loginProcessor.login(username, password);
 		} catch (Exception e) {
+			request.logout();
 			model.addAttribute("content", "login");
 			rm.addFlashAttribute("message","Your credentials are incorrect");
 			return "redirect:/login";
