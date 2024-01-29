@@ -1,7 +1,7 @@
 # TheScope
 Education teamwork 2  - Cinema Organization Management System
 
-URL <a href="https://thescope.site">https://thescope.site</a><br><br>
+URL <a href="https://thescope.kennyverheyden.be">thescope.kennyverheyden.be</a><br><br>
 | Online login: demo@thescope.site | password: test<br>
 | Online login: customer@thescope.site | password: test
 
